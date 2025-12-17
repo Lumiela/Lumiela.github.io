@@ -11,7 +11,7 @@ const Projects = () => {
         <div className="col-md-6 mb-4">
           <div className="card">
             <div className="card-body">
-              <h5 className="card-title">Project One</h5>
+              <h5 className="card-title">Project</h5>
               <p className="card-text">A brief description of the first project. What it does, what tech was used.</p>
               <a href="#" className="btn btn-primary">View on GitHub</a>
             </div>
