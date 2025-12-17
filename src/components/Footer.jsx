@@ -1,15 +1,18 @@
 import React from 'react';
+import './Footer.css';
 
 const Footer = () => {
   return (
-    <footer className="footer mt-auto py-3 bg-dark text-white">
-      <div className="container text-center">
-        <p className="mb-0">&copy; {new Date().getFullYear()} My Portfolio. All Rights Reserved.</p>
-        <div>
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-white mx-2">
+    <footer className="footer">
+      <div className="container">
+        <p className="footer-text">
+          &copy; {new Date().getFullYear()} 내 포트폴리오. 모든 권리 보유.
+        </p>
+        <div className="social-links">
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer">
             GitHub
           </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white mx-2">
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
             LinkedIn
           </a>
         </div>

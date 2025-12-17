@@ -1,16 +1,36 @@
-# React + Vite
+# 포트폴리오 프로젝트 (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+이 프로젝트는 Vite를 사용하여 빠르게 개발 환경을 설정한 React 기반의 개인 포트폴리오 웹사이트입니다.
 
-Currently, two official plugins are available:
+## 주요 기술
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **프레임워크:** React
+- **빌드 도구:** Vite
+- **스타일링:** Bootstrap, CSS Modules
+- **라우팅:** React Router
 
-## React Compiler
+## 실행 방법
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 개발 서버 실행
 
-## Expanding the ESLint configuration
+개발 환경에서 프로젝트를 실행하고 실시간으로 변경 사항을 확인하려면 아래 명령어를 입력하세요.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```sh
+npm run dev
+```
+
+### 프로덕션 빌드
+
+프로젝트를 배포용으로 빌드하려면 아래 명령어를 사용하세요. 빌드 결과물은 `dist` 폴더에 생성됩니다.
+
+```sh
+npm run build
+```
+
+### 빌드 결과물 미리보기
+
+빌드된 결과물을 로컬에서 확인하려면 다음 명령어를 실행하세요.
+
+```sh
+npm run preview
+```

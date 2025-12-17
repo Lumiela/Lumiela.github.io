@@ -1,16 +1,22 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import './Home.css';
 
 const Home = () => {
   return (
-    <div className="p-5 mb-4 bg-light rounded-3">
-      <div className="container-fluid py-5">
-        <h1 className="display-5 fw-bold">Welcome to My Portfolio</h1>
-        <p className="col-md-8 fs-4">
-          I'm a passionate developer creating modern and responsive web applications.
-          Explore my projects and get to know more about me.
+    <section className="hero">
+      <div className="hero-content">
+        <h1 className="hero-title">안녕하세요, 환영합니다!</h1>
+        <p className="hero-subtitle">
+          저는 현대적이고 반응형 웹 애플리케이션을 만드는 것을 즐기는 개발자입니다.
+          <br />
+          제 프로젝트들을 둘러보시고 저에 대해 더 알아보세요.
         </p>
+        <Link to="/projects" className="hero-button">
+          프로젝트 보러가기
+        </Link>
       </div>
-    </div>
+    </section>
   );
 };
 
