@@ -1,0 +1,51 @@
+/* 제목 스타일 */
+.history-title {
+  margin-bottom: 40px;
+  font-size: 24px;
+  color: #333;
+}
+
+/* 가로 배치를 위한 컨테이너 */
+.history-container {
+  display: flex;
+  justify-content: space-between; /* 아이템 사이 간격을 균등하게 */
+  padding: 20px 0;
+  position: relative;
+}
+
+/* 아이템 개별 스타일 */
+.history-item {
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+
+/* 날짜(연도.월) 강조 */
+.history-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.year {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #4caf50; /* 상단 바와 맞춘 초록색 계열 */
+}
+
+/* 시각적 포인트(점) */
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: #4caf50;
+  border-radius: 50%;
+  margin: 10px 0;
+}
+
+.history-text {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+  word-break: keep-all; /* 단어 단위 줄바꿈 */
+}
