@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import './AboutSubsections.css';
+import daonrsImg from '../../assets/images/daonrs_img.jpg';
 
 const DirectionsSection = forwardRef((props, ref) => {
   return (
@@ -36,7 +37,7 @@ const DirectionsSection = forwardRef((props, ref) => {
 
         </div>
         <img 
-          src="src/assets/images/daonrs_img.jpg" 
+          src={daonrsImg} 
           alt="다온알에스 전경" 
           className='company_pic' 
           style={{ width: '100%', height: 'auto', borderRadius: '8px' }} 
