@@ -1,0 +1,169 @@
+/* Board.css */
+.board-container {
+  width: 100%;
+}
+
+.board-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.9em;
+}
+
+.board-th,
+.board-td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.board-th {
+  background-color: #f8f9fa;
+  color: #333;
+  font-weight: 600;
+}
+
+.board-td.title {
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.private-icon {
+  margin-left: 8px;
+  color: #888;
+}
+
+.board-td.title:hover {
+  text-decoration: underline;
+}
+
+.status {
+  font-weight: bold;
+  color: #888;
+}
+
+.status.completed {
+  color: #007bff;
+}
+
+.no-posts {
+  text-align: center;
+  padding: 50px;
+  color: #888;
+}
+
+/* Board Footer: Pagination and Search */
+.board-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.search-input {
+  border: none;
+  padding: 8px 12px;
+  font-size: 0.9em;
+  outline: none;
+}
+
+.search-button {
+  background-color: #f8f9fa;
+  border: none;
+  padding: 8px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid #ddd;
+}
+
+.search-button:hover {
+  background-color: #f1f3f5;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.pagination button {
+  background: none;
+  border: 1px solid #ddd;
+  color: #333;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #f1f3f5;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Responsive Table and Footer Styles */
+@media (max-width: 768px) {
+  /* Make table text smaller */
+  .board-table {
+    font-size: 0.9em;
+  }
+
+  /* Adjust padding for smaller screens */
+  .board-th,
+  .board-td {
+    padding: 10px 5px;
+  }
+
+  /* Hide non-essential columns on mobile */
+  .board-author,
+  .board-views,
+  .board-date,
+  .board-status {
+    display: none;
+  }
+  
+  /* Ensure the title cell uses the full space */
+  .board-td.title {
+    text-align: left;
+  }
+
+  .board-footer {
+    flex-direction: column-reverse; /* Stack pagination below search */
+    align-items: center;
+  }
+
+  .search-container {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+}
+

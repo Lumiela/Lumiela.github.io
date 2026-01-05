@@ -1,24 +1,50 @@
-import React, { forwardRef } from 'react';
+import React, { useState, forwardRef } from 'react';
+import NoticeSection from './subsections/NoticeSection';
+import DataroomSection from './subsections/DataroomSection';
+import QnaSection from './subsections/QnaSection';
+import './SupportSection.css';
 
 const SupportSection = forwardRef((props, ref) => {
+  const [activeTab, setActiveTab] = useState(0);
+
+  const handleTabClick = (index) => {
+    setActiveTab(index);
+  };
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 0:
+        return <NoticeSection />;
+      case 1:
+        return <DataroomSection />;
+      case 2:
+        return <QnaSection />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <section id="support" className="section" ref={ref}>
-      <h2>고객센터</h2>
-      <p>문의 사항이나 기술 지원이 필요하시면 언제든지 연락 주세요.</p>
-
-      <div id="support-notice" className="sub-section">
-        <h3>공지사항</h3>
-        <ul>
-          <li>시스템 점검 안내 (2025-12-31)</li>
-          <li>신제품 출시 예정 (2026-01-15)</li>
-        </ul>
-      </div>
-      <div id="support-qna" className="sub-section">
-        <h3>문의해보세요</h3>
-        <p>궁금한 점이 있으시면 언제든지 1811-6101로 연락 주시거나, 이메일(thankyou@daonrs.kr)로 문의해주세요.</p>
+      <div className="sub-section">
+        <div className="support-tabs">
+          {['공지사항', '자료실', '문의하기'].map((tab, index) => (
+            <button
+              key={tab}
+              className={`support-tab ${activeTab === index ? 'active' : ''}`}
+              onClick={() => handleTabClick(index)}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+        <div className="support-content">
+          {renderContent()}
+        </div>
       </div>
     </section>
   );
 });
 
 export default SupportSection;
+

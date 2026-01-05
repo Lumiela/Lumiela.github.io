@@ -1,0 +1,49 @@
+.floating-daoni-button {
+  position: fixed;
+  width: 80px;  /* 가시성을 위해 조금 더 키움 */
+  height: 80px;
+  bottom: 70px;
+  right: 30px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1010;
+  text-decoration: none; /* 링크 밑줄 제거 */
+  
+  /* 테두리와 글로우 효과 */
+  border: 2px solid rgba(0, 150, 255, 0.5);
+  box-shadow: 0 0 15px rgba(0, 149, 255, 0.4), 
+              inset 0 0 10px rgba(0, 149, 255, 0.1);
+  
+  transition: all 0.3s ease;
+  
+  /* 부드럽게 커졌다 작아지는 애니메이션 (가시성 증대) */
+  animation: pulse-blue 2s infinite;
+}
+
+.floating-daoni-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px rgba(0, 149, 255, 0.7);
+  border-color: rgba(0, 150, 255, 1);
+}
+
+.floating-daoni-button img {
+  width: 70px; /* 로고 크기 */
+  height: auto;
+  object-fit: contain;
+}
+
+/* 맥동 애니메이션 정의 */
+@keyframes pulse-blue {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 149, 255, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(0, 149, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 149, 255, 0);
+  }
+}

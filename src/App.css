@@ -1,447 +1,73 @@
 /* --- General Layout --- */
+html {
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 80px; /* 고정 헤더의 높이(80px)를 고려 */
+}
+
 .App {
   text-align: center;
 }
 
 .main-content {
-  /* 헤더 높이(80px)만큼 상단 패딩 */
-  padding-top: 80px;
-  /* 하단 네비게이션 높이(80px)만큼 하단 패딩 */
-  padding-bottom: 80px; 
+  /* 
+    헤더 높이(fixed)와 하단 네비게이션 높이(fixed)를 고려하여
+    콘텐츠가 가려지지 않도록 패딩을 추가합니다.
+    Header.css와 BottomNav.css의 높이 값과 일치해야 합니다.
+  */
+  padding-top: 60px;
+  padding-bottom: 60px; /* BottomNav 높이 60px */
 }
 
-/* Section for One Page Scroll */
+/* --- Section Defaults --- */
 .section {
+  scroll-snap-align: start; /* 스크롤 스냅 정렬 지점을 각 섹션의 시작점으로 설정 */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4rem 2rem;
-  border-bottom: 1px solid #ddd;
+  padding: 1rem 1rem;
+  border-bottom: 1px solid #E8E8E8;
 }
 
+/* 홀수번째 섹션에 다른 배경색 적용 */
 .section:nth-of-type(odd) {
-  background-color: #f9f9f9;
+  background-color: #F8F9F5;
 }
 
+/* 
+  각 섹션 내부의 콘텐츠 블록 스타일입니다.
+*/
 .sub-section {
   width: 100%;
-  max-width: 960px;
+  max-width: 1024px;
   margin-top: 2rem;
   padding: 2rem;
   background-color: #fff;
-  border: 1px solid #e7e7e7;
+  border: 1px solid #E8E8E8;
   border-radius: 8px;
   text-align: left;
 }
 
-/* --- Header & Navigation (Desktop 기준) --- */
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: #333;
-  z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.header-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 100%;
-  padding: 0 2%;
-  margin: 1% auto;
-  height: auto;
-  position: relative; /* 중요: .nav를 absolute 중앙 정렬하기 위한 기준점 */
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: #eee;
-  font-weight: bold;
-  font-size: 1.2rem;
-  z-index: 1011; /* 모바일 메뉴 위로 유지 */
-}
-
-.logo img {
-  margin-right: 10px;
-}
-
-/* Navigation 중앙 정렬 및 탭 크기 균등화 */
-.nav {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-
-.nav ul {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  /* 탭 크기 일관성을 위해 전체 너비 고정 (메뉴 6개 기준 약 720px~800px 추천) */
-  width: 750px; 
-}
-
-.nav li {
-  flex: 1; /* 핵심: 모든 메뉴 항목이 동일한 너비를 가짐 */
-  display: flex;
-  min-width: 0;
-}
-
-.nav a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%; /* li 너비를 꽉 채움 */
-  height: 100%; /* 헤더 높이 80px를 꽉 채움 */
-  padding: 0 10px;
-  text-decoration: none;
-  color: #eee;
-  white-space: nowrap;
-  transition: all 0.3s;
-}
-
-.nav a:hover {
-  color: #fff;
-  background-color: #444;
-}
-
-.nav a.active {
-  color: #fff;
-  background-color: #444444; /* 이제 80px 높이를 가득 채우는 배경색이 됩니다 */
-  font-weight: bold;
-}
-
-/* --- Search & Utils (Desktop) --- */
-.header-utils {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  z-index: 1011;
-}
-
-.search-container {
-  display: flex;
-}
-
-.search-container input {
-  height: 38px;
-  border: 1px solid #555;
-  background-color: #444;
-  color: white;
-  padding: 0 10px;
-  border-radius: 4px 0 0 4px;
-}
-
-.search-container input::placeholder {
-  color: #bbb;
-}
-
-.search-container button {
-  height: 38px;
-  border: 1px solid #555;
-  border-left: none;
-  background-color: #555;
-  color: white;
-  padding: 0 12px;
-  border-radius: 0 4px 4px 0;
-  cursor: pointer;
-}
-
-.search-container button:hover {
-  background-color: #009bff;
-  border-color: #009bff;
-}
-
-/* Auth Buttons */
-.auth-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  height: 38px;
-  padding: 0 12px;
-  border-radius: 4px;
-  border: none;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.auth-btn.google {
-  background-color: #ffffff;
-  color: #333;
-  border: 1px solid #dadce0;
-}
-
-.auth-btn.google:hover {
-  background-color: #f1f1f1;
-}
-
-.auth-btn.google img {
-  width: 18px;
-  height: 18px;
-  object-fit: contain;
-}
-
-.auth-btn.logout {
-  background-color: transparent;
-  border: 1px solid #555;
-  color: #aaa;
-}
-
-.auth-btn.logout:hover {
-  background-color: #444;
-  color: #fff;
-}
-
-.user-profile {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1px solid #555;
-  object-fit: cover;
-}
-
-/* --- Footer & Bottom Nav --- */
-.footer {
-  background-color: #222;
-  padding: 2rem;
-  font-size: 0.8rem;
-  color: #aaa;
-}
-
-.footer-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 60px;
-  background-color: #333;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
-}
-
-.bottom-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  overflow-x: auto;
-}
-
-.bottom-nav a {
-  display: block;
-  padding: 0 15px;
-  line-height: 60px;
-  color: white;
-  text-decoration: none;
-  transition: background-color 0.2s;
-}
-
-.bottom-nav a.active {
-  background-color: #009bff;
-  color: white;
-}
-
 /* --- Responsive Styles (Mobile) --- */
-.hamburger-menu {
-  display: none; /* 기본 숨김 */
-}
-
-.mobile-active-section-name {
-  display: none; /* Hidden by default */
-}
-
 @media (max-width: 768px) {
-  /* [수정] 헤더 높이 고정 및 레이아웃 흔들림 방지 */
-  .header {
-    height: 80px; 
-    position: fixed; /* sticky보다 모바일에서 fixed가 더 견고합니다 */
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: #282828;
-    z-index: 1011;
+  /* 모바일에서는 스크롤 스냅을 비활성화하여 자연스러운 스크롤 경험 제공 */
+  html {
+    scroll-snap-type: none;
   }
 
-  /* [수정] 내부 요소를 absolute로 배치하기 위해 relative 설정 */
-  .header-inner {
-    position: relative; 
-    display: flex;
-    align-items: center;
-    height: 100%;
-    max-width: 100%;
-    padding: 0 20px;
-    margin: 0; /* 불필요한 마진 제거 */
+  /* 
+    모바일에서는 one-page-scroll 효과 대신
+    콘텐츠 길이에 맞게 섹션 높이를 조절합니다.
+  */
+  .section {
+    min-height: auto;
   }
-
-  /* [추가] 로고 위치 좌측 고정 */
-  .logo {
-    position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1012;
-  }
-
-  /* 데스크톱 전용 nav와 utils 숨김 */
-  .header-inner > .nav, 
-  .header-inner > .header-utils {
-    display: none;
-  }
-
-  /* [수정 핵심] 햄버거 메뉴를 우측 끝에 강제 고정 */
-  .hamburger-menu {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 2rem;
-    height: 1.5rem;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    z-index: 1012;
-    
-    position: absolute; /* 주변 요소에 영향받지 않도록 설정 */
-    right: 20px; 
-    top: 50%;
-    transform: translateY(-50%);
-    margin: 0; 
-  }
-
-  /* [수정] 섹션 이름을 헤더 정중앙에 고정 (좌우 요소 무관) */
-  .mobile-active-section-name {
-    display: block;
-    position: absolute; 
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%); /* 정확한 중앙 정렬 */
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #fff;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    /* 로고와 햄버거 버튼 사이 공간 확보 */
-    max-width: calc(100% - 160px); 
-    text-align: center;
-    line-height: 1;
-    z-index: 5;
-  }
-
-  .hamburger-menu .bar {
-    width: 2rem;
-    height: 0.2rem;
-    background: #eee;
-    border-radius: 10px;
-    transition: all 0.3s linear;
-  }
-
-  /* [수정] 사이드 메뉴 패널: 헤더(80px) 바로 아래에서 시작 */
-  .mobile-menu-wrapper {
-    position: fixed;
-    top: 80px; 
-    right: -100%;
-    width: 280px;
-    /* 전체 높이에서 헤더를 뺀 만큼만 */
-    height: calc(100vh - 80px); 
-    background: #282828;
-    z-index: 1010;
-    transition: right 0.3s ease-in-out;
-    display: flex;
-    flex-direction: column;
-    padding-top: 0; 
-    overflow-y: auto;
-  }
-
-  .mobile-menu-wrapper.open {
-    right: 0;
-    box-shadow: -5px 5px 15px rgba(0,0,0,0.3);
-  }
-
-  /* 모바일 패널 내부 요소 정렬 */
-  .mobile-menu-wrapper .nav,
-  .mobile-menu-wrapper .header-utils {
-    display: block;
-    position: static; 
-    transform: none;
-    width: 100%;
-    height: auto;
-  }
-
-  .mobile-menu-wrapper .nav ul {
-    flex-direction: column;
-    width: 100%;
-    height: auto;
-    padding: 0;
-    margin: 0;
-  }
-
-  .mobile-menu-wrapper .nav a {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 0 30px;
-    height: 60px;
-    border-bottom: 1px solid #383838;
-    color: #ccc;
-    text-decoration: none;
-  }
-
-  .mobile-menu-wrapper .nav a.active {
-    background-color: #007acc;
-    color: #fff;
-    font-weight: bold;
-  }
-
-  .mobile-menu-wrapper .header-utils {
-    padding: 30px;
-    border-top: 1px solid #444;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .mobile-menu-wrapper .search-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .mobile-menu-wrapper .search-container input,
-  .mobile-menu-wrapper .search-container button {
-    width: 100%;
-    border-radius: 4px;
-    height: 45px;
+  
+  /* [수정] 모바일에서 상단 헤더에 콘텐츠가 가려지지 않도록 상단 패딩(여백) 추가 */
+  .main-content {
+    /* 기존 100px에서 가려짐 정도에 따라 수치를 더 늘려 조절할 수 있습니다. */
+    padding-top: 90px; /* 추가/수정된 부분: 상단 여백 확보 */
+    padding-bottom: 60px; 
   }
 }

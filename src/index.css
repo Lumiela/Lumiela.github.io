@@ -9,7 +9,7 @@ html {
   /* Smooth scrolling for anchor links */
   scroll-behavior: smooth;
   /* Fixed header height offset */
-  scroll-padding-top: 80px;
+  scroll-padding-top: 60px;
 }
 
 body {
@@ -18,7 +18,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #333;
+  color: #4F4F4F;
   background-color: #fff;
   line-height: 1.6;
 }

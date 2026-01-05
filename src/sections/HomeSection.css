@@ -1,0 +1,114 @@
+/* HomeSection.css */
+
+/* 홈 섹션 컨테이너 */
+.home-container {
+  padding-top: 20px;
+  width: 100%;
+  max-width: 1024px; /* 콘텐츠 최대 너비를 1024px로 설정 */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 홈 섹션 레이아웃 */
+#home.section {
+  min-height: 100vh; 
+  height: auto; 
+  justify-content: flex-start;
+  padding: 0; /* 배경 꽉 차게 조절 */
+}
+
+/* [수정] 메인 배너: 텍스트를 위에 띄우기 위한 기준점 설정 */
+.main-banner {
+  width: 100%;
+  position: relative; /* 텍스트 absolute 배치의 기준 */
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 3%;
+}
+
+/* 이미지 크기 및 어두운 필터 적용 */
+.full-width-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  /* [추가] 글자가 잘 보이도록 이미지에 어두운 오버레이 효과 */
+  filter: brightness(0.7); 
+}
+
+/* [수정] 텍스트를 이미지 왼쪽 중간에 흰색으로 배치 */
+.banner-text {
+  position: absolute;   /* 이미지 위에 겹침 */
+  top: 50%;             /* 세로 중앙 */
+  left: 10%;            /* 왼쪽에서 어느 정도 띄움 */
+  transform: translateY(-50%); /* 정확한 세로 중앙 정렬 */
+  
+  text-align: left;     /* 왼쪽 정렬 */
+  color: #ffffff;       /* 흰색 글씨 */
+  z-index: 10;          /* 이미지보다 위에 오도록 */
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); /* 글자 가독성 확보 */
+}
+
+.banner-text .sub-title {
+  margin: 0 0 10px 0;
+  font-size: 1.2rem;
+  font-weight: 300;
+}
+
+.banner-text .main-title {
+  margin: 0;
+  font-size: 3rem;      /* 크게 강조 */
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* 소개 영역 및 이미지 중앙 정렬 */
+.about-banner {
+  width: 100%;
+  padding-bottom: 1%;
+  padding-top: 1%;
+}
+
+.content-img {
+  width: 30%;
+  height: auto;
+  display: block;
+  margin: 0 auto; /* 중앙 정렬 */
+  object-fit: cover;
+}
+
+/* 필드 이미지 그리드 */
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 데스크톱: 4개 이미지 한 줄로 표시 */
+  gap: 10px; /* 이미지 사이 간격 추가 */
+}
+
+.grid-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* 모바일 반응형 대응 */
+@media (max-width: 768px) {
+  #home.section {
+    min-height: auto;
+  }
+
+  .banner-text {
+    left: 5%;
+  }
+
+  .banner-text .main-title {
+    font-size: 1.8rem;
+  }
+
+  /* 모바일: 2x2 그리드로 변경 */
+  .field-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
