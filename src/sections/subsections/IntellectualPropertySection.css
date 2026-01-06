@@ -1,0 +1,122 @@
+/* 1. 섹션 기본 설정 */
+.intellectual-property-section .sub-section {
+  padding: 60px 15px; /* 상하 여백 확대 */
+  text-align: center;
+}
+
+/* 1. 기본 스타일 (모바일 우선 접근) */
+.mySwiper {
+  width: 100%;
+  /* 모바일: 화면이 작으므로 높이를 낮게 설정 (확대 시 잘림 방지용 패딩 포함) */
+  height: 400px; 
+  padding: 40px 0 60px 0; 
+  display: flex;
+  align-items: center;
+}
+
+.swiper-slide {
+  transition: all 0.5s ease-in-out;
+  transform: scale(0.8); /* 기본 상태 축소 */
+  opacity: 0.4;
+  filter: blur(4px);
+  height: 250px; /* 모바일 기준 슬라이드 자체 높이 */
+}
+
+/* 활성화된 슬라이드 (가운데) */
+.swiper-slide-active {
+  transform: scale(1.3); /* 모바일은 화면이 좁으므로 1.3배만 확대 추천 */
+  opacity: 1;
+  filter: blur(0);
+  z-index: 10;
+}
+
+/* 2. 태블릿 ~ 작은 노트북 (768px 이상) */
+@media (min-width: 768px) {
+  .mySwiper {
+    height: 500px;
+  }
+  .swiper-slide {
+    height: 350px;
+  }
+  .swiper-slide-active {
+    transform: scale(1.4);
+  }
+}
+
+/* 3. 데스크탑 (1024px 이상) - 요청하신 600px 설정 */
+@media (min-width: 1024px) {
+  .mySwiper {
+    /* 전체 스와이퍼 영역을 600px로 고정 */
+    height: 600px; 
+    padding: 20px 0 50px 0;
+  }
+  
+  .swiper-slide {
+    /* 확대(1.5배)를 고려하여 기본 높이를 약 380px~400px로 설정 */
+    height: 380px; 
+  }
+  
+  .swiper-slide-active {
+    /* 380px * 1.5 = 570px (600px 컨테이너 안에 안전하게 들어옴) */
+    transform: scale(1.5); 
+  }
+}
+
+/* 이미지 및 카드 공통 설정 */
+.gallery-item {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.gallery-thumbnail {
+  width: 100%;
+  flex: 1;
+  position: relative;
+}
+
+.gallery-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 이미지 전체가 보이도록 설정 */
+}
+
+.gallery-title {
+  padding: 10px;
+  font-size: 0.9rem;
+  background-color: #f9f9f9;
+  border-top: 1px solid #eee;
+}
+
+/* New styles for responsive title */
+.ip-title-container {
+  text-align: center;
+  margin: 50px 0;
+}
+
+.ip-title {
+  font-size: 48px;
+  font-weight: 800;
+  color: #ff5e1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+}
+
+/* 모바일 전용 스타일 (화면 너비 768px 이하일 때) */
+@media (max-width: 768px) {
+  .ip-title {
+    font-size: 30px; /* 모바일에 적합한 크기로 조정 */
+    gap: 5px;       /* 아이콘과의 간격도 조금 줄임 */
+  }
+  
+  .ip-title-container {
+    margin: 30px 0; /* 모바일에서는 상하 여백도 줄이는 것이 보기 좋습니다 */
+  }
+}

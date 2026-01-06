@@ -112,3 +112,23 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* 1024px 데스크탑 반응형 대응 */
+@media (max-width: 1024px) {
+  .main-banner {
+    padding-bottom: 1%;
+  }
+
+  .banner-text .main-title {
+    font-size: 2.2rem;
+  }
+
+  .field-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+  }
+
+  .content-img {
+    width: 25%;
+  }
+}

@@ -1,0 +1,28 @@
+@media (max-width: 1024px) {
+    .directions-content {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .directions-info {
+      flex: 1;
+    }
+    .company_pic {
+      flex: 1;
+      max-width: 50%;
+      align-self: center;
+    }
+    .map-wrapper iframe {
+      height: 300px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .directions-content {
+      flex-direction: column;
+    }
+    .company_pic {
+      max-width: 100%;
+    }
+  }
+  

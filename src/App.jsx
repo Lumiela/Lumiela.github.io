@@ -10,18 +10,19 @@ import HistorySection from './sections/subsections/HistorySection';
 import DirectionsSection from './sections/subsections/DirectionsSection';
 import ScopeSection from './sections/subsections/ScopeSection';
 import RndSection from './sections/subsections/RndSection';
+import IPWrapperSection from './sections/IPWrapperSection';
 import Product1Section from './sections/subsections/Product1Section';
 import Product2Section from './sections/subsections/Product2Section';
-import CaseExampleSection from './sections/subsections/CaseExampleSection';
+import CasesSection from './sections/CasesSection';
 import SupportSection from './sections/SupportSection';
 import { useScrollSpy } from './hooks/useScrollSpy';
 import './App.css';
 
 const menuData = {
   about: { subMenus: [{ name: '경영비전', anchor: '#about-vision' }, { name: '회사연혁', anchor: '#about-history' }, { name: '오시는길', anchor: '#about-directions' }] },
-  business: { subMenus: [{ name: '사업영역', anchor: '#business-scope' }, { name: '연구개발', anchor: '#business-rnd' }] },
+  business: { subMenus: [{ name: '사업영역', anchor: '#business-scope' }, { name: '연구개발', anchor: '#business-rnd' }, { name: '지식재산권 및 인증', anchor: '#business-ip' }] },
   products: { subMenus: [{ name: '스마트 측정 제어기', anchor: '#products-product1' }, { name: '탄산가스 발생기', anchor: '#products-product2' }] },
-  cases: { subMenus: [{ name: '구축사례', anchor: '#cases-example' }] },
+  cases: { subMenus: [{ name: '구축사례', anchor: '#cases' }] },
   support: { subMenus: [{ name: '공지사항', anchor: '#support' }, { name: '자료실', anchor: '#support' }, { name: '문의하기', anchor: '#support' }] },
 };
 
@@ -34,14 +35,15 @@ function App() {
   const directionsRef = useRef(null);
   const scopeRef = useRef(null);
   const rndRef = useRef(null);
+  const ipRef = useRef(null);
   const product1Ref = useRef(null);
   const product2Ref = useRef(null);
-  const caseExampleRef = useRef(null);
+  const casesRef = useRef(null);
   const supportRef = useRef(null);
   const footerRef = useRef(null);
 
-  const sectionRefs = useMemo(() => [homeRef, visionRef, historyRef, directionsRef, scopeRef, rndRef, product1Ref, product2Ref, caseExampleRef, supportRef], []);
-  const sectionIds = useMemo(() => ['home', 'about-vision', 'about-history', 'about-directions', 'business-scope', 'business-rnd', 'products-product1', 'products-product2', 'cases-example', 'support'], []);
+  const sectionRefs = useMemo(() => [homeRef, visionRef, historyRef, directionsRef, scopeRef, rndRef, ipRef, product1Ref, product2Ref, casesRef, supportRef], []);
+  const sectionIds = useMemo(() => ['home', 'about-vision', 'about-history', 'about-directions', 'business-scope', 'business-rnd', 'business-ip', 'products-product1', 'products-product2', 'cases', 'support'], []);
   
   // useScrollSpy 옵션 수정: 화면 중앙 20% 영역을 기준으로 활성 섹션 감지하여 모바일 안정성 향상
   const activeSectionId = useScrollSpy(sectionRefs, { rootMargin: '-20% 0px -70% 0px' });
@@ -52,7 +54,7 @@ function App() {
     if (activeId.startsWith('about-')) return 'about';
     if (activeId.startsWith('business-')) return 'business';
     if (activeId.startsWith('products-')) return 'products';
-    if (activeId.startsWith('cases-')) return 'cases';
+    if (activeId.startsWith('cases')) return 'cases';
     if (activeId.startsWith('support')) return 'support';
     return activeId; // 일치하는 부모가 없으면 ID 그대로 반환 (예: home)
   };
@@ -113,9 +115,10 @@ function App() {
         <DirectionsSection ref={directionsRef} />
         <ScopeSection ref={scopeRef} />
         <RndSection ref={rndRef} />
+        <IPWrapperSection ref={ipRef} />
         <Product1Section ref={product1Ref} />
         <Product2Section ref={product2Ref} />
-        <CaseExampleSection ref={caseExampleRef} />
+        <CasesSection ref={casesRef} />
         <SupportSection ref={supportRef} />
       </main>
       {activeParentSectionId !== 'support' && <BottomNav items={bottomNavItems} activeSectionId={activeSectionId} isFooterVisible={isFooterVisible} />}

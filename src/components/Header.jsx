@@ -29,7 +29,7 @@ const Header = ({ activeParentSectionId, user, onGoogleLogin, onLogout }) => {
     { name: '회사소개', anchor: '#about-vision' },
     { name: '사업분야', anchor: '#business-scope' },
     { name: '제품', anchor: '#products-product1' },
-    { name: '적용사례', anchor: '#cases-example1' },
+    { name: '적용사례', anchor: '#cases' },
     { name: '고객센터', anchor: '#support' },
   ];
 

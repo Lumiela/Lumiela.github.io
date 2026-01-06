@@ -1,61 +1,105 @@
-.case-example-section {
-    padding: 60px 0;
-    text-align: center;
-  }
+/* 전체 섹션 컨테이너 */
+.case-example-section .sub-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 15px;
+  text-align: center;
+}
+
+/* 제목 스타일 */
+.case-example-section h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+/* 개별 카드 아이템 */
+.gallery-item {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   
-  .case-example-section .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
-  }
+  /* [추가] 렌더링 시 흐림 방지 */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translate3d(0, 0, 0); /* GPU 가속 사용 */
+  will-change: transform;
+}
+
+/* 호버 시 효과 */
+.gallery-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* 썸네일 컨테이너 (4:3 비율) */
+.gallery-thumbnail {
+  width: 100%;
+  padding-top: 75%; /* 4:3 Aspect Ratio */
+  position: relative;
+  overflow: hidden;
+  background-color: #f0f0f0; /* 이미지 로딩 전 배경색 */
+}
+
+/* 이미지 스타일 최적화 */
+.gallery-thumbnail img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
   
-  .case-example-section .section-title {
-    font-size: 2.5rem;
-    margin-bottom: 40px;
-    color: #333;
-  }
+  /* [추가] 이미지 선명도 관련 핵심 속성 */
+  image-rendering: -webkit-optimize-contrast; /* 대비 최적화로 선명하게 */
+  transform: translateZ(0); 
+  backface-visibility: hidden;
+}
+
+/* 호버 시 이미지 미세 확대 */
+.gallery-item:hover .gallery-thumbnail img {
+  transform: scale(1.05);
+}
+
+/* 하단 제목 영역 */
+.gallery-title {
+  padding: 15px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  text-align: left;
+  background-color: #f9f9f9;
+  border-top: 1px solid #eee;
+  margin-top: auto;
   
-  .case-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 30px; /* Adjust gap as needed */
-    max-width: 800px; /* Limit width for a more document-like feel */
-    margin: 0 auto; /* Center the cards */
-  }
+  /* [추가] 텍스트 흐림 방지 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Swiper 컨테이너 최적화 */
+.mySwiper {
+  width: 100%;
+  padding: 10px 0 40px 0;
   
-  .case-card {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s;
-    width: 100%; /* Ensure cards take full width of their container */
-  }
-  
-  .case-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-  
-  .card-thumbnail {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
-  
-  .card-body {
-    padding: 20px;
-  }
-  
-  .card-title {
-    font-size: 1.5rem;
-    margin: 0 0 10px;
-    color: #333;
-  }
-  
-  .card-description {
-    font-size: 1rem;
-    color: #666;
-  }
-  
+  /* [추가] 슬라이드 이동 중 블러 현상 제거 */
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  z-index: 1;
+}
+
+/* Swiper 개별 슬라이드 선명도 유지 */
+.swiper-slide {
+  height: auto; /* 카드 높이 균일화 보조 */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}

@@ -14,7 +14,6 @@ html {
     콘텐츠가 가려지지 않도록 패딩을 추가합니다.
     Header.css와 BottomNav.css의 높이 값과 일치해야 합니다.
   */
-  padding-top: 60px;
   padding-bottom: 60px; /* BottomNav 높이 60px */
 }
 
