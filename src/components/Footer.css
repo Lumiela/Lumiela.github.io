@@ -26,3 +26,9 @@
     margin-bottom: 0.5rem;
   }
 }
+
+@media (min-width: 1024px) {
+  .footer-inner {
+    justify-content: center; /* 1024px 이상 해상도에서 내용 중앙 정렬 */
+  }
+}
