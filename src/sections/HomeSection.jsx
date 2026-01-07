@@ -35,10 +35,10 @@ const HomeSection = forwardRef((props, ref) => {
 
         {/* 필드 이미지 그리드 영역 */}
         <div className="field-grid">
-          <img src={field01Image} alt="field-01" className="grid-img"/>
-          <img src={field02Image} alt="field-02" className="grid-img"/>
-          <img src={field03Image} alt="field-03" className="grid-img"/>
-          <img src={field04Image} alt="field-04" className="grid-img"/>
+          <a href="#about-vision"><img src={field01Image} alt="field-01" className="grid-img"/></a>
+          <a href="#business-scope"><img src={field02Image} alt="field-02" className="grid-img"/></a>
+          <a href="#products-product1"><img src={field03Image} alt="field-03" className="grid-img"/></a>
+          <a href="#cases"><img src={field04Image} alt="field-04" className="grid-img"/></a>
         </div>
       </div>
     </section>

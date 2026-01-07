@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Header.css';
 import logo from '../assets/images/site_logo.png';
+import daoniLogo from '../assets/images/daoni.png';
 
 const useWindowWidth = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -12,7 +13,7 @@ const useWindowWidth = () => {
   return windowWidth;
 };
 
-const Header = ({ activeParentSectionId, user, onGoogleLogin, onLogout }) => {
+const Header = ({ activeParentSectionId, subNavItems, activeSubSectionId }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const windowWidth = useWindowWidth();
@@ -82,44 +83,39 @@ const Header = ({ activeParentSectionId, user, onGoogleLogin, onLogout }) => {
 
           <div className="header-utils">
             {windowWidth > 768 ? (
-              <button onClick={handleSearchIconClick} className="search-icon-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-              </button>
-            ) : (
-              <div className="search-container">
-                <input type="text" placeholder="검색" />
-                <button>검색</button>
-              </div>
-            )}
-
-            <div className="auth-container">
-              {user ? (
-                <div className="user-profile">
-                  <img src={user.user_metadata.avatar_url} alt="profile" className="avatar" />
-                  <button onClick={() => { onLogout(); setIsMenuOpen(false); }} className="auth-btn logout">로그아웃</button>
-                </div>
-              ) : (
-                <button onClick={() => { onGoogleLogin(); setIsMenuOpen(false); }} className="auth-btn google">
-                  <img src="https://developers.google.com/static/identity/images/g-logo.png" alt="G" />
-                  <span>로그인</span>
+              <>
+                <button onClick={handleSearchIconClick} className="search-icon-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
                 </button>
-              )}
-            </div>
+                <a href="http://www.daonrs.com/" target="_blank" rel="noopener noreferrer" className="daoni-link-header">
+                  <img src={daoniLogo} alt="Daoni" />
+                </a>
+              </>
+            ) : (
+              <>
+                <div className="search-container">
+                  <input type="text" placeholder="검색" />
+                  <button>검색</button>
+                </div>
+                <a href="http://www.daonrs.com/" target="_blank" rel="noopener noreferrer" className="daoni-link-header">
+                  <img src={daoniLogo} alt="Daoni" />
+                </a>
+              </>
+            )}
           </div>
         </div>
 
         {isSearchOpen && windowWidth > 768 && (
-          <div className="search-overlay">
-            <div className="search-overlay-content">
-              <input type="text" placeholder="검색어를 입력하세요..." autoFocus />
-              <button className="search-submit-btn">검색</button>
-              <button onClick={() => setIsSearchOpen(false)} className="search-close-btn">&times;</button>
-            </div>
-          </div>
-        )}
+                <div className="search-overlay">
+                  <div className="search-overlay-content">
+                    <input type="text" placeholder="검색어를 입력하세요..." autoFocus className="search-input" />
+                    <button className="search-submit-btn">검색</button>
+                  </div>
+                  <button onClick={() => setIsSearchOpen(false)} className="search-close-btn">&times;</button>
+                </div>        )}
         
         {isMenuOpen && <div className="overlay" onClick={() => setIsMenuOpen(false)}></div>}
       </div>
@@ -128,6 +124,24 @@ const Header = ({ activeParentSectionId, user, onGoogleLogin, onLogout }) => {
       {activeItemName && windowWidth <= 768 && (
         <div className="mobile-active-bar">
           <span>{activeItemName}</span>
+        </div>
+      )}
+
+      {/* [추가] 데스크톱 전용 서브 네비게이션 */}
+      {subNavItems && subNavItems.length > 0 && !['home', 'cases', 'support'].includes(activeParentSectionId) && (
+        <div className="desktop-sub-nav">
+          <ul>
+            {subNavItems.map(item => (
+              <li key={item.name}>
+                <a
+                  href={item.anchor}
+                  className={item.anchor.substring(1) === activeSubSectionId ? 'active' : ''}
+                >
+                  {item.name}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </header>

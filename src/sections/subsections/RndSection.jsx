@@ -6,8 +6,8 @@ const RndSection = forwardRef((props, ref) => {
   return (
     <section id="business-rnd" className="section" ref={ref}>
       <div className="sub-section">
-        <div className="rnd-title-container">
-          <p className="rnd-title">
+        <div className="subsection-title-container">
+          <p className="subsection-title">
             <span className="quote">“</span>
             연구개발
             <span className="quote">”</span>

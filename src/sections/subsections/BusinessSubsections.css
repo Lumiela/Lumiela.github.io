@@ -5,12 +5,12 @@
   margin: 0 auto;
 }
 
-.rnd-title-container {
+.subsection-title-container {
   text-align: center;
   margin: 50px 0;
 }
 
-.rnd-title {
+.subsection-title {
   font-size: 48px;
   font-weight: 800;
   color: #ff5e1a;
@@ -28,12 +28,12 @@
 
 /* 모바일 전용 스타일 (화면 너비 768px 이하일 때) */
 @media (max-width: 768px) {
-  .rnd-title {
+  .subsection-title {
     font-size: 30px; /* 모바일에 적합한 크기로 조정 */
     gap: 5px;       /* 아이콘과의 간격도 조금 줄임 */
   }
   
-  .rnd-title-container {
+  .subsection-title-container {
     margin: 30px 0; /* 모바일에서는 상하 여백도 줄이는 것이 보기 좋습니다 */
   }
 }

@@ -92,31 +92,4 @@
   border-top: 1px solid #eee;
 }
 
-/* New styles for responsive title */
-.ip-title-container {
-  text-align: center;
-  margin: 50px 0;
-}
 
-.ip-title {
-  font-size: 48px;
-  font-weight: 800;
-  color: #ff5e1a;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin: 0;
-}
-
-/* 모바일 전용 스타일 (화면 너비 768px 이하일 때) */
-@media (max-width: 768px) {
-  .ip-title {
-    font-size: 30px; /* 모바일에 적합한 크기로 조정 */
-    gap: 5px;       /* 아이콘과의 간격도 조금 줄임 */
-  }
-  
-  .ip-title-container {
-    margin: 30px 0; /* 모바일에서는 상하 여백도 줄이는 것이 보기 좋습니다 */
-  }
-}

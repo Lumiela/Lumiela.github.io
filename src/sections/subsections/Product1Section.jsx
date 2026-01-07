@@ -6,7 +6,6 @@ const Product1Section = forwardRef((props, ref) => {
   return (
     <section id="products-product1" className="section" ref={ref}>
       <div className="sub-section">
-        <h2>스마트 측정 제어기</h2>
         <img src={productImage1} alt="스마트 측정 제어기" className="product-image" />
       </div>
     </section>

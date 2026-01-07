@@ -1,12 +1,19 @@
 import React, { forwardRef } from 'react';
 import './AboutSubsections.css';
+import '../subsections/BusinessSubsections.css';
 import daonrsImg from '../../assets/images/daonrs_img.jpg';
 
 const DirectionsSection = forwardRef((props, ref) => {
   return (
     <section id="about-directions" className="section" ref={ref}>
       <div className="sub-section">
-        <h2>오시는길</h2>
+        <div className="subsection-title-container">
+          <p className="subsection-title">
+            <span className="quote">“</span>
+            오시는 길
+            <span className="quote">”</span>
+          </p>
+        </div>
         <div className="directions-info">
           <p>
             <strong>주소 :</strong> 

@@ -4,13 +4,16 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 60px; /* 데스크톱 헤더 높이 고정 */
-  background-color: #4A934A;
+  /* height: 60px; 서브메뉴 추가로 인해 높이 자동 조절 */
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 1000 !important;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: height 0.3s ease-in-out;
 }
 
 .header-inner {
@@ -40,7 +43,7 @@
   background-color: rgba(255, 255, 255, 0.9);
   padding: 4px 8px;
   border-radius: 6px;
-  border: 2px solid white;
+  border: 2px solid #333;
 }
 
 /* 2. 중앙 메뉴 섹션 (데스크톱) */
@@ -74,7 +77,7 @@
   justify-content: center;
   height: 100%;
   padding: 0 18px;
-  color: #FFFFFF;
+  color: #333;
   text-decoration: none;
   font-size: 1rem;
   font-weight: 500;
@@ -85,7 +88,8 @@
 
 .nav a.active {
   font-weight: bold;
-  background-color: rgba(0, 0, 0, 0.2);
+  color: #000;
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 /* 3. 우측 유틸 섹션 */
@@ -101,6 +105,7 @@
 .search-icon-btn {
   background: none;
   border: none;
+  outline: none;
   cursor: pointer;
   padding: 8px;
   display: flex;
@@ -109,29 +114,13 @@
   border-radius: 50%;
 }
 
-.auth-btn.google {
+.daoni-link-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  height: 36px;
-  padding: 0 12px;
-  background-color: #ffffff;
-  border: 1px solid #dadce0;
-  border-radius: 4px;
-  cursor: pointer;
-  white-space: nowrap;
 }
 
-.auth-btn.google img {
-  width: 18px !important;
-  height: 18px !important;
-}
-
-.auth-btn.google span {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #333;
+.daoni-link-header img {
+  height: 32px;
 }
 
 /* --- 햄버거 메뉴 (공통/데스크톱은 숨김) --- */
@@ -149,7 +138,7 @@
 .hamburger-menu .bar {
   width: 22px;
   height: 2px;
-  background-color: white;
+  background-color: #333;
   margin: 4px auto;
   transition: all 0.3s ease-in-out;
   display: block;
@@ -172,10 +161,70 @@
   }
 }
 
+/* --- 데스크톱 서브 네비게이션 --- */
+.desktop-sub-nav {
+  display: none; /* 모바일에서는 숨김 */
+  width: 100%;
+  height: 50px;
+  background-color: rgba(245, 245, 245, 0.6);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.desktop-sub-nav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.desktop-sub-nav a {
+  display: block;
+  padding: 0 20px;
+  line-height: 50px;
+  color: #555;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.desktop-sub-nav a:hover {
+  color: #000;
+}
+
+.desktop-sub-nav a.active {
+  color: #000;
+  font-weight: 700;
+}
+
+/* 검색 버튼 테두리 및 배경 제거 */
+.search-icon-btn {
+  background: none;      /* 배경 제거 */
+  border: none;          /* 테두리 제거 */
+  padding: 0;            /* 불필요한 여백 제거 */
+  cursor: pointer;       /* 마우스 포인터 표시 */
+  display: flex;         /* 아이콘 정렬을 위해 flex 권장 */
+  align-items: center;
+  outline: none;         /* 클릭 시 생기는 파란색 테두리(아웃라인) 방지 */
+}
+
+/* (선택 사항) 버튼 클릭 시 아웃라인이 생기는 것을 방지하려면 */
+.search-icon-btn:focus {
+  outline: none;
+}
+
+
 /* --- 모바일 반응형 (슬라이딩 애니메이션 핵심 수정) --- */
-@media (max-width: 768px) {
+@media (max-width: 1023px) { /* 768px -> 1023px로 통합 */
   .header {
-    height: 60px;
+    height: 60px !important; /* 모바일에서는 높이 고정 */
+  }
+
+  .nav, .header-utils {
+    display: none; /* 모바일에서는 기본 nav와 utils 숨김 */
   }
   
   /* 햄버거 메뉴 */
@@ -199,7 +248,7 @@
   .mobile-active-bar {
     width: 100%;
     height: 40px;
-    background-color: rgba(74, 147, 74, 0.5); 
+    background-color: rgba(255, 255, 255, 0.5); 
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     display: flex;
@@ -207,15 +256,15 @@
     align-items: center;
     position: absolute;
     top: 60px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 999;
   }
 
   .mobile-active-bar span {
-    color: white;
+    color: #333;
     font-weight: bold;
     font-size: 1.2rem;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    text-shadow: none;
   }
 
   /* [수정] 우측 슬라이드 메뉴 스타일 */
@@ -227,12 +276,13 @@
     position: fixed;
     top: 0;
     right: 0;
-    width: 50%;                /* 화면의 50% 차지 */
+    width: 60%;                /* 너비 조정 */
+    max-width: 300px;          /* 최대 너비 설정 */
     height: 100vh;
-    background-color: #4A934A;
+    background-color: #f8f8f8;
     z-index: 1050;
     padding-top: 80px;
-    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
 
     /* 애니메이션 설정: 우측 밖으로 100% 밀어두기 */
     transform: translateX(100%);
@@ -246,11 +296,12 @@
     visibility: visible;
   }
   
-  .mobile-menu-wrapper .nav {
-    display: block;
+  .mobile-menu-wrapper .nav,
+  .mobile-menu-wrapper .header-utils {
+    display: block; /* 모바일 메뉴 래퍼 안에서는 보이도록 설정 */
     position: static;
     transform: none;
-    width: 100%; /* 네비게이션 전체 너비 확보 */
+    width: 100%;
   }
 
   .mobile-menu-wrapper .nav ul {
@@ -260,19 +311,20 @@
   }
 
   .mobile-menu-wrapper .nav li {
-    margin: 0; /* 마진 대신 a 태그의 패딩으로 조절 */
-    width: 100%; /* 리스트 항목 전체 너비 */
+    margin: 0;
+    width: 100%;
   }
 
   .mobile-menu-wrapper .nav a {
+    color: #333;
     font-size: 1.1rem;
-    padding: 15px 0; /* 상하 여백을 충분히 주어 터치 영역 확보 */
-    width: 100%; /* a 태그를 전체 너비로 확장 */
-    display: flex; /* flex로 변경하여 중앙 정렬 용이하게 설정 */
-    justify-content: center; /* 가로 중앙 정렬 */
-    align-items: center; /* 세로 중앙 정렬 */
+    padding: 15px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     transition: background 0.3s;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* 항목 간 구분선 (선택 사항) */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   }
 
   .mobile-menu-wrapper .header-utils {
@@ -284,44 +336,21 @@
     width: 100%;
   }
 
-  /* 검색창 컨테이너: 내부 빈공간 제거 및 테두리 통합 */
-.mobile-menu-wrapper .search-container {
-    display: flex;
-    width: 85%;
-    height: 40px;          /* 높이 가독성 확보 */
-    background-color: white; /* 배경을 흰색으로 통일 */
-    border-radius: 6px;
-    overflow: hidden;
-    border: 1px solid #ddd;
-    margin: 0 auto;        /* 중앙 정렬 보장 */
-  }
-
-  .mobile-menu-wrapper .search-container input {
-    flex: 1;               /* 입력창이 가능한 공간을 다 차지함 */
-    min-width: 0;          /* flexbox 내 밀림 방지 */
-    height: 100%;
-    padding: 0 12px;
-    border: none;
-    outline: none;
-    font-size: 0.95rem;
-    background: transparent;
-  }
-
-  .mobile-menu-wrapper .search-container button {
-    flex-shrink: 0;        /* [중요] 버튼이 밀려도 크기가 줄어들지 않게 고정 */
-    width: 60px;           /* 버튼 너비 고정 */
-    height: 100%;
-    background-color: #333; /* 버튼 색상 */
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 0.85rem;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  /* 모바일 메뉴 내 다오니 로고 크기 조절 */
+  .mobile-menu-wrapper .daoni-link-header img {
+    height: 60px; /* 가시성 향상을 위해 더 크게 */
   }
 }
+
+@media (min-width: 1024px) {
+  .desktop-sub-nav {
+    display: block;
+  }
+  .mobile-menu-wrapper {
+    display: contents !important;
+  }
+}
+
 
 /* 검색 오버레이 (데스크톱) */
 .search-overlay {
@@ -333,9 +362,62 @@
   background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding-top: 15vh;
+  align-items: center; /* flex-start에서 center로 변경 */
   z-index: 2000;
+  /* padding-top: 15vh; 삭제 */
+}
+
+.search-overlay-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 600px; /* 검색창 최대 너비 */
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.search-input {
+  flex-grow: 1;
+  height: 50px;
+  border: none;
+  outline: none;
+  padding: 0 20px;
+  font-size: 1.2rem;
+  background: transparent;
+}
+
+.search-submit-btn {
+  height: 50px;
+  border: none;
+  background-color: #333;
+  color: white;
+  padding: 0 25px;
+  border-radius: 0 6px 6px 0;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.search-submit-btn:hover {
+  background-color: #555;
+}
+
+.search-close-btn {
+  position: absolute; /* 절대 위치 지정 복원 */
+  top: calc(50% - 25px); /* 검색창과 수직 중앙 정렬 (검색창 높이 약 50px 가정) */
+  right: calc(50% - 300px - 50px); /* 검색창 박스 최대 너비(600px)의 절반 + 마진 */
+  background: none;
+  border: none;
+  color: white; /* 오버레이 배경에 맞게 흰색으로 복원 */
+  font-size: 2.5rem; /* 크기 조정 */
+  cursor: pointer;
+  line-height: 1;
+}
+.search-close-btn:hover {
+  color: #ddd; /* 호버 색상 */
 }
 
 /* 공통 오버레이 (배경 어둡게) */
@@ -347,25 +429,4 @@
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 1040;
-}
-
-/* 로그인 유저 프로필 */
-.user-profile {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 2px solid white;
-}
-.auth-btn.logout {
-  background: none;
-  border: 1px solid white;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 4px;
-  font-size: 0.8rem;
 }

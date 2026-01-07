@@ -6,7 +6,6 @@ const Product2Section = forwardRef((props, ref) => {
   return (
     <section id="products-product2" className="section" ref={ref}>
       <div className="sub-section">
-        <h2>탄산가스 발생기</h2>
         <img src={productImage2} alt="탄산가스 발생기" className="product-image" />
       </div>
     </section>
