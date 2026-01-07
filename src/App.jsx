@@ -20,6 +20,7 @@ import AdminTopNav from './components/AdminTopNav';
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import { supabase } from './supabaseClient';
+import HomeFloatingButton from './components/HomeFloatingButton';
 
 const menuData = {
   home: { subMenus: [] },
@@ -53,6 +54,7 @@ const MainContent = React.forwardRef((props, ref) => {
         <BottomNav items={subNavItems} activeSectionId={activeSectionId} isFooterVisible={isFooterVisible} />
       )}
       <Footer ref={ref} />
+      <HomeFloatingButton />
     </>
   );
 });
