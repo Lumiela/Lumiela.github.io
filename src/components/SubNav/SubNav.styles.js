@@ -1,0 +1,73 @@
+import styled from 'styled-components';
+
+export const SubNavContainer = styled.nav`
+  position: absolute;
+  bottom: 40px; /* 배너 하단에서의 간격 */
+  left: 50%;
+  transform: translateX(-50%); /* 정확한 중앙 정렬 */
+  z-index: 10;
+  
+  /* 다온알에스 스타일: 반투명 배경과 둥근 테두리 */
+  background-color: rgba(255, 255, 255, 0.2); 
+  backdrop-filter: blur(5px); /* 배경 흐림 효과 (선택 사항) */
+  padding: 10px 30px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  /* 모바일에서는 햄버거 메뉴로 들어가므로 숨김 */
+  @media (max-width: 1023px) {
+    display: none;
+  }
+
+  ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    margin: 0 1.5rem;
+    position: relative;
+
+    /* 항목 사이의 구분선 (선택 사항) */
+    &:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      right: -1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 12px;
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  a {
+    color: #fff; /* 어두운 배경 위에서 잘 보이도록 흰색 설정 */
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+
+    &:hover {
+      color: #fff;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+    }
+
+&.active {
+  color: #fff;              // 글자색 (배경이 어두우면 밝게)
+  font-weight: 700;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;       // 모서리를 둥글게 (선택 사항)
+  padding: 8px 16px;        // 상하 좌우 여백으로 크기 조절
+  
+  // 만약 부모 요소 때문에 위치가 어긋난다면 추가
+  display: inline-block;    
+  transition: all 0.2s;     // 부드러운 전환 효과
+}
+  }
+`;

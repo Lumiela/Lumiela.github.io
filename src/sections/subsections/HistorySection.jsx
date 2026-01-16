@@ -1,38 +1,74 @@
-import React, { forwardRef } from 'react';
-import './HistorySection.css'; // CSS 파일 임포트
-import './BusinessSubsections.css';
+import React, { forwardRef, useState } from 'react';
+import content from '../../content/HistoryContent.json';
+import {
+  HistoryContainer,
+  SectionHeader,
+  Navigation,
+  TimelineWrapper,
+  TimelineTrack,
+  TimelineItem,
+  TimelineDot,
+  YearTitle,
+  EventList
+} from './styles/HistorySection.styles.js';
 
 const HistorySection = forwardRef((props, ref) => {
-  // 연혁 데이터를 배열로 구조화
-  const historyData = [
-    { date: '2020.01', description: '(주)다온알에스 법인 설립' },
-    { date: '2021.05', description: '스마트 측정 제어기 개발 완료' },
-    { date: '2022.08', description: '탄산가스 발생기 특허 출원' },
-    // 필요시 여기에 더 많은 연혁 항목 추가
-  ];
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const totalItems = content.history.length;
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : 0));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev < totalItems - 1 ? prev + 1 : prev));
+  };
 
   return (
-    <section id="about-history" className="section" ref={ref}>
-      <div className="sub-section">
-        <div className="subsection-title-container">
-          <p className="subsection-title">
-            <span className="quote">“</span>
-            회사연혁
-            <span className="quote">”</span>
-          </p>
-        </div>
-        <div className="timeline">
-          {historyData.map((item, index) => (
-            <div className="timeline-item" key={index}>
-              <div className="timeline-dot"></div>
-              <div className="timeline-date">{item.date}</div>
-              <div className="timeline-content">
-                <p>{item.description}</p>
-              </div>
+    <section id="history" ref={ref} style={{ backgroundColor: '#fff' }}>
+      <HistoryContainer>
+        <SectionHeader>
+          <div>
+            <h2>회사 연혁</h2>
+            <div className="main-title">
+              {content.title.split('\n').map((text, i) => (
+                <React.Fragment key={i}>
+                  {text} <br />
+                </React.Fragment>
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
+          <Navigation>
+            <span className="page-num">
+              {String(currentIndex + 1).padStart(2, '0')} / {String(totalItems).padStart(2, '0')}
+            </span>
+            <div className="nav-buttons">
+              <button onClick={handlePrev} disabled={currentIndex === 0}>〈</button>
+              <button onClick={handleNext} disabled={currentIndex >= totalItems - 1}>〉</button>
+            </div>
+          </Navigation>
+        </SectionHeader>
+
+        <TimelineWrapper>
+          {/* 100% 단위를 사용하여 데스크톱에서도 한 섹션씩 이동 */}
+          <TimelineTrack style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+            {content.history.map((item, index) => (
+              <TimelineItem key={index}>
+                <TimelineDot className="dot" />
+                <YearTitle className="year">{item.year}</YearTitle>
+                <EventList>
+                  {item.events.map((event, i) => (
+                    <li key={i}>
+                      <span className="month">{event.month}</span>
+                      <span className="content">{event.content}</span>
+                    </li>
+                  ))}
+                </EventList>
+              </TimelineItem>
+            ))}
+          </TimelineTrack>
+        </TimelineWrapper>
+      </HistoryContainer>
     </section>
   );
 });

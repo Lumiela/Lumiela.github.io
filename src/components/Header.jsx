@@ -1,7 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import './Header.css';
+import { NavLink, Link } from 'react-router-dom';
+import { menuItems } from '../content/menuData';
+import {
+  HeaderContainer,
+  HeaderInner,
+  LogoContainer,
+  DesktopNavContainer,
+  HamburgerMenu,
+  SidePanelWrapper,
+  DropdownMenu,
+  FullscreenNavWrapper,
+  NavList,
+  Overlay,
+  CloseButton
+} from './Header/styles.js';
 import logo from '../assets/images/site_logo.png';
-import daoniLogo from '../assets/images/daoni.png';
 
 const useWindowWidth = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -13,138 +26,156 @@ const useWindowWidth = () => {
   return windowWidth;
 };
 
-const Header = ({ activeParentSectionId, subNavItems, activeSubSectionId }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+const Header = ({ isAdmin }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isFullscreenNavOpen, setIsFullscreenNavOpen] = useState(false);
+  const [openMobileSubMenu, setOpenMobileSubMenu] = useState(null);
+  const [visible, setVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [activeMenu, setActiveMenu] = useState(null);
   const windowWidth = useWindowWidth();
+  const isDesktop = windowWidth >= 1024;
 
-  useEffect(() => {
-    document.body.style.overflow = (isMenuOpen || isSearchOpen) ? 'hidden' : 'auto';
-    return () => { document.body.style.overflow = 'auto'; };
-  }, [isMenuOpen, isSearchOpen]);
-
-  const handleSearchIconClick = () => setIsSearchOpen(true);
-
-  const menuItems = [
-    { name: 'HOME', anchor: '#home' },
-    { name: '회사소개', anchor: '#about-vision' },
-    { name: '사업분야', anchor: '#business-scope' },
-    { name: '제품', anchor: '#products-product1' },
-    { name: '적용사례', anchor: '#cases' },
-    { name: '고객센터', anchor: '#support' },
-  ];
-
-  const getParentIdFromAnchor = (anchor) => {
-    const id = anchor.substring(1); // # 제거
-    if (id.startsWith('about-')) return 'about';
-    if (id.startsWith('business-')) return 'business';
-    if (id.startsWith('products-')) return 'products';
-    if (id.startsWith('cases-')) return 'cases';
-    if (id.startsWith('support')) return 'support';
-    return id; // home
+  const controlNavbar = () => {
+    if (window.scrollY > 200 && window.scrollY > lastScrollY) setVisible(false);
+    else setVisible(true);
+    setLastScrollY(window.scrollY);
   };
 
-  const activeItemName = menuItems.find(item => getParentIdFromAnchor(item.anchor) === activeParentSectionId)?.name;
+  useEffect(() => {
+    window.addEventListener('scroll', controlNavbar);
+    return () => window.removeEventListener('scroll', controlNavbar);
+  }, [lastScrollY]);
 
   useEffect(() => {
-    const handleResize = () => { if (window.innerWidth > 768) setIsMenuOpen(false); };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    setIsMobileMenuOpen(false);
+    setIsFullscreenNavOpen(false);
+    setOpenMobileSubMenu(null);
+  }, [windowWidth]);
+
+  const toggleMenu = () => {
+    if (isDesktop) setIsFullscreenNavOpen(!isFullscreenNavOpen);
+    else setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+  
+  const closeAllMenus = () => {
+    setIsMobileMenuOpen(false);
+    setIsFullscreenNavOpen(false);
+    setOpenMobileSubMenu(null);
+    setActiveMenu(null);
+  };
+
+  const handleMobileMainClick = (menuName) => {
+    setOpenMobileSubMenu(openMobileSubMenu === menuName ? null : menuName);
+  };
+
+  // 모바일 전용 네비게이션 링크 (아코디언 + 가로배치)
+  const mobileNavLinks = (
+    <ul>
+      {menuItems.map((item) => (
+        <li key={item.name}>
+          <div className="main-menu-group">
+            <div className="main-menu-item">
+              {item.subMenus ? (
+                <button className="menu-title-btn" onClick={() => handleMobileMainClick(item.name)}>
+                  {item.name}
+                </button>
+              ) : (
+                <NavLink to={item.path} onClick={closeAllMenus}>{item.name}</NavLink>
+              )}
+            </div>
+            {item.subMenus && (
+              <ul className={`submenu ${openMobileSubMenu === item.name ? 'show' : ''}`}>
+                {item.subMenus.map(subItem => (
+                  <li key={subItem.name}>
+                    <NavLink to={`${item.path}/${subItem.path}`} onClick={closeAllMenus}>
+                      {subItem.name}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+
+  // 데스크톱 풀스크린 전용 네비게이션 링크 (기존 스타일 유지)
+  const desktopNavLinks = (
+    <ul>
+      {menuItems.map((item) => (
+        <li key={item.name}>
+          <div className="main-menu-group">
+            <div className="main-menu-item">
+              {item.subMenus ? <span>{item.name}</span> : <NavLink to={item.path} onClick={closeAllMenus}>{item.name}</NavLink>}
+            </div>
+            {item.subMenus && (
+              <ul className="submenu">
+                {item.subMenus.map(subItem => (
+                  <li key={subItem.name}>
+                    <NavLink to={`${item.path}/${subItem.path}`} onClick={closeAllMenus}>{subItem.name}</NavLink>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
 
   return (
-    <header className="header">
-      <div className="header-inner">
-        <div className="logo-container">
-          <a href="#home" className="logo" onClick={() => setIsMenuOpen(false)}>
-            <img src={logo} alt="Daonrs Logo" style={{height: '28px'}}/>
-          </a>
-        </div>
-        
-        <button className={`hamburger-menu ${isMenuOpen ? 'open' : ''}`} onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          <div className="bar"></div>
-          <div className="bar"></div>
-          <div className="bar"></div>
-        </button>
-
-        {/* 데스크톱 nav는 그대로 유지 */}
-        <div className={`mobile-menu-wrapper ${isMenuOpen ? 'open' : ''}`}>
-          <nav className="nav">
-            <ul>
+    <>
+      <HeaderContainer $isAdmin={isAdmin} $visible={visible}>
+        <HeaderInner>
+          <LogoContainer>
+            <Link to="/" onClick={closeAllMenus}><img src={logo} alt="Logo" /></Link>
+          </LogoContainer>
+          
+          <DesktopNavContainer>
+            <ul className="main-menu-list">
               {menuItems.map((item) => (
-                <li key={item.name}>
-                  <a href={item.anchor} onClick={() => setIsMenuOpen(false)} className={getParentIdFromAnchor(item.anchor) === activeParentSectionId ? 'active' : ''}>
-                    {item.name}
-                  </a>
+                <li key={item.name} className="main-menu-item" onMouseEnter={() => setActiveMenu(item.name)} onMouseLeave={() => setActiveMenu(null)}>
+                  {item.subMenus ? <span className={activeMenu === item.name ? 'active' : ''}>{item.name}</span> : <NavLink to={item.path} className={({ isActive }) => (isActive ? 'active' : '')}>{item.name}</NavLink>}
+                  {activeMenu === item.name && item.subMenus && (
+                    <DropdownMenu>
+                      <ul>
+                        {item.subMenus.map(subItem => (
+                          <li key={subItem.name}><NavLink to={`${item.path}/${subItem.path}`} onClick={closeAllMenus}>{subItem.name}</NavLink></li>
+                        ))}
+                      </ul>
+                    </DropdownMenu>
+                  )}
                 </li>
               ))}
             </ul>
-          </nav>
+          </DesktopNavContainer>
 
-          <div className="header-utils">
-            {windowWidth > 768 ? (
-              <>
-                <button onClick={handleSearchIconClick} className="search-icon-btn">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                  </svg>
-                </button>
-                <a href="http://www.daonrs.com/" target="_blank" rel="noopener noreferrer" className="daoni-link-header">
-                  <img src={daoniLogo} alt="Daoni" />
-                </a>
-              </>
-            ) : (
-              <>
-                <div className="search-container">
-                  <input type="text" placeholder="검색" />
-                  <button>검색</button>
-                </div>
-                <a href="http://www.daonrs.com/" target="_blank" rel="noopener noreferrer" className="daoni-link-header">
-                  <img src={daoniLogo} alt="Daoni" />
-                </a>
-              </>
-            )}
-          </div>
+          <HamburgerMenu onClick={toggleMenu}><div className="bar"></div><div className="bar"></div><div className="bar"></div></HamburgerMenu>
+        </HeaderInner>
+      </HeaderContainer>
+
+      {/* 데스크톱 전용 풀스크린 (상단 고정 메뉴) */}
+      <FullscreenNavWrapper $isOpen={isFullscreenNavOpen}>
+        <div className="fullscreen-header">
+           <LogoContainer><Link to="/" onClick={closeAllMenus}><img src={logo} alt="Logo" /></Link></LogoContainer>
+           <CloseButton onClick={closeAllMenus}><span></span><span></span></CloseButton>
         </div>
+        <div className="fullscreen-content"><NavList $isDesktop={true}>{desktopNavLinks}</NavList></div>
+      </FullscreenNavWrapper>
 
-        {isSearchOpen && windowWidth > 768 && (
-                <div className="search-overlay">
-                  <div className="search-overlay-content">
-                    <input type="text" placeholder="검색어를 입력하세요..." autoFocus className="search-input" />
-                    <button className="search-submit-btn">검색</button>
-                  </div>
-                  <button onClick={() => setIsSearchOpen(false)} className="search-close-btn">&times;</button>
-                </div>        )}
-        
-        {isMenuOpen && <div className="overlay" onClick={() => setIsMenuOpen(false)}></div>}
-      </div>
-
-      {/* [수정] 모바일 전용 액티브 섹션 표시줄 (2단 분리) */}
-      {activeItemName && windowWidth <= 768 && (
-        <div className="mobile-active-bar">
-          <span>{activeItemName}</span>
+      {/* 모바일 전용 사이드 패널 (우측에서 등장) */}
+      <SidePanelWrapper $isOpen={isMobileMenuOpen}>
+        <div className="panel-header">
+          <LogoContainer><Link to="/" onClick={closeAllMenus}><img src={logo} alt="Logo" /></Link></LogoContainer>
+          <CloseButton onClick={closeAllMenus}><span></span><span></span></CloseButton>
         </div>
-      )}
+        <div className="panel-content"><NavList $isDesktop={false}>{mobileNavLinks}</NavList></div>
+      </SidePanelWrapper>
 
-      {/* [추가] 데스크톱 전용 서브 네비게이션 */}
-      {subNavItems && subNavItems.length > 0 && !['home', 'cases', 'support'].includes(activeParentSectionId) && (
-        <div className="desktop-sub-nav">
-          <ul>
-            {subNavItems.map(item => (
-              <li key={item.name}>
-                <a
-                  href={item.anchor}
-                  className={item.anchor.substring(1) === activeSubSectionId ? 'active' : ''}
-                >
-                  {item.name}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </header>
+      {(isMobileMenuOpen || isFullscreenNavOpen) && <Overlay onClick={closeAllMenus} />}
+    </>
   );
 };
 

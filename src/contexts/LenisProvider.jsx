@@ -15,6 +15,33 @@ export const LenisProvider = ({ children }) => {
   }, [lenis]);
 
   useEffect(() => {
+    if (!lenis) return;
+
+    const handleClick = (e) => {
+      const link = e.target.closest('a[href^="#"]');
+      if (!link) return;
+
+      e.preventDefault();
+      const href = link.getAttribute('href');
+      
+      // Allow external links or non-anchor links
+      if (href === '#' || href.startsWith('#') === false) return;
+
+      lenis.scrollTo(href, {
+        offset: 0, // Optional offset
+        duration: 1.5, // Optional duration
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Optional easing
+      });
+    };
+
+    document.addEventListener('click', handleClick);
+
+    return () => {
+      document.removeEventListener('click', handleClick);
+    };
+  }, [lenis]);
+
+  useEffect(() => {
     const newLenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),

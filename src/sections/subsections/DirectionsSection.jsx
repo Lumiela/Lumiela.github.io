@@ -1,54 +1,60 @@
 import React, { forwardRef } from 'react';
-import './AboutSubsections.css';
-import '../subsections/BusinessSubsections.css';
-import daonrsImg from '../../assets/images/daonrs_img.jpg';
+import content from '../../content/DirectionsContent.json';
+import {
+  SubsectionTitleContainer,
+  SubsectionTitle,
+  DirectionsInfo,
+  MapWrapper,
+  CompanyImage,
+  DirectionsContent
+} from './styles/DirectionsSection.styles.js';
+
+import daonrsImage from '../../assets/images/daonrs_img.jpg';
 
 const DirectionsSection = forwardRef((props, ref) => {
   return (
-    <section id="about-directions" className="section" ref={ref}>
+    <section id="directions" className="section" ref={ref}>
       <div className="sub-section">
-        <div className="subsection-title-container">
-          <p className="subsection-title">
+        <SubsectionTitleContainer>
+          <SubsectionTitle>
             <span className="quote">“</span>
-            오시는 길
+            {content.title}
             <span className="quote">”</span>
-          </p>
-        </div>
-        <div className="directions-info">
-          <p>
-            <strong>주소 :</strong> 
-            <a 
-              href="https://naver.me/FAPr3dlK" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              style={{ textDecoration: 'none', color: '#007bff', fontWeight: 'bold' }}              
-            >
-              광주 북구 용봉로 77 전남대학교 정비센터 다온알에스 <strong>[지도보기]</strong>
-            </a>
-          </p>
-          <p><strong>연락처:</strong> 1811-6101</p>
-          
-          {/* 구글 지도 프레임 - 실제 작동 주소로 업데이트 */}
-          <div className="map-wrapper" style={{ marginTop: '20px', marginBottom: '20px', border: '1px solid #ddd', borderRadius: '8px', overflow: 'hidden' }}>
-            <iframe 
-              title="구글 지도 - (주)다온알에스"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3258.924296614488!2d126.9018311762886!3d35.176361372754644!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35718c50dd50d377%3A0x3130b9863c26f2bf!2zKOyjvCnrTsmK3slYzsl5DsnbTsiqQ!5e0!3m2!1sko!2skr!4v1710000000000!5m2!1sko!2skr" 
-              width="100%" 
-              height="450" 
-              style={{ border: 0 }} 
-              allowFullScreen 
-              loading="lazy" 
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>       
-          </div>
+          </SubsectionTitle>
+        </SubsectionTitleContainer>
+        
+        <DirectionsContent>
+          <DirectionsInfo>
+            <p>
+              <strong>주소 :</strong> 
+              <a 
+                href={content.mapLink}
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                {content.address} <strong>[지도보기]</strong>
+              </a>
+            </p>
+            <p><strong>연락처:</strong> {content.phone}</p>
+            
+            <MapWrapper>
+              <iframe 
+                title="구글 지도 - (주)다온알에스"
+                src={content.googleMapEmbed}
+                allowFullScreen 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>       
+            </MapWrapper>
 
-        </div>
-        <img 
-          src={daonrsImg} 
-          alt="다온알에스 전경" 
-          className='company_pic' 
-          style={{ width: '100%', height: 'auto', borderRadius: '8px' }} 
-        />
+          </DirectionsInfo>
+          
+          <CompanyImage 
+            src={daonrsImage} 
+            alt="다온알에스 전경" 
+          />
+        </DirectionsContent>
+
       </div>
     </section>
   );

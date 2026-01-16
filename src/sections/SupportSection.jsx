@@ -2,7 +2,13 @@ import React, { useState, forwardRef } from 'react';
 import NoticeSection from './subsections/NoticeSection';
 import DataroomSection from './subsections/DataroomSection';
 import QnaSection from './subsections/QnaSection';
-import './SupportSection.css';
+import supportContent from '../content/SupportContent.json'; // Import content
+import {
+  SupportTabsContainer,
+  SupportTab,
+  SupportContentContainer,
+  SupportContentSection // Re-exporting from styles
+} from './SupportSection.styles.js'; // Import styled components
 
 const SupportSection = forwardRef((props, ref) => {
   const [activeTab, setActiveTab] = useState(0);
@@ -27,24 +33,23 @@ const SupportSection = forwardRef((props, ref) => {
   return (
     <section id="support" className="section" ref={ref}>
       <div className="sub-section">
-        <div className="support-tabs">
-          {['공지사항', '자료실', '문의하기'].map((tab, index) => (
-            <button
+        <SupportTabsContainer>
+          {supportContent.tabs.map((tab, index) => ( // Use content from JSON
+            <SupportTab
               key={tab}
-              className={`support-tab ${activeTab === index ? 'active' : ''}`}
+              className={activeTab === index ? 'active' : ''} // active class still used
               onClick={() => handleTabClick(index)}
             >
               {tab}
-            </button>
+            </SupportTab>
           ))}
-        </div>
-        <div className="support-content">
+        </SupportTabsContainer>
+        <SupportContentContainer>
           {renderContent()}
-        </div>
+        </SupportContentContainer>
       </div>
     </section>
   );
 });
 
 export default SupportSection;
-

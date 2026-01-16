@@ -1,23 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react'; // Add forwardRef
+import { SwiperSlide } from 'swiper/react';
+import { Pagination, Navigation } from 'swiper/modules'; // Import Swiper modules
+
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import './CaseExampleSection.css';
-import '../subsections/BusinessSubsections.css';
-import CasesModal from '../../components/CasesModal';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation } from 'swiper/modules'; // Import Swiper modules
 
-// Use { eager: true } for synchronous import
+import CasesModal from '../../components/CasesModal';
+import {
+  SubsectionTitleContainer,
+  SubsectionTitle,
+  CaseExamplesGrid,
+  CaseCard,
+  CaseCardThumbnail,
+  CaseCardTitle,
+  ModalSwiper
+} from './styles/CaseExampleSection.styles.js';
+
 const imageModules = import.meta.glob('../../assets/images/caseexample/**/*.{png,jpg,jpeg,svg,gif}', { eager: true });
 
-const CaseExampleSection = () => {
+const CaseExampleSection = forwardRef((props, ref) => { // Wrap with forwardRef
     const [caseExamples, setCaseExamples] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedCase, setSelectedCase] = useState(null);
 
     useEffect(() => {
-        // Synchronously process the already loaded modules
         const imagePaths = Object.keys(imageModules).map(path => ({
             url: imageModules[path].default,
             path,
@@ -43,23 +50,22 @@ const CaseExampleSection = () => {
 
             return {
                 id: index + 1,
-                title: folder.replace(/\[|\]/g, ''), // Remove brackets from folder name
+                title: folder.replace(/\[|\]/g, ''),
                 thumbnail,
                 content: (
-                    <Swiper
+                    <ModalSwiper // Use styled Swiper
                         modules={[Pagination, Navigation]}
                         spaceBetween={10}
                         slidesPerView={1}
                         pagination={{ clickable: true }}
                         navigation={true}
-                        className="modal-swiper"
                     >
                         {[thumbnail, ...contentImages].map((img, i) => (
                             <SwiperSlide key={i}>
                                 <img src={img} alt={`${folder} image ${i + 1}`} style={{ maxWidth: '100%' }} />
                             </SwiperSlide>
                         ))}
-                    </Swiper>
+                    </ModalSwiper>
                 )
             };
         });
@@ -74,35 +80,35 @@ const CaseExampleSection = () => {
 
     const closeModal = () => {
         setModalIsOpen(false);
-        setSelectedCase(null);
+        setSelectedCase(null); // Assuming selectedItem was meant to be selectedCase
     };
 
     return (
-        <div className="sub-section">
-            <div className="subsection-title-container">
-              <p className="subsection-title">
+        <section className="sub-section" ref={ref}> {/* Use section with ref */}
+            <SubsectionTitleContainer>
+              <SubsectionTitle>
                 <span className="quote">“</span>
                 주요실적
                 <span className="quote">”</span>
-              </p>
-            </div>
-            <div className="case-examples-grid">
+              </SubsectionTitle>
+            </SubsectionTitleContainer>
+            <CaseExamplesGrid> {/* Use styled grid */}
                 {caseExamples.map((caseItem) => (
-                    <div key={caseItem.id} className="case-card" onClick={() => openModal(caseItem)}>
-                        <div className="case-card-thumbnail">
+                    <CaseCard key={caseItem.id} onClick={() => openModal(caseItem)}> {/* Use styled card */}
+                        <CaseCardThumbnail> {/* Use styled thumbnail */}
                             <img src={caseItem.thumbnail} alt={caseItem.title} />
-                        </div>
-                        <div className="case-card-title">{caseItem.title}</div>
-                    </div>
+                        </CaseCardThumbnail>
+                        <CaseCardTitle>{caseItem.title}</CaseCardTitle> {/* Use styled title */}
+                    </CaseCard>
                 ))}
-            </div>
+            </CaseExamplesGrid>
             {selectedCase && (
                 <CasesModal isOpen={modalIsOpen} onClose={closeModal}>
                     {selectedCase.content}
                 </CasesModal>
             )}
-        </div>
+        </section> // Close section
     );
-};
+});
 
 export default CaseExampleSection;

@@ -1,28 +1,204 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Board from '../../components/Board';
+import { SupportContentSection } from '../SupportSection.styles.js';
+import { supabase } from '../../supabaseClient';
 
 const NoticeSection = () => {
-  const posts = [
-    { id: 12, title: '2026년 새해 복 많이 받으세요', author: '관리자', date: '2026-01-01', views: 50 },
-    { id: 11, title: '시스템 점검 안내 (2025-12-31)', author: '관리자', date: '2025-12-24', views: 120 },
-    { id: 10, title: '신제품 출시 예정 (2026-01-15)', author: '관리자', date: '2025-12-20', views: 245 },
-    { id: 9, title: '개인정보처리방침 변경 안내', author: '관리자', date: '2025-12-01', views: 500 },
-    { id: 8, title: 'CS 운영 시간 변경 안내', author: '관리자', date: '2025-11-15', views: 450 },
-    { id: 7, title: '서버 안정화 작업 완료', author: '관리자', date: '2025-11-01', views: 300 },
-    { id: 6, title: '홈페이지 리뉴얼 안내', author: '관리자', date: '2025-10-20', views: 600 },
-    { id: 5, title: '추석 연휴 배송 안내', author: '관리자', date: '2025-09-10', views: 750 },
-    { id: 4, title: '보안 강화 업데이트 안내', author: '관리자', date: '2025-08-25', views: 800 },
-    { id: 3, title: '하계 휴무 안내', author: '관리자', date: '2025-07-20', views: 900 },
-    { id: 2, title: '신규 서비스 오픈', author: '관리자', date: '2025-06-15', views: 1200 },
-    { id: 1, title: '다온알에스 홈페이지 방문을 환영합니다', author: '관리자', date: '2025-06-01', views: 2500 },
-  ];
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedPost, setSelectedPost] = useState(null); 
+  const [isWriting, setIsWriting] = useState(false); 
+  const [isEditing, setIsEditing] = useState(false); // 수정 모드 상태 추가
+  const [user, setUser] = useState(null); 
+
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
+  useEffect(() => {
+    const getSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setUser(session?.user ?? null);
+    };
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    getSession();
+    fetchNotices();
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
+
+  const fetchNotices = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('notices')
+        .select('*')
+        .order('notice_no', { ascending: false });
+
+      if (error) throw error;
+
+      const formattedData = data.map((item) => ({
+        ...item,
+        no: item.notice_no,
+        date: item.created_at ? item.created_at.split('T')[0] : '',
+      }));
+
+      setPosts(formattedData);
+    } catch (error) {
+      console.error('불러오기 실패:', error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // --- 글 삭제 함수 ---
+  const handleDelete = async (id) => {
+    if (!window.confirm('정말로 삭제하시겠습니까?')) return;
+
+    try {
+      const { error } = await supabase
+        .from('notices')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+
+      alert('삭제되었습니다.');
+      fetchNotices();
+      if (selectedPost?.id === id) setSelectedPost(null);
+    } catch (error) {
+      alert('삭제 실패: ' + error.message);
+    }
+  };
+
+  // --- 글 수정 모드 진입 ---
+  const startEditing = () => {
+    setTitle(selectedPost.title);
+    setContent(selectedPost.content);
+    setIsEditing(true);
+  };
+
+  // --- DB에 수정 내용 저장 ---
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const { error } = await supabase
+        .from('notices')
+        .update({ title, content })
+        .eq('id', selectedPost.id);
+
+      if (error) throw error;
+
+      alert('수정되었습니다.');
+      setIsEditing(false);
+      setSelectedPost(null); // 수정 후 목록으로 이동
+      fetchNotices();
+    } catch (error) {
+      alert('수정 실패: ' + error.message);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!title || !content) return alert('제목과 내용을 입력해주세요.');
+
+    try {
+      const { error } = await supabase
+        .from('notices')
+        .insert([{ title, content, author: user.email }]);
+
+      if (error) throw error;
+
+      alert('등록되었습니다.');
+      setTitle('');
+      setContent('');
+      setIsWriting(false);
+      fetchNotices();
+    } catch (error) {
+      alert('저장 실패: ' + error.message);
+    }
+  };
+
+  if (loading) return <div style={{ textAlign: 'center', padding: '50px' }}>로딩 중...</div>;
 
   return (
-    <div className="support-content-section">
-      <Board posts={posts} />
-    </div>
+    <SupportContentSection>
+      {/* --- 글쓰기 또는 수정 폼 --- */}
+      {(isWriting || isEditing) ? (
+        <div style={{ padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
+          <h3>{isEditing ? '공지사항 수정' : '공지사항 작성'}</h3>
+          <form onSubmit={isEditing ? handleUpdate : handleSubmit}>
+            <input 
+              type="text" 
+              placeholder="제목을 입력하세요" 
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
+            />
+            <textarea 
+              placeholder="내용을 입력하세요" 
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              style={{ width: '100%', height: '200px', padding: '10px', marginBottom: '10px' }}
+            />
+            <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+              <button type="button" onClick={() => { setIsWriting(false); setIsEditing(false); }}>취소</button>
+              <button type="submit" style={{ backgroundColor: '#000', color: '#fff', padding: '5px 15px' }}>
+                {isEditing ? '수정 완료' : '등록'}
+              </button>
+            </div>
+          </form>
+        </div>
+      ) : selectedPost ? (
+        /* --- 상세 보기 화면 --- */
+        <div style={{ padding: '20px' }}>
+          <h2>{selectedPost.title}</h2>
+          <p style={{ color: '#666' }}>작성자: {selectedPost.author} | 날짜: {selectedPost.date}</p>
+          <hr />
+          <div style={{ minHeight: '200px', whiteSpace: 'pre-wrap' }}>{selectedPost.content}</div>
+          <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
+            <button onClick={() => setSelectedPost(null)}>목록으로</button>
+            {/* 작성자 본인 확인 로직 (필요시 user.email === selectedPost.author 조건 추가) */}
+            {user && (
+              <>
+                <button onClick={startEditing} style={{ backgroundColor: '#f0ad4e', color: '#fff', border: 'none', padding: '5px 15px', borderRadius: '4px' }}>수정</button>
+                <button onClick={() => handleDelete(selectedPost.id)} style={{ backgroundColor: '#d9534f', color: '#fff', border: 'none', padding: '5px 15px', borderRadius: '4px' }}>삭제</button>
+              </>
+            )}
+          </div>
+        </div>
+      ) : (
+        /* --- 게시판 리스트 화면 --- */
+        <>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '10px' }}>
+            {user && (
+              <button 
+                onClick={() => {
+                  setTitle('');
+                  setContent('');
+                  setIsWriting(true);
+                }}
+                style={{ padding: '8px 16px', backgroundColor: '#000', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+              >
+                글쓰기
+              </button>
+            )}
+          </div>
+          <Board 
+            posts={posts} 
+            onItemClick={(post) => setSelectedPost(post)} 
+            onDelete={handleDelete} // 삭제 함수 전달
+            currentUser={user} // 유저 정보 전달
+          />
+        </>
+      )}
+    </SupportContentSection>
   );
 };
 
 export default NoticeSection;
-

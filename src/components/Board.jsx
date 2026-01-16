@@ -1,22 +1,33 @@
 import React, { useState } from 'react';
-import './Board.css';
-import { Lock, Search } from 'lucide-react';
+import { Lock, Search, Trash2 } from 'lucide-react'; // Trash2 아이콘 추가
+import {
+  BoardContainer,
+  BoardTable,
+  BoardTh,
+  BoardTd,
+  BoardFooter,
+  SearchContainer,
+  SearchInput,
+  SearchButton,
+  PaginationContainer,
+  PaginationButton
+} from './styles/Board.styles.js';
 
-const Board = ({ posts, isQna = false }) => {
+// onDelete와 currentUser 프롭을 추가로 받습니다.
+const Board = ({ posts, isQna = false, onItemClick, onDelete, currentUser }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 10;
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
-    setCurrentPage(1); // 검색 시 첫 페이지로 리셋
+    setCurrentPage(1);
   };
 
   const filteredPosts = posts.filter(post =>
     post.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Pagination logic
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
@@ -26,78 +37,111 @@ const Board = ({ posts, isQna = false }) => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="board-container">
-      <table className="board-table">
+    <BoardContainer>
+      <BoardTable>
         <thead>
           <tr>
-            <th className="board-th">번호</th>
-            <th className="board-th">제목</th>
-            <th className="board-th board-author">작성자</th>
-            <th className="board-th board-date">작성일</th>
-            <th className="board-th board-views">조회수</th>
-            {isQna && <th className="board-th board-status">답변상태</th>}
+            <BoardTh>번호</BoardTh>
+            <BoardTh>제목</BoardTh>
+            <BoardTh className="board-author">작성자</BoardTh>
+            <BoardTh className="board-date">작성일</BoardTh>
+            <BoardTh className="board-views">조회수</BoardTh>
+            {/* 로그인한 사용자에게만 관리(삭제) 컬럼 표시 */}
+            {currentUser && <BoardTh style={{ width: '80px' }}>관리</BoardTh>}
+            {isQna && <BoardTh className="board-status">답변상태</BoardTh>}
           </tr>
         </thead>
         <tbody>
           {currentPosts && currentPosts.length > 0 ? (
             currentPosts.map((post) => (
               <tr key={post.id}>
-                <td className="board-td">{post.id}</td>
-                <td className="board-td title">
+                <BoardTd>{post.no || post.id}</BoardTd>
+                
+                <BoardTd 
+                  className="title" 
+                  onClick={() => onItemClick && onItemClick(post)}
+                  style={{ cursor: 'pointer' }}
+                >
                   {post.title}
                   {isQna && post.isPrivate && <Lock className="private-icon" size={16} />}
-                </td>
-                <td className="board-td board-author">{post.author}</td>
-                <td className="board-td board-date">{post.date}</td>
-                <td className="board-td board-views">{post.views}</td>
+                </BoardTd>
+                
+                <BoardTd className="board-author">{post.author}</BoardTd>
+                <BoardTd className="board-date">{post.date}</BoardTd>
+                <BoardTd className="board-views">{post.views || 0}</BoardTd>
+                
+                {/* --- 삭제 버튼 추가 --- */}
+                {currentUser && (
+                  <BoardTd>
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation(); // 제목 클릭 이벤트(상세보기) 방지
+                        onDelete && onDelete(post.id);
+                      }}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        color: '#ff4d4f',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        margin: '0 auto'
+                      }}
+                    >
+                      <Trash2 size={16} />
+                      <span style={{ fontSize: '12px' }}>삭제</span>
+                    </button>
+                  </BoardTd>
+                )}
+
                 {isQna && (
-                  <td className={`board-td status board-status ${post.status === '답변완료' ? 'completed' : ''}`}>
+                  <BoardTd className={`status board-status ${post.status === '답변완료' ? 'completed' : ''}`}>
                     {post.status}
-                  </td>
+                  </BoardTd>
                 )}
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={isQna ? 6 : 5} className="board-td no-posts">게시글이 없습니다.</td>
+              <BoardTd colSpan={currentUser ? 6 : 5} className="no-posts">게시글이 없습니다.</BoardTd>
             </tr>
           )}
         </tbody>
-      </table>
+      </BoardTable>
 
-      <div className="board-footer">
-        <div className="search-container">
-          <input
+      <BoardFooter>
+        <SearchContainer>
+          <SearchInput
             type="text"
             placeholder="제목 검색..."
-            className="search-input"
             value={searchTerm}
             onChange={handleSearchChange}
           />
-          <button className="search-button">
+          <SearchButton>
             <Search size={18} />
-          </button>
-        </div>
+          </SearchButton>
+        </SearchContainer>
         
-        <div className="pagination">
-          <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
+        <PaginationContainer>
+          <PaginationButton onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
             이전
-          </button>
+          </PaginationButton>
           {Array.from({ length: totalPages }, (_, i) => (
-            <button
+            <PaginationButton
               key={i + 1}
               onClick={() => paginate(i + 1)}
               className={currentPage === i + 1 ? 'active' : ''}
             >
               {i + 1}
-            </button>
+            </PaginationButton>
           ))}
-          <button onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages}>
+          <PaginationButton onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages}>
             다음
-          </button>
-        </div>
-      </div>
-    </div>
+          </PaginationButton>
+        </PaginationContainer>
+      </BoardFooter>
+    </BoardContainer>
   );
 };
 

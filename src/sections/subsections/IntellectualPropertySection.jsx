@@ -1,33 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import React, { useState } from 'react';
+import { SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+
+// Keep Swiper's own CSS
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import './IntellectualPropertySection.css';
-import '../subsections/BusinessSubsections.css';
+
 import IntellectualPropertyModal from '../../components/IntellectualPropertyModal';
-import { useLenis } from '../../contexts/LenisContext';
+import {
+  IPSectionContainer,
+  SubsectionTitleContainer,
+  SubsectionTitle,
+  StyledSwiper,
+  GalleryItem,
+  GalleryThumbnail,
+  GalleryTitle
+} from './styles/IntellectualPropertySection.styles.js';
 
-const imageModules = import.meta.glob('../../assets/images/IntellectualProperty/*.{png,jpg,jpeg,svg,gif}');
+const imageModules = import.meta.glob('../../../assets/images/IntellectualProperty/*.{png,jpg,jpeg,svg,gif}', { eager: true });
 
-const imagePaths = Object.keys(imageModules).map(path => {
-    const url = new URL(path, import.meta.url).href;
+const ipExamples = Object.keys(imageModules).map((path, index) => {
+    const url = imageModules[path].default;
     const fileName = path.split('/').pop();
-    return { url, fileName };
+    // Simple title from filename, e.g., "image-01.jpg" -> "image-01"
+    const title = fileName.substring(0, fileName.lastIndexOf('.'));
+    return {
+        id: index + 1,
+        thumbnail: url,
+        title: title,
+        content: (<div><img src={url} style={{maxWidth:'100%'}} alt={title}/></div>)
+    };
 });
 
-
-const ipExamples = imagePaths.map((image, index) => ({
-  id: index + 1,
-  thumbnail: image.url,
-  content: (<div><img src={image.url} style={{maxWidth:'100%'}}/></div>)
-}));
-
-const IntellectualPropertySection = () => {
+const IntellectualPropertySection = React.forwardRef((props, ref) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
-    const lenis = useLenis();
 
     const openModal = (item) => {
         setSelectedItem(item);
@@ -40,50 +48,43 @@ const IntellectualPropertySection = () => {
     };
 
     return (
-        <div className="intellectual-property-section sub-section">
-            <div className="subsection-title-container">
-                <p className="subsection-title">
-                <span className="quote">“</span>
-                지식재산권 및 인증
-                <span className="quote">”</span>
-                </p>
-            </div>
-            <Swiper
+        <IPSectionContainer ref={ref} id="ip">
+            <SubsectionTitleContainer>
+                <SubsectionTitle>
+                  <span className="quote">“</span>
+                  지식재산권 및 인증
+                  <span className="quote">”</span>
+                </SubsectionTitle>
+            </SubsectionTitleContainer>
+            <StyledSwiper
                 modules={[Autoplay, Pagination, Navigation]}
-                spaceBetween={20} 
-                slidesPerView={1.4} 
-                centeredSlides={true}
-                loop={true}
-                autoplay={{
-                    delay: 3000,
-                    disableOnInteraction: false,
-                }}
-                breakpoints={{
-                    768: { slidesPerView: 2 },
-                    1024: { slidesPerView: 2.5 },
-                }}
+                spaceBetween={20}
+                slidesPerView={3}
                 pagination={{ clickable: true }}
                 navigation={true}
-                className="mySwiper"
+                autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                }}
             >
                 {ipExamples.map((item) => (
                     <SwiperSlide key={item.id} onClick={() => openModal(item)}>
-                        <div className="gallery-item">
-                            <div className="gallery-thumbnail">
+                        <GalleryItem>
+                            <GalleryThumbnail>
                                 <img src={item.thumbnail} alt={item.title} />
-                            </div>
-                            <div className="gallery-title">{item.title}</div>
-                        </div>
+                            </GalleryThumbnail>
+                            <GalleryTitle>{item.title}</GalleryTitle>
+                        </GalleryItem>
                     </SwiperSlide>
                 ))}
-            </Swiper>
+            </StyledSwiper>
             {selectedItem && (
                 <IntellectualPropertyModal isOpen={modalIsOpen} onClose={closeModal}>
                     {selectedItem.content}
                 </IntellectualPropertyModal>
             )}
-        </div>
+        </IPSectionContainer>
     );
-};
+});
 
 export default IntellectualPropertySection;

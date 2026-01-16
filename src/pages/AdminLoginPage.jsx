@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './AdminLoginPage.css';
 import { supabase } from '../supabaseClient';
 
-const AdminLoginPage = ({ onLoginSuccess }) => {
+const AdminLoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -20,8 +20,6 @@ const AdminLoginPage = ({ onLoginSuccess }) => {
 
     if (error) {
       setError(error.message);
-    } else {
-      onLoginSuccess();
     }
     setLoading(false);
   };

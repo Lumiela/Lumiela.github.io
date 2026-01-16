@@ -1,25 +1,108 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Board from '../../components/Board';
+import { SupportContentSection } from '../SupportSection.styles.js';
+import { supabase } from '../../supabaseClient';
 
 const DataroomSection = () => {
-  const posts = [
-    { id: 11, title: '2026년 제품 브로슈어', author: '관리자', date: '2026-01-05', views: 25 },
-    { id: 10, title: '제품 카탈로그 v3.0', author: '관리자', date: '2025-12-15', views: 150 },
-    { id: 9, title: '스마트 온실 제어 시스템 제안서', author: '관리자', date: '2025-11-20', views: 300 },
-    { id: 8, title: '양액기 A/S 가이드', author: '관리자', date: '2025-10-30', views: 250 },
-    { id: 7, title: '복합 환경 제어기 사용자 매뉴얼 v2.1', author: '관리자', date: '2025-09-15', views: 450 },
-    { id: 6, title: '무인방제기 설치 사례', author: '관리자', date: '2025-08-22', views: 500 },
-    { id: 5, title: '스마트팜 구축 우수 사례집', author: '관리자', date: '2025-07-18', views: 680 },
-    { id: 4, title: '탄산가스 발생기 매뉴얼 v1.5', author: '관리자', date: '2025-06-25', views: 820 },
-    { id: 3, title: '스마트 측정 제어기 매뉴얼 v2.0', author: '관리자', date: '2025-05-30', views: 1100 },
-    { id: 2, title: '제품 카탈로그 v2.0', author: '관리자', date: '2025-04-10', views: 1500 },
-    { id: 1, title: '전체 제품 통합 매뉴얼', author: '관리자', date: '2025-03-01', views: 2800 },
-  ];
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // 1. 유저 세션 및 상태 감지
+    const getSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setUser(session?.user ?? null);
+    };
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    getSession();
+    fetchArchives();
+
+    return () => authListener.subscription.unsubscribe();
+  }, []);
+
+  // 2. 자료실 데이터(archives 테이블) 불러오기
+  const fetchArchives = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('archives') // 자료실 전용 테이블
+        .select('*')
+        .order('notice_no', { ascending: false });
+
+      if (error) throw error;
+
+      setPosts(data.map(item => ({
+        ...item,
+        no: item.notice_no,
+        date: item.created_at ? item.created_at.split('T')[0] : '',
+      })));
+    } catch (error) {
+      console.error('자료 로딩 실패:', error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 3. 자료 삭제 함수
+  const handleDelete = async (id) => {
+    if (!window.confirm("이 자료를 삭제하시겠습니까?")) return;
+    try {
+      const { error } = await supabase.from('archives').delete().eq('id', id);
+      if (error) throw error;
+      alert("삭제되었습니다.");
+      setSelectedPost(null);
+      fetchArchives();
+    } catch (error) {
+      alert("삭제 실패: " + error.message);
+    }
+  };
 
   return (
-    <div className="support-content-section">
-      <Board posts={posts} />
-    </div>
+    <SupportContentSection>
+      {loading ? (
+        <p style={{ textAlign: 'center' }}>로딩 중...</p>
+      ) : selectedPost ? (
+        /* --- 자료 상세 보기 --- */
+        <div style={{ padding: '20px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <h2>{selectedPost.title}</h2>
+            {user && (
+              <button onClick={() => handleDelete(selectedPost.id)} style={{ color: 'red' }}>삭제</button>
+            )}
+          </div>
+          <p style={{ color: '#666' }}>날짜: {selectedPost.date}</p>
+          <hr />
+          <div style={{ minHeight: '150px', whiteSpace: 'pre-wrap', marginBottom: '20px' }}>
+            {selectedPost.content}
+          </div>
+          
+          {/* 첨부파일 다운로드 영역 */}
+          {selectedPost.file_url && (
+            <div style={{ padding: '15px', backgroundColor: '#f4f4f4', borderRadius: '5px' }}>
+              <strong>첨부파일: </strong>
+              <a href={selectedPost.file_url} target="_blank" rel="noopener noreferrer" download>
+                {selectedPost.file_name || '파일 다운로드'}
+              </a>
+            </div>
+          )}
+          
+          <button onClick={() => setSelectedPost(null)} style={{ marginTop: '20px' }}>목록으로</button>
+        </div>
+      ) : (
+        /* --- 자료 목록 (Board 컴포넌트 재사용) --- */
+        <Board 
+          posts={posts} 
+          onItemClick={(post) => setSelectedPost(post)} 
+          onDelete={handleDelete}
+          currentUser={user}
+        />
+      )}
+    </SupportContentSection>
   );
 };
 
