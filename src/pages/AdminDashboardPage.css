@@ -62,3 +62,207 @@
     color: #555;
     font-size: 18px;
   }
+
+  /* Add styles that were previously in GlobalStyle.js */
+  .admin-dashboard-container h2,
+  .admin-dashboard-container h3,
+  .admin-dashboard-container h4 {
+    font-family: 'Motiva Sans Bold', serif;
+    color: #333; /* Keep the specific color for this page */
+    line-height: 1.18;
+  }
+
+  .admin-dashboard-container h2 {
+    font-size: 32px;
+  }
+
+  .admin-dashboard-container h3 {
+    font-size: 28px;
+  }
+  
+  .admin-dashboard-container h4 {
+    font-size: 22px;
+  }
+
+  .admin-dashboard-container p {
+    color: #555;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .admin-dashboard-container input[type="text"],
+  .admin-dashboard-container input[type="file"],
+  .admin-dashboard-container textarea {
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: #fff;
+    transition: all 0.3s ease-in-out;  
+    outline: none;
+    width: 100%;  
+    padding: 1rem 1.25rem;
+  }
+
+  .admin-dashboard-container input[type="text"]:focus,
+  .admin-dashboard-container textarea:focus {
+      background: none;
+      border-color: #2e186a;
+  }
+
+  .admin-dashboard-container button {
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    background-color: #4caf50; /* Default button color */
+  }
+
+  .admin-dashboard-container button:hover {
+    opacity: 0.9;
+  }
+
+  .admin-dashboard-container button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+/* Tabs */
+.admin-tabs {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.admin-tabs button.active {
+  background-color: #2e7d32;
+}
+
+/* Forms */
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.history-form {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  border: 1px solid #eee;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px; /* 입력창 사이 간격 확대 */
+  margin-bottom: 10px;
+  align-items: center; /* 세로 중앙 정렬 */
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 30px;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+/* Inputs and Textareas */
+.input-month {
+  flex: 0 0 120px; /* 너비를 120px로 고정 (또는 필요에 따라 조절) */
+  min-width: 100px;
+}
+
+/* 내용 입력창: 남은 공간을 모두 차지 */
+.input-full {
+  flex: 1; /* 나머지 공간을 모두 채움 */
+}
+
+.textarea-large {
+    height: 200px;
+}
+
+/* Buttons */
+.btn-add {
+  margin-top: 5px;
+  background-color: #1890ff;
+}
+
+.btn-delete {
+  background-color: #ff4d4f;
+  padding: 0 15px;
+}
+
+.btn-delete-outline {
+    background-color: #fff;
+    border: 1px solid #ff4d4f;
+    color: #ff4d4f;
+}
+
+.btn-submit {
+  flex: 1;
+  background-color: #2e7d32;
+  font-weight: bold;
+}
+
+.btn-cancel {
+  flex: 0.3;
+  background-color: #ccc;
+}
+
+.btn-edit {
+    padding: 5px 15px;
+}
+
+/* History List */
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.history-list-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    align-items: center;
+    background: white;
+}
+
+.history-item-year {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.history-item-events {
+    color: #666;
+}
+
+.history-list-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.no-history {
+    color: #999;
+    text-align: center;
+    padding: 20px;
+}
+
+.section-title {
+  margin-bottom: 20px;
+}

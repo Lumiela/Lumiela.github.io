@@ -29,7 +29,7 @@ export const menuItems = [
   { name: '적용사례', 
     path: '/cases' ,
     subMenus: [
-      { name: '적용사례', path: '' }]
+      { name: '적용사례', path: 'example' }]
   },
   { 
     name: '고객센터', 

@@ -2,14 +2,14 @@ import styled from 'styled-components';
 
 export const HeaderContainer = styled.header`
   position: fixed;
-  top: ${({ $visible, $isAdmin }) => ($visible ? ($isAdmin ? '42px' : '0') : '-100px')};
+  top: ${({ $visible, $isAdmin }) => ($visible ? ($isAdmin ? '60px' : '0') : '-100px')};
   left: 0;
   width: 100%;
   background-color: #FFFFFF;
   z-index: 1040;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   transition: top 0.3s ease-in-out;
-  height: 60px;
+  height: 80px;
 `;
 
 export const HeaderInner = styled.div`
@@ -17,7 +17,7 @@ export const HeaderInner = styled.div`
   width: 100%; height: 100%; padding: 0 40px; @media (max-width: 480px) { padding: 0 15px; }
 `;
 
-export const LogoContainer = styled.div` img { height: 35px; display: block; } `;
+export const LogoContainer = styled.div` img { height: 50px; display: block; } `;
 
 export const DesktopNavContainer = styled.nav`
   display: none;

@@ -50,54 +50,6 @@ export const GlobalStyle = createGlobalStyle`
         }
     }
 
-    /* Input/Textarea styles from template */
-    input,
-    textarea {
-        border-radius: 4px;
-        border: 0;
-        background: rgb(241, 242, 243);
-        transition: all 0.3s ease-in-out;  
-        outline: none;
-        width: 100%;  
-        padding: 1rem 1.25rem;
-
-        :focus-within {
-            background: none;
-            box-shadow: #2e186a 0px 0px 0px 1px;
-        }
-    }
-
-    /* Heading styles from template */
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        font-family: 'Motiva Sans Bold', serif;
-        color: #18216d;
-        font-size: 56px;
-        line-height: 1.18;
-
-        @media only screen and (max-width: 890px) {
-          font-size: 47px;
-        }
-      
-        @media only screen and (max-width: 414px) {
-          font-size: 32px;
-        }
-    }
-
-    p {
-        color: #18216d; /* Adopt template color */
-        font-size: 21px; /* Adopt template size */        
-        line-height: 1.41; /* Adopt template line-height */
-    }
-
-    h1 {
-        font-weight: 600;
-    }
-
     *:focus {
         outline: none;
     }
@@ -136,8 +88,8 @@ export const GlobalStyle = createGlobalStyle`
 
     .sub-section {
         width: 100%;
-        max-width: 1024px;
-        padding: 2rem;
+        // max-width: 1024px;
+        padding: 5rem;
         background-color: #fff;
         border: 1px solid #E8E8E8;
         border-radius: 8px;

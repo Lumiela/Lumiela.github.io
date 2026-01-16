@@ -17,7 +17,7 @@ const HistorySection = forwardRef((props, ref) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  const title = "정밀한 생장 분석과 자동화 기술을 기반으로,\n한국표준육묘는 농업 혁신의 길을 꾸준히 걸어왔습니다.";
+  const title = "최적의 관리를 위한 Daonrs의 발자취 입니다 .";
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -43,7 +43,7 @@ const HistorySection = forwardRef((props, ref) => {
   if (loading || totalItems === 0) return null;
 
   return (
-    <section id="history" ref={ref} style={{ backgroundColor: '#fff' }}>
+    <section id="history" ref={ref} className="sub-section">
       <HistoryContainer>
         <SectionHeader>
           <div>

@@ -2,8 +2,6 @@ import styled from 'styled-components';
 
 export const HistoryContainer = styled.div`
   padding: clamp(60px, 8vw, 120px) 0;
-  max-width: 1400px;
-  margin: 0 auto;
   position: relative;
   overflow: hidden; /* 슬라이드 영역 밖 숨김 */
 `;
@@ -13,7 +11,6 @@ export const SectionHeader = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: clamp(40px, 6vw, 80px);
-  padding: 0 20px;
   gap: 20px;
 
   @media (max-width: 768px) {
@@ -91,7 +88,6 @@ export const TimelineTrack = styled.div`
 
 export const TimelineItem = styled.div`
   flex: 0 0 100%; 
-  padding: 0 20px;
   box-sizing: border-box;
   position: relative;
 
@@ -109,7 +105,7 @@ export const TimelineItem = styled.div`
 export const TimelineDot = styled.div`
   position: absolute;
   top: -58px;
-  left: 20px;
+  left: 0; /* Changed from 20px */
   width: 12px;
   height: 12px;
   border-radius: 50%;

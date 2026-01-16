@@ -1,108 +1,89 @@
 import styled from 'styled-components';
 import { Swiper } from 'swiper/react';
 
-export const SubsectionTitleContainer = styled.div`
+export const IPContainer = styled.div`
+  padding: clamp(60px, 8vw, 120px) 0;
+  position: relative;
+  overflow: hidden;
   text-align: center;
-  margin: 50px 0;
-  @media (max-width: 768px) {
-    margin: 30px 0;
-  }
 `;
 
-export const SubsectionTitle = styled.p`
-  font-size: 48px;
-  font-weight: 800;
-  color: #ff5e1a;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin: 0;
-
-  .quote {
-    color: #555;
-    font-family: serif;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 30px;
-    gap: 5px;
-  }
-`;
-
-export const IPSectionContainer = styled.div`
-  padding: 60px 15px;
+export const SectionHeader = styled.div`
+  margin-bottom: clamp(40px, 6vw, 80px);
   text-align: center;
+
+  .main-title {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #666;
+  }
 `;
 
 export const StyledSwiper = styled(Swiper)`
   width: 100%;
-  height: 400px; 
-  padding: 40px 0 60px 0; 
+  padding: 50px 0 80px 0; 
 
   .swiper-slide {
-    transition: all 0.5s ease-in-out;
-    transform: scale(0.8);
-    opacity: 0.4;
-    filter: blur(4px);
-    height: 250px;
+    transition: all 0.4s ease;
+    transform: scale(0.85); /* 주변 이미지 크기 상향 */
+    opacity: 0.6; /* 투명도 완화 */
+    filter: blur(1.5px); /* 블러 최소화 */
+    display: flex;
+    justify-content: center;
   }
 
   .swiper-slide-active {
-    transform: scale(1.3);
+    transform: scale(1.1); /* 중앙 강조 수치 현실화 */
     opacity: 1;
     filter: blur(0);
     z-index: 10;
   }
 
-  @media (min-width: 768px) {
-    height: 500px;
-    .swiper-slide {
-      height: 350px;
-    }
-    .swiper-slide-active {
-      transform: scale(1.4);
-    }
+  /* 네비게이션 버튼 가독성 */
+  .swiper-button-next, .swiper-button-prev {
+    color: #ff5e1a;
+    transform: scale(0.7);
   }
 
-  @media (min-width: 1024px) {
-    height: 600px; 
-    padding: 20px 0 50px 0;
-    .swiper-slide {
-      height: 380px; 
-    }
-    .swiper-slide-active {
-      transform: scale(1.5); 
-    }
+  .swiper-pagination-bullet-active {
+    background: #ff5e1a;
   }
 `;
 
 export const GalleryItem = styled.div`
   background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 380px;
+  height: 480px; 
   display: flex;
   flex-direction: column;
-  height: 100%;
+  overflow: hidden;
   cursor: pointer;
+  border: 1px solid #eee;
 `;
 
 export const GalleryThumbnail = styled.div`
-  width: 100%;
   flex: 1;
-  position: relative;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
   
   img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* 인증서 비율 유지 */
   }
 `;
 
 export const GalleryTitle = styled.div`
-  padding: 10px;
-  font-size: 0.9rem;
-  background-color: #f9f9f9;
-  border-top: 1px solid #eee;
+  padding: 18px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #333;
+  background-color: #fafafa;
+  border-top: 1px solid #f0f0f0;
 `;

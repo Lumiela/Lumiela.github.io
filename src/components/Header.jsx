@@ -155,8 +155,8 @@ const Header = ({ isAdmin }) => {
 
           {/* 데스크탑에서만 보이는 daoni 로고 */}
           {isDesktop && (
-            <Link to="https://daonrs.com" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
-              <img src={daoniLogo} alt="Daoni Logo" style={{ height: '40px', marginRight: '20px' }} />
+            <Link to="http://www.daonrs.com" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
+              <img src={daoniLogo} alt="Daoni Logo" style={{ height: '60px', marginRight: '20px' }} />
             </Link>
           )}
 
@@ -171,7 +171,7 @@ const Header = ({ isAdmin }) => {
       {/* 데스크톱 전용 풀스크린 (여기에도 하단에 넣고 싶다면 동일하게 적용 가능) */}
       <FullscreenNavWrapper $isOpen={isFullscreenNavOpen}>
         <div className="fullscreen-header">
-           <LogoContainer><Link to="https://daonrs.com" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}><img src={logo} alt="Logo" /></Link></LogoContainer>
+           <LogoContainer><Link to="http://www.daonrs.com" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}><img src={logo} alt="Logo" /></Link></LogoContainer>
            <CloseButton onClick={closeAllMenus}><span></span><span></span></CloseButton>
         </div>
         <div className="fullscreen-content"><NavList $isDesktop={true}>{desktopNavLinks}</NavList></div>
@@ -180,7 +180,7 @@ const Header = ({ isAdmin }) => {
       {/* 모바일 전용 사이드 패널 (우측에서 등장) */}
       <SidePanelWrapper $isOpen={isMobileMenuOpen}>
         <div className="panel-header">
-          <LogoContainer><Link to="https://daonrs.com" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}><img src={logo} alt="Logo" /></Link></LogoContainer>
+          <LogoContainer><Link to="http://www.daonrs.com" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}><img src={logo} alt="Logo" /></Link></LogoContainer>
           <CloseButton onClick={closeAllMenus}><span></span><span></span></CloseButton>
         </div>
         
@@ -191,8 +191,8 @@ const Header = ({ isAdmin }) => {
           </div>
           
           <div className="panel-footer" style={{ padding: '20px', borderTop: '1px solid #eee', textAlign: 'center' }}>
-            <Link to="https://daonrs.com" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
-              <img src={daoniLogo} alt="Daoni Logo" style={{ height: '30px' }} />
+            <Link to="http://www.daonrs.com" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
+              <img src={daoniLogo} alt="Daoni Logo" style={{ height: '70px' }} />
             </Link>
           </div>
         </div>

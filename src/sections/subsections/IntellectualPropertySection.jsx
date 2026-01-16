@@ -1,89 +1,145 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { supabase } from '../../supabaseClient'; 
 
-// Keep Swiper's own CSS
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 import IntellectualPropertyModal from '../../components/IntellectualPropertyModal';
 import {
-  IPSectionContainer,
-  SubsectionTitleContainer,
-  SubsectionTitle,
+  IPContainer,
+  SectionHeader,
   StyledSwiper,
   GalleryItem,
   GalleryThumbnail,
-  GalleryTitle
 } from './styles/IntellectualPropertySection.styles.js';
 
-const imageModules = import.meta.glob('../../../assets/images/IntellectualProperty/*.{png,jpg,jpeg,svg,gif}', { eager: true });
-
-const ipExamples = Object.keys(imageModules).map((path, index) => {
-    const url = imageModules[path].default;
-    const fileName = path.split('/').pop();
-    // Simple title from filename, e.g., "image-01.jpg" -> "image-01"
-    const title = fileName.substring(0, fileName.lastIndexOf('.'));
-    return {
-        id: index + 1,
-        thumbnail: url,
-        title: title,
-        content: (<div><img src={url} style={{maxWidth:'100%'}} alt={title}/></div>)
-    };
-});
-
 const IntellectualPropertySection = React.forwardRef((props, ref) => {
+    const [ipExamples, setIpExamples] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
+    const [uploading, setUploading] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
 
-    const openModal = (item) => {
-        setSelectedItem(item);
-        setModalIsOpen(true);
+    const title = "지식과 기술을 보호하고, 혁신을 입증합니다.";
+
+    // 1. 관리자 세션 감지
+    useEffect(() => {
+        const checkSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            setIsAdmin(!!session);
+        };
+        checkSession();
+
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            setIsAdmin(!!session);
+        });
+        return () => subscription.unsubscribe();
+    }, []);
+
+    // 2. 이미지 데이터 로드
+    const fetchIPImages = async () => {
+        try {
+            const { data, error } = await supabase.storage.from('images').list('IntellectualProperty');
+            if (error) throw error;
+
+            const imageFiles = data.filter(file => file.name !== '.emptyFolderPlaceholder');
+            const formattedData = imageFiles.map((file, index) => {
+                const { data: { publicUrl } } = supabase.storage.from('images').getPublicUrl(`IntellectualProperty/${file.name}`);
+                return {
+                    id: file.id || index,
+                    thumbnail: `${publicUrl}?t=${new Date().getTime()}`,
+                    title: file.name.split('.').slice(0, -1).join('.') || '인증서',
+                    content: (<div style={{textAlign:'center'}}><img src={publicUrl} style={{maxWidth:'100%'}} alt="detail"/></div>)
+                };
+            });
+            setIpExamples(formattedData);
+        } catch (err) {
+            console.error('데이터 로드 오류:', err);
+        }
     };
 
-    const closeModal = () => {
-        setModalIsOpen(false);
-        setSelectedItem(null);
+    useEffect(() => { fetchIPImages(); }, []);
+
+    // 3. 관리자 업로드 로직
+    const handleUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file || !isAdmin) return;
+
+        try {
+            setUploading(true);
+            const fileName = `${Date.now()}_${file.name}`;
+            const { error } = await supabase.storage.from('images').upload(`IntellectualProperty/${fileName}`, file);
+            if (error) throw error;
+            alert('인증서가 추가되었습니다.');
+            fetchIPImages();
+        } catch (err) {
+            alert(`업로드 실패: ${err.message}`);
+        } finally {
+            setUploading(false);
+        }
     };
+
+    const openModal = (item) => { setSelectedItem(item); setModalIsOpen(true); };
+    const closeModal = () => { setModalIsOpen(false); setSelectedItem(null); };
 
     return (
-        <IPSectionContainer ref={ref} id="ip">
-            <SubsectionTitleContainer>
-                <SubsectionTitle>
-                  <span className="quote">“</span>
-                  지식재산권 및 인증
-                  <span className="quote">”</span>
-                </SubsectionTitle>
-            </SubsectionTitleContainer>
-            <StyledSwiper
-                modules={[Autoplay, Pagination, Navigation]}
-                spaceBetween={20}
-                slidesPerView={3}
-                pagination={{ clickable: true }}
-                navigation={true}
-                autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                }}
-            >
-                {ipExamples.map((item) => (
-                    <SwiperSlide key={item.id} onClick={() => openModal(item)}>
-                        <GalleryItem>
-                            <GalleryThumbnail>
-                                <img src={item.thumbnail} alt={item.title} />
-                            </GalleryThumbnail>
-                            <GalleryTitle>{item.title}</GalleryTitle>
-                        </GalleryItem>
-                    </SwiperSlide>
-                ))}
-            </StyledSwiper>
-            {selectedItem && (
-                <IntellectualPropertyModal isOpen={modalIsOpen} onClose={closeModal}>
-                    {selectedItem.content}
-                </IntellectualPropertyModal>
-            )}
-        </IPSectionContainer>
+        <section id="ip" ref={ref} className="sub-section">
+            <IPContainer>
+                <SectionHeader>
+                    <h2>지식재산권 및 인증</h2>
+                    <div className="main-title">{title}</div>
+                    
+                    {isAdmin && (
+                        <div style={{marginTop: '25px'}}>
+                            <input type="file" id="admin-upload" hidden onChange={handleUpload} accept="image/*" />
+                            <label htmlFor="admin-upload" style={{
+                                cursor: 'pointer', padding: '10px 20px', backgroundColor: '#ff5e1a', color: '#fff', borderRadius: '6px', fontSize: '14px', fontWeight: 'bold'
+                            }}>
+                                {uploading ? '업로드 중...' : '+ 신규 인증서 등록'}
+                            </label>
+                        </div>
+                    )}
+                </SectionHeader>
+
+                {ipExamples.length > 0 ? (
+                    <StyledSwiper
+                        modules={[Autoplay, Pagination, Navigation]}
+                        slidesPerView={1}
+                        centeredSlides={true}
+                        spaceBetween={0}
+                        loop={ipExamples.length > 2}
+                        breakpoints={{
+                            768: { slidesPerView: 3 },
+                        }}
+                        pagination={{ clickable: true }}
+                        navigation={true}
+                        autoplay={{ delay: 3500, disableOnInteraction: false }}
+                    >
+                        {ipExamples.map((item) => (
+                            <SwiperSlide key={item.id} onClick={() => openModal(item)}>
+                                <GalleryItem>
+                                    <GalleryThumbnail>
+                                        <img src={item.thumbnail} alt={item.title} />
+                                    </GalleryThumbnail>
+                                    {/* 파일명 표시(GalleryTitle) 삭제 완료 */}
+                                </GalleryItem>
+                            </SwiperSlide>
+                        ))}
+                    </StyledSwiper>
+                ) : (
+                    <div style={{padding: '100px 0', color: '#999'}}>등록된 인증 정보가 없습니다.</div>
+                )}
+
+                {selectedItem && (
+                    <IntellectualPropertyModal isOpen={modalIsOpen} onClose={closeModal}>
+                        {selectedItem.content}
+                    </IntellectualPropertyModal>
+                )}
+            </IPContainer>
+        </section>
     );
 });
 

@@ -159,12 +159,11 @@ const AdminDashboardPage = () => {
       
       <div className="admin-dashboard-content">
         {/* 상단 탭 메뉴 */}
-        <div style={{ marginBottom: '20px', display: 'flex', gap: '10px' }}>
-          <button onClick={() => setActiveTab('list')}>자료실 목록</button>
+        <div className="admin-tabs">
           <button onClick={() => setActiveTab('write')}>자료실 글쓰기</button>
-          <button 
-            onClick={() => { setActiveTab('history'); resetHistoryForm(); }} 
-            style={{ backgroundColor: activeTab === 'history' ? '#2e7d32' : '#4caf50', color: 'white' }}
+          <button
+            onClick={() => { setActiveTab('history'); resetHistoryForm(); }}
+            className={activeTab === 'history' ? 'active' : ''}
           >
             연혁 관리
           </button>
@@ -172,10 +171,10 @@ const AdminDashboardPage = () => {
 
         {/* 1. 자료실 글쓰기 탭 */}
         {activeTab === 'write' && (
-          <form onSubmit={handleUpload} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-             <h3>새 자료 등록</h3>
+          <form onSubmit={handleUpload} className="admin-form">
+            <h3>새 자료 등록</h3>
             <input type="text" placeholder="제목" value={title} onChange={(e) => setTitle(e.target.value)} required />
-            <textarea placeholder="내용" value={content} onChange={(e) => setContent(e.target.value)} style={{ height: '200px' }} required />
+            <textarea placeholder="내용" value={content} onChange={(e) => setContent(e.target.value)} className="textarea-large" required />
             <input type="file" onChange={(e) => setFile(e.target.files[0])} />
             <button type="submit" disabled={uploading}>{uploading ? '처리 중...' : '등록'}</button>
           </form>
@@ -184,67 +183,66 @@ const AdminDashboardPage = () => {
         {/* 2. 연혁 관리 탭 (폼 기반 수정 방식) */}
         {activeTab === 'history' && (
           <div className="history-admin-section">
-            <h3 style={{ marginBottom: '20px' }}>{isEditingHistory ? '연혁 수정' : '새 연혁 등록'}</h3>
-            
+            <h3 className="section-title">{isEditingHistory ? '연혁 수정' : '새 연혁 등록'}</h3>
+
             {/* 입력 폼 */}
-            <form onSubmit={handleHistorySubmit} style={{ background: '#f9f9f9', padding: '20px', borderRadius: '8px', marginBottom: '30px', border: '1px solid #eee' }}>
-              <div style={{ marginBottom: '15px' }}>
-                <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}>대상 연도</label>
-                <input 
-                  type="text" 
-                  value={historyYear} 
-                  onChange={(e) => setHistoryYear(e.target.value)} 
-                  placeholder="예: 2025" 
-                  style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
-                  required 
+            <form onSubmit={handleHistorySubmit} className="history-form">
+              <div className="form-group">
+                <label className="form-label">대상 연도</label>
+                <input
+                  type="text"
+                  value={historyYear}
+                  onChange={(e) => setHistoryYear(e.target.value)}
+                  placeholder="예: 2025"
+                  required
                 />
               </div>
 
-              <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '10px' }}>세부 일정 목록</label>
+              <label className="form-label">세부 일정 목록</label>
               {historyEvents.map((event, index) => (
-                <div key={index} style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
-                  <input 
-                    type="text" 
-                    placeholder="월 (예: 05.22)" 
-                    value={event.month} 
+                <div key={index} className="form-row">
+                  <input
+                    type="text"
+                    placeholder="월 (예: 05.22)"
+                    value={event.month}
                     onChange={(e) => handleEventChange(index, 'month', e.target.value)}
-                    style={{ width: '100px', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
-                    required 
+                    className="input-month"
+                    required
                   />
-                  <input 
-                    type="text" 
-                    placeholder="내용" 
-                    value={event.content} 
+                  <input
+                    type="text"
+                    placeholder="내용"
+                    value={event.content}
                     onChange={(e) => handleEventChange(index, 'content', e.target.value)}
-                    style={{ flex: 1, padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
-                    required 
+                    className="input-full"
+                    required
                   />
                   {historyEvents.length > 1 && (
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       onClick={() => removeEventField(index)}
-                      style={{ backgroundColor: '#ff4d4f', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', padding: '0 15px' }}
+                      className="btn-delete"
                     >
                       삭제
                     </button>
                   )}
                 </div>
               ))}
-              
-              <button 
-                type="button" 
+
+              <button
+                type="button"
                 onClick={addEventField}
-                style={{ marginTop: '5px', backgroundColor: '#1890ff', color: 'white', border: 'none', padding: '8px 15px', borderRadius: '4px', cursor: 'pointer' }}
+                className="btn-add"
               >
                 + 일정 추가
               </button>
 
-              <div style={{ display: 'flex', gap: '10px', marginTop: '30px', borderTop: '1px solid #ddd', paddingTop: '20px' }}>
-                <button type="submit" style={{ flex: 1, backgroundColor: '#2e7d32', color: 'white', padding: '12px', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer' }}>
+              <div className="form-actions">
+                <button type="submit" className="btn-submit">
                   {isEditingHistory ? '수정사항 저장' : '새 연혁 등록'}
                 </button>
                 {isEditingHistory && (
-                  <button type="button" onClick={resetHistoryForm} style={{ flex: 0.3, backgroundColor: '#ccc', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+                  <button type="button" onClick={resetHistoryForm} className="btn-cancel">
                     취소
                   </button>
                 )}
@@ -253,25 +251,25 @@ const AdminDashboardPage = () => {
 
             {/* 목록 리스트 */}
             <h4>등록된 연혁 목록</h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div className="history-list">
               {historyList.map(item => (
-                <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '15px', border: '1px solid #ddd', borderRadius: '8px', alignItems: 'center', background: 'white' }}>
+                <div key={item.id} className="history-list-item">
                   <div>
-                    <span style={{ fontSize: '1.1rem', fontWeight: 'bold', marginRight: '10px' }}>{item.year}년</span>
-                    <span style={{ color: '#666' }}>이벤트 {item.events.length}개</span>
+                    <span className="history-item-year">{item.year}년</span>
+                    <span className="history-item-events">이벤트 {item.events.length}개</span>
                   </div>
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <button onClick={() => startEditHistory(item)} style={{ padding: '5px 15px', borderRadius: '4px', cursor: 'pointer' }}>수정</button>
-                    <button 
-                      onClick={() => deleteHistory(item.id)} 
-                      style={{ padding: '5px 15px', borderRadius: '4px', cursor: 'pointer', backgroundColor: '#fff', border: '1px solid #ff4d4f', color: '#ff4d4f' }}
+                  <div className="history-list-actions">
+                    <button onClick={() => startEditHistory(item)} className="btn-edit">수정</button>
+                    <button
+                      onClick={() => deleteHistory(item.id)}
+                      className="btn-delete-outline"
                     >
                       삭제
                     </button>
                   </div>
                 </div>
               ))}
-              {historyList.length === 0 && <p style={{ color: '#999', textAlign: 'center', padding: '20px' }}>등록된 연혁이 없습니다.</p>}
+              {historyList.length === 0 && <p className="no-history">등록된 연혁이 없습니다.</p>}
             </div>
           </div>
         )}
