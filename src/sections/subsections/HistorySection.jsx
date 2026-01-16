@@ -1,5 +1,5 @@
-import React, { forwardRef, useState } from 'react';
-import content from '../../content/HistoryContent.json';
+import React, { forwardRef, useState, useEffect } from 'react';
+import { supabase } from '../../supabaseClient';
 import {
   HistoryContainer,
   SectionHeader,
@@ -13,16 +13,34 @@ import {
 } from './styles/HistorySection.styles.js';
 
 const HistorySection = forwardRef((props, ref) => {
+  const [historyData, setHistoryData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const totalItems = content.history.length;
+  const [loading, setLoading] = useState(true);
 
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : 0));
-  };
+  const title = "정밀한 생장 분석과 자동화 기술을 기반으로,\n한국표준육묘는 농업 혁신의 길을 꾸준히 걸어왔습니다.";
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev < totalItems - 1 ? prev + 1 : prev));
-  };
+  useEffect(() => {
+    const fetchHistory = async () => {
+      const { data, error } = await supabase
+        .from('history')
+        .select('*')
+        // order_index가 큰 순서대로 불러와서 0번 인덱스(왼쪽)가 최신이 되게 함
+        .order('order_index', { ascending: false }); 
+
+      if (!error && data) {
+        setHistoryData(data);
+      }
+      setLoading(false);
+    };
+    fetchHistory();
+  }, []);
+
+  const totalItems = historyData.length;
+
+  const handlePrev = () => setCurrentIndex((prev) => (prev > 0 ? prev - 1 : 0));
+  const handleNext = () => setCurrentIndex((prev) => (prev < totalItems - 1 ? prev + 1 : prev));
+
+  if (loading || totalItems === 0) return null;
 
   return (
     <section id="history" ref={ref} style={{ backgroundColor: '#fff' }}>
@@ -31,7 +49,7 @@ const HistorySection = forwardRef((props, ref) => {
           <div>
             <h2>회사 연혁</h2>
             <div className="main-title">
-              {content.title.split('\n').map((text, i) => (
+              {title.split('\n').map((text, i) => (
                 <React.Fragment key={i}>
                   {text} <br />
                 </React.Fragment>
@@ -50,14 +68,13 @@ const HistorySection = forwardRef((props, ref) => {
         </SectionHeader>
 
         <TimelineWrapper>
-          {/* 100% 단위를 사용하여 데스크톱에서도 한 섹션씩 이동 */}
           <TimelineTrack style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-            {content.history.map((item, index) => (
-              <TimelineItem key={index}>
+            {historyData.map((item) => (
+              <TimelineItem key={item.id}>
                 <TimelineDot className="dot" />
                 <YearTitle className="year">{item.year}</YearTitle>
                 <EventList>
-                  {item.events.map((event, i) => (
+                  {item.events?.map((event, i) => (
                     <li key={i}>
                       <span className="month">{event.month}</span>
                       <span className="content">{event.content}</span>

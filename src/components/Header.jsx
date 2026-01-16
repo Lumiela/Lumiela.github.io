@@ -15,6 +15,7 @@ import {
   CloseButton
 } from './Header/styles.js';
 import logo from '../assets/images/site_logo.png';
+import daoniLogo from '../assets/images/daoni.png';
 
 const useWindowWidth = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -69,7 +70,6 @@ const Header = ({ isAdmin }) => {
     setOpenMobileSubMenu(openMobileSubMenu === menuName ? null : menuName);
   };
 
-  // 모바일 전용 네비게이션 링크 (아코디언 + 가로배치)
   const mobileNavLinks = (
     <ul>
       {menuItems.map((item) => (
@@ -101,7 +101,6 @@ const Header = ({ isAdmin }) => {
     </ul>
   );
 
-  // 데스크톱 풀스크린 전용 네비게이션 링크 (기존 스타일 유지)
   const desktopNavLinks = (
     <ul>
       {menuItems.map((item) => (
@@ -130,7 +129,9 @@ const Header = ({ isAdmin }) => {
       <HeaderContainer $isAdmin={isAdmin} $visible={visible}>
         <HeaderInner>
           <LogoContainer>
-            <Link to="/" onClick={closeAllMenus}><img src={logo} alt="Logo" /></Link>
+            <Link to="http://www.daonrs.com/login" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
+              <img src={logo} alt="Logo" />
+            </Link>
           </LogoContainer>
           
           <DesktopNavContainer>
@@ -152,14 +153,25 @@ const Header = ({ isAdmin }) => {
             </ul>
           </DesktopNavContainer>
 
-          <HamburgerMenu onClick={toggleMenu}><div className="bar"></div><div className="bar"></div><div className="bar"></div></HamburgerMenu>
+          {/* 데스크탑에서만 보이는 daoni 로고 */}
+          {isDesktop && (
+            <Link to="https://daonrs.com" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
+              <img src={daoniLogo} alt="Daoni Logo" style={{ height: '40px', marginRight: '20px' }} />
+            </Link>
+          )}
+
+          <HamburgerMenu onClick={toggleMenu}>
+            <div className="bar"></div>
+            <div className="bar"></div>
+            <div className="bar"></div>
+          </HamburgerMenu>
         </HeaderInner>
       </HeaderContainer>
 
-      {/* 데스크톱 전용 풀스크린 (상단 고정 메뉴) */}
+      {/* 데스크톱 전용 풀스크린 (여기에도 하단에 넣고 싶다면 동일하게 적용 가능) */}
       <FullscreenNavWrapper $isOpen={isFullscreenNavOpen}>
         <div className="fullscreen-header">
-           <LogoContainer><Link to="/" onClick={closeAllMenus}><img src={logo} alt="Logo" /></Link></LogoContainer>
+           <LogoContainer><Link to="https://daonrs.com" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}><img src={logo} alt="Logo" /></Link></LogoContainer>
            <CloseButton onClick={closeAllMenus}><span></span><span></span></CloseButton>
         </div>
         <div className="fullscreen-content"><NavList $isDesktop={true}>{desktopNavLinks}</NavList></div>
@@ -168,10 +180,22 @@ const Header = ({ isAdmin }) => {
       {/* 모바일 전용 사이드 패널 (우측에서 등장) */}
       <SidePanelWrapper $isOpen={isMobileMenuOpen}>
         <div className="panel-header">
-          <LogoContainer><Link to="/" onClick={closeAllMenus}><img src={logo} alt="Logo" /></Link></LogoContainer>
+          <LogoContainer><Link to="https://daonrs.com" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}><img src={logo} alt="Logo" /></Link></LogoContainer>
           <CloseButton onClick={closeAllMenus}><span></span><span></span></CloseButton>
         </div>
-        <div className="panel-content"><NavList $isDesktop={false}>{mobileNavLinks}</NavList></div>
+        
+        {/* 수정 포인트: 패널 내부 하단에 로고 배치 */}
+        <div className="panel-content" style={{ display: 'flex', flexDirection: 'column', height: 'calc(100% - 80px)' }}>
+          <div style={{ flex: 1 }}>
+            <NavList $isDesktop={false}>{mobileNavLinks}</NavList>
+          </div>
+          
+          <div className="panel-footer" style={{ padding: '20px', borderTop: '1px solid #eee', textAlign: 'center' }}>
+            <Link to="https://daonrs.com" target="_blank" rel="noopener noreferrer" onClick={closeAllMenus}>
+              <img src={daoniLogo} alt="Daoni Logo" style={{ height: '30px' }} />
+            </Link>
+          </div>
+        </div>
       </SidePanelWrapper>
 
       {(isMobileMenuOpen || isFullscreenNavOpen) && <Overlay onClick={closeAllMenus} />}
