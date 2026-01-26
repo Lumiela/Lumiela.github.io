@@ -31,17 +31,14 @@ const dummyGraphData = [
 ];
 
 const Dashboard = () => {
-  // ✅ 1. 날씨 초기값 수정
   const [weather, setWeather] = useState({ temp: '-', reh: '-', sky: '-' });
   const [address, setAddress] = useState("");
   const [isPostcodeOpen, setIsPostcodeOpen] = useState(false);
 
   const fetchWeather = async (nx = 59, ny = 75) => {
-    // ✅ 2. 주소가 설정되지 않은 경우 API 호출 방지
     if (!address && nx === 59 && ny === 75) return;
 
-    const SERVICE_KEY = import.meta.env.VITE_WEATHER_KEY;
-    const END_POINT = "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst";
+    // ✅ 보안 수정: 브라우저에서 직접 공공데이터 API를 호출하지 않고 Netlify Function을 거칩니다.
     const now = new Date();
     let baseDate = now.toISOString().slice(0, 10).replace(/-/g, '');
     let hour = now.getHours();
@@ -57,12 +54,16 @@ const Dashboard = () => {
     const baseTime = `${String(hour).padStart(2, '0')}00`;
 
     try {
-      const res = await axios.get(END_POINT, {
+      // ✅ 수정된 호출 주소: 서비스 키는 서버(Function)에서 자동으로 붙여줍니다.
+      const res = await axios.get("/.netlify/functions/getWeather", {
         params: {
-          serviceKey: SERVICE_KEY, pageNo: 1, numOfRows: 10, dataType: 'JSON',
-          base_date: baseDate, base_time: baseTime, nx: nx, ny: ny
+          base_date: baseDate,
+          base_time: baseTime,
+          nx: nx,
+          ny: ny
         }
       });
+
       if (res.data.response?.header?.resultCode === "00") {
         const items = res.data.response.body.items.item;
         const t1h = items.find(i => i.category === 'T1H')?.obsrValue;
@@ -110,7 +111,6 @@ const Dashboard = () => {
     }
   };
 
-  // ✅ 3. 첫 렌더링 시 주소가 있을 때만 호출하도록 설정
   useEffect(() => { 
     if (address) {
         fetchWeather(); 
@@ -167,14 +167,12 @@ const Dashboard = () => {
                 <h2 style={{ fontSize: '18px', fontWeight: 'bold' }}>📍 {address || "주소를 설정해주세요"}</h2>
                 <div className="weather-info">
                   <div style={{ fontSize: '40px' }}>
-                    {/* ✅ 4. 주소가 있을 때만 날씨 아이콘 표시 */}
                     {address && weather.sky !== '-' ? (
                         weather.sky === '맑음' ? '☀️' : weather.sky === '비' ? '🌧️' : '☁️'
                     ) : '-'}
                   </div>
                   <div>
                     <div style={{ color: '#6b7280' }}>
-                        {/* ✅ 5. 주소 유무에 따른 텍스트 노출 분기 */}
                         {address && weather.sky !== '-' ? `${weather.sky}, 습도 ${weather.reh}%` : '날씨 정보 없음'}
                     </div>
                     <div style={{ fontSize: '28px', fontWeight: 'bold' }}>
