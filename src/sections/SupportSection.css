@@ -1,42 +1,102 @@
 /* src/sections/SupportSection.css */
 
+/* 1. 전체 섹션 컨테이너 및 중앙 정렬 */
+.sub-section {
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;       /* 화면 중앙 배치 */
+  padding: 60px 20px;
+  background-color: #fff;
+  border: 1px solid #E8E8E8;
+  border-radius: 12px;
+  min-height: 80vh;
+  box-sizing: border-box;
+}
+
+/* 2. 섹션 타이틀 통일 */
+.support-content-section h1, 
+.support-content-section h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 25px;
+  letter-spacing: -0.5px;
+}
+
+/* 3. 상단 강조 라인 */
+.section-top-line {
+  border: 0;
+  border-top: 2px solid #111;
+  margin: 0 0 10px 0;
+}
+
+/* 4. 아코디언/리스트 아이템 디자인 (Notice, Dataroom 공통) */
+.list-item-wrapper {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.list-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 15px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.list-item-header:hover {
+  background-color: #fafafa;
+}
+
+.q-icon-circle {
+  background-color: #111;
+  color: #fff;
+  border-radius: 50%;
+  min-width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.item-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.item-meta {
+  font-size: 14px;
+  color: #999;
+}
+
+/* 5. 탭 메뉴 스타일 (기존 유지 및 정돈) */
 .support-tabs-container {
   display: flex;
   justify-content: left;
   border-bottom: 2px solid #eee;
-  margin-bottom: 1rem;
-}
-
-@media (max-width: 768px) {
-  .support-tabs-container {
-    overflow-x: auto;
-    white-space: nowrap;
-    justify-content: flex-start;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .support-tabs-container::-webkit-scrollbar {
-    display: none;
-  }
+  margin-bottom: 2rem;
 }
 
 .support-tab {
-  padding: 10px 20px;
+  padding: 12px 24px;
   cursor: pointer;
   background: none;
   border: none;
-  font-size: 1.1rem;
+  font-size: 16px;
   font-weight: 500;
   color: #888;
   position: relative;
-  transition: color 0.3s;
-  flex-shrink: 0;
+  transition: all 0.3s;
 }
 
 .support-tab.active {
-  color: #333;
+  color: #111;
   font-weight: 700;
 }
+
 .support-tab.active::after {
   content: '';
   position: absolute;
@@ -44,21 +104,10 @@
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #333;
+  background-color: #111;
 }
 
 @media (max-width: 768px) {
-  .support-tab {
-    padding: 10px 15px;
-    font-size: 1rem;
-  }
-}
-
-.support-content-container {
-  padding: 1rem 0;
-}
-
-.support-content-section {
-  width: 100%;
-  padding: 1rem;
+  .sub-section { padding: 40px 15px; }
+  .support-tab { padding: 10px 15px; font-size: 15px; }
 }

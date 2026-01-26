@@ -89,7 +89,7 @@ const InquiryForm = () => {
             />
           </div>
           <div className="inline-group">
-            <label htmlFor="email">이메일 주소</label>
+            <label htmlFor="email">이메일</label>
             <input
               type="email"
               id="email"
