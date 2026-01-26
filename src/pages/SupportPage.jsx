@@ -4,7 +4,7 @@ import Banner from '../components/Banner/Banner';
 import SubNav from '../components/SubNav/SubNav';
 import NoticeSection from '../sections/subsections/NoticeSection';
 import DataroomSection from '../sections/subsections/DataroomSection';
-import QnaSection from '../sections/subsections/QnaSection';
+import InquirySection from '../sections/subsections/InquirySection'; // InquirySection으로 변경
 import homeBannerImage from '../assets/images/slider-01.jpg'; // 배너 이미지 재사용
 
 const SupportPage = () => {
@@ -16,7 +16,7 @@ const SupportPage = () => {
         <Route path="/" element={<Navigate to="notice" />} />
         <Route path="notice" element={<NoticeSection />} />
         <Route path="dataroom" element={<DataroomSection />} />
-        <Route path="qna" element={<QnaSection />} />
+        <Route path="inquiry" element={<InquirySection />} /> 
       </Routes>
     </>
   );

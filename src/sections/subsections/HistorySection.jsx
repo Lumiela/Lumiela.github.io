@@ -1,16 +1,6 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import { supabase } from '../../supabaseClient';
-import {
-  HistoryContainer,
-  SectionHeader,
-  Navigation,
-  TimelineWrapper,
-  TimelineTrack,
-  TimelineItem,
-  TimelineDot,
-  YearTitle,
-  EventList
-} from './styles/HistorySection.styles.js';
+import './HistorySection.css'; // Import the new CSS file
 
 const HistorySection = forwardRef((props, ref) => {
   const [historyData, setHistoryData] = useState([]);
@@ -44,8 +34,8 @@ const HistorySection = forwardRef((props, ref) => {
 
   return (
     <section id="history" ref={ref} className="sub-section">
-      <HistoryContainer>
-        <SectionHeader>
+      <div className="history-container">
+        <div className="section-header">
           <div>
             <h2>회사 연혁</h2>
             <div className="main-title">
@@ -56,7 +46,7 @@ const HistorySection = forwardRef((props, ref) => {
               ))}
             </div>
           </div>
-          <Navigation>
+          <div className="navigation">
             <span className="page-num">
               {String(currentIndex + 1).padStart(2, '0')} / {String(totalItems).padStart(2, '0')}
             </span>
@@ -64,28 +54,28 @@ const HistorySection = forwardRef((props, ref) => {
               <button onClick={handlePrev} disabled={currentIndex === 0}>〈</button>
               <button onClick={handleNext} disabled={currentIndex >= totalItems - 1}>〉</button>
             </div>
-          </Navigation>
-        </SectionHeader>
+          </div>
+        </div>
 
-        <TimelineWrapper>
-          <TimelineTrack style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+        <div className="timeline-wrapper">
+          <div className="timeline-track" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
             {historyData.map((item) => (
-              <TimelineItem key={item.id}>
-                <TimelineDot className="dot" />
-                <YearTitle className="year">{item.year}</YearTitle>
-                <EventList>
+              <div key={item.id} className="timeline-item">
+                <div className="timeline-dot dot" />
+                <h3 className="year-title year">{item.year}</h3>
+                <ul className="event-list">
                   {item.events?.map((event, i) => (
                     <li key={i}>
                       <span className="month">{event.month}</span>
                       <span className="content">{event.content}</span>
                     </li>
                   ))}
-                </EventList>
-              </TimelineItem>
+                </ul>
+              </div>
             ))}
-          </TimelineTrack>
-        </TimelineWrapper>
-      </HistoryContainer>
+          </div>
+        </div>
+      </div>
     </section>
   );
 });

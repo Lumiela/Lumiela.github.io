@@ -1,13 +1,6 @@
 import React, { forwardRef } from 'react';
 import content from '../../content/DirectionsContent.json';
-import {
-  SubsectionTitleContainer,
-  SubsectionTitle,
-  DirectionsInfo,
-  MapWrapper,
-  CompanyImage,
-  DirectionsContent
-} from './styles/DirectionsSection.styles.js';
+import './DirectionsSection.css'; // Import the new CSS file
 
 import daonrsImage from '../../assets/images/daonrs_img.jpg';
 
@@ -15,16 +8,16 @@ const DirectionsSection = forwardRef((props, ref) => {
   return (
     <section id="directions" className="section" ref={ref}>
       <div className="sub-section">
-        <SubsectionTitleContainer>
-          <SubsectionTitle>
+        <div className="subsection-title-container">
+          <p className="subsection-title">
             <span className="quote">“</span>
             {content.title}
             <span className="quote">”</span>
-          </SubsectionTitle>
-        </SubsectionTitleContainer>
+          </p>
+        </div>
         
-        <DirectionsContent>
-          <DirectionsInfo>
+        <div className="directions-content">
+          <div className="directions-info">
             <p>
               <strong>주소 :</strong> 
               <a 
@@ -37,7 +30,7 @@ const DirectionsSection = forwardRef((props, ref) => {
             </p>
             <p><strong>연락처:</strong> {content.phone}</p>
             
-            <MapWrapper>
+            <div className="map-wrapper">
               <iframe 
                 title="구글 지도 - (주)다온알에스"
                 src={content.googleMapEmbed}
@@ -45,15 +38,16 @@ const DirectionsSection = forwardRef((props, ref) => {
                 loading="lazy" 
                 referrerPolicy="no-referrer-when-downgrade"
               ></iframe>       
-            </MapWrapper>
+            </div>
 
-          </DirectionsInfo>
+          </div>
           
-          <CompanyImage 
+          <img 
             src={daonrsImage} 
             alt="다온알에스 전경" 
+            className="company-image"
           />
-        </DirectionsContent>
+        </div>
 
       </div>
     </section>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react'; // Import Swiper
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { supabase } from '../../supabaseClient'; 
 
@@ -8,13 +8,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 import IntellectualPropertyModal from '../../components/IntellectualPropertyModal';
-import {
-  IPContainer,
-  SectionHeader,
-  StyledSwiper,
-  GalleryItem,
-  GalleryThumbnail,
-} from './styles/IntellectualPropertySection.styles.js';
+import './IntellectualPropertySection.css'; // Import new CSS
 
 const IntellectualPropertySection = React.forwardRef((props, ref) => {
     const [ipExamples, setIpExamples] = useState([]);
@@ -87,8 +81,8 @@ const IntellectualPropertySection = React.forwardRef((props, ref) => {
 
     return (
         <section id="ip" ref={ref} className="sub-section">
-            <IPContainer>
-                <SectionHeader>
+            <div className="ip-container">
+                <div className="section-header">
                     <h2>지식재산권 및 인증</h2>
                     <div className="main-title">{title}</div>
                     
@@ -102,10 +96,11 @@ const IntellectualPropertySection = React.forwardRef((props, ref) => {
                             </label>
                         </div>
                     )}
-                </SectionHeader>
+                </div>
 
                 {ipExamples.length > 0 ? (
-                    <StyledSwiper
+                    <Swiper
+                        className="styled-swiper"
                         modules={[Autoplay, Pagination, Navigation]}
                         slidesPerView={1}
                         centeredSlides={true}
@@ -120,15 +115,15 @@ const IntellectualPropertySection = React.forwardRef((props, ref) => {
                     >
                         {ipExamples.map((item) => (
                             <SwiperSlide key={item.id} onClick={() => openModal(item)}>
-                                <GalleryItem>
-                                    <GalleryThumbnail>
+                                <div className="gallery-item">
+                                    <div className="gallery-thumbnail">
                                         <img src={item.thumbnail} alt={item.title} />
-                                    </GalleryThumbnail>
+                                    </div>
                                     {/* 파일명 표시(GalleryTitle) 삭제 완료 */}
-                                </GalleryItem>
+                                </div>
                             </SwiperSlide>
                         ))}
-                    </StyledSwiper>
+                    </Swiper>
                 ) : (
                     <div style={{padding: '100px 0', color: '#999'}}>등록된 인증 정보가 없습니다.</div>
                 )}
@@ -138,7 +133,7 @@ const IntellectualPropertySection = React.forwardRef((props, ref) => {
                         {selectedItem.content}
                     </IntellectualPropertyModal>
                 )}
-            </IPContainer>
+            </div>
         </section>
     );
 });

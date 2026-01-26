@@ -12,12 +12,14 @@ import AdminTopNav from './components/AdminTopNav';
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import { useAuth } from './contexts/AuthContext';
+import MonitorPage from './pages/MonitorPage';
 
 function App() {
   const { session, loading, handleLogout, isAdmin } = useAuth();
   const location = useLocation();
 
   const isAdminPage = location.pathname.startsWith('/admin');
+  const isMonitorPage = location.pathname.startsWith('/monitor'); // Added line
 
   if (loading) {
     return <div>Loading...</div>;
@@ -34,7 +36,7 @@ function App() {
   return (
     <div className={`App ${isAdmin ? 'admin-logged-in' : ''}`}>
       {isAdmin && <AdminTopNav />}
-      <Header isAdmin={isAdmin} />
+      {!isMonitorPage && <Header isAdmin={isAdmin} />} {/* Conditionally render Header */}
       <main className="main-content">
         <Routes>
           <Route path="/" element={<Navigate to="/about/vision" />} />
@@ -43,9 +45,10 @@ function App() {
           <Route path="/products/*" element={<ProductsPage />} />
           <Route path="/cases/*" element={<CasesPage />} />
           <Route path="/support/*" element={<SupportPage />} />
+          <Route path="/monitor/*" element={<MonitorPage />} />
         </Routes>
       </main>
-      <Footer />
+      {!isMonitorPage && <Footer />} {/* Conditionally render Footer */}
     </div>
   );
 }

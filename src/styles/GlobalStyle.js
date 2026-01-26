@@ -134,4 +134,29 @@ export const GlobalStyle = createGlobalStyle`
     .ant-drawer-content-wrapper {
         width: 300px !important;
     }
+        
+
+    /* 공통 페이드인 애니메이션 정의 */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* 애니메이션 준비 상태 (클래스 기반) */
+    .reveal {
+        opacity: 0;
+        transition: all 0.8s ease-out;
+    }
+
+    /* 화면에 노출되었을 때 실행될 클래스 */
+    .reveal.active {
+        animation: fadeInUp 1s ease-out forwards;
+    }
 `;
+

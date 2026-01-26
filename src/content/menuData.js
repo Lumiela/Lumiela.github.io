@@ -15,7 +15,7 @@ export const menuItems = [
     subMenus: [
       { name: '사업영역', path: 'scope' },
       { name: '연구개발', path: 'rnd' },
-      { name: '지식재산권 및 인증', path: 'ip' },
+      { name: '지식재산권', path: 'ip' },
     ]
   },
   { 
@@ -37,7 +37,7 @@ export const menuItems = [
     subMenus: [
       { name: '공지사항', path: 'notice' },
       { name: '자료실', path: 'dataroom' },
-      { name: 'Q&A', path: 'qna' },
+      { name: '문의하기', path: 'inquiry' },
     ]
   },
 ];

@@ -1,0 +1,101 @@
+/* src/components/Banner/Banner.css */
+
+/* Keyframe Animations */
+@keyframes circleReveal {
+  0% {
+    clip-path: circle(0% at 50% 50%);
+    filter: blur(10px);
+    transform: scale(1.1);
+    opacity: 0;
+  }
+  100% {
+    clip-path: circle(100% at 50% 50%);
+    filter: blur(0px);
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* BannerContainer */
+.banner-container {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  background-color: #000; /* 이미지가 로드되기 전이나 없을 때 배경색 */
+}
+
+/* Background image layer (가상 요소에 이미지를 배치) */
+.banner-container::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  
+  /* JSX에서 전달한 CSS 변수를 사용 */
+  background-image: var(--banner-img);
+  background-position: center;
+  background-size: cover;
+  z-index: 0;
+  
+  /* 초기 상태: 원 크기 0, 투명도 0 */
+  clip-path: circle(0% at 50% 50%);
+  opacity: 0;
+  pointer-events: none; /* 클릭 방해 금지 */
+}
+
+/* Active state: 클래스가 붙으면 애니메이션 실행 */
+.banner-container.is-visible::after {
+  animation: circleReveal 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Dark overlay (이미지 위의 어두운 막) */
+.banner-container::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+/* BannerContent */
+.banner-content {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  opacity: 0;
+}
+
+/* Active state for BannerContent */
+.banner-content.is-visible {
+  animation: fadeInUp 1s ease-out 0.5s forwards;
+}
+
+/* BannerTitle */
+.banner-title {
+  font-size: 4rem;
+  font-weight: bold;
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .banner-title {
+    font-size: 2.5rem;
+  }
+}

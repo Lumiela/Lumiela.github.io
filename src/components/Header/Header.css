@@ -1,0 +1,378 @@
+/* src/components/Header/Header.css */
+
+/* HeaderContainer */
+.header-container {
+  position: fixed;
+  top: -100px; /* Default hidden state */
+  left: 0;
+  width: 100%;
+  z-index: 1040;
+  transition: top 0.3s ease-in-out, background-color 0.3s ease;
+  height: 80px;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+/* [핵심 수정] 모바일에서 최상단 강제 고정 */
+@media (max-width: 1023px) {
+  .header-container.is-visible {
+    top: 0 !important; /* 관리자 모드 여부 상관없이 0px 고정 */
+    height: 70px; /* 모바일 전용 높이 */
+  }
+}
+
+/* 데스크탑 관리자 모드 대응 */
+@media (min-width: 1024px) {
+  .header-container.is-admin.is-visible {
+    top: 58px;
+  }
+  .header-container.is-visible:not(.is-admin) {
+    top: 0;
+  }
+}
+
+.header-container.is-scrolled {
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* HeaderInner */
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding: 0 40px;
+}
+@media (max-width: 480px) {
+  .header-inner {
+    padding: 0 15px;
+  }
+}
+
+/* LogoContainer */
+.logo-container img {
+  height: 50px;
+  display: block;
+  padding: 5px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  border: 2px solid #FFFFFF; /* 기본 상태 테두리 */
+}
+
+@media (max-width: 1023px) {
+  .logo-container img {
+    height: 40px;
+  }
+}
+
+/* 스크롤 시 로고 테두리 변경 */
+.logo-container.is-scrolled img {
+  border: 2px solid #000000;
+}
+
+/* DesktopNavContainer */
+.desktop-nav-container {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .desktop-nav-container {
+    display: flex;
+    height: 100%;
+    flex-grow: 1;
+    justify-content: center;
+  }
+  .desktop-nav-container .main-menu-list {
+    display: flex;
+    list-style: none;
+    height: 100%;
+  }
+  .desktop-nav-container .main-menu-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  .desktop-nav-container span,
+  .desktop-nav-container a {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    color: #FFFFFF;
+  }
+  .desktop-nav-container.is-scrolled span,
+  .desktop-nav-container.is-scrolled a {
+    color: #000000;
+  }
+  .desktop-nav-container span.active,
+  .desktop-nav-container a.active {
+    color: #FFFFFF;
+    box-shadow: inset 0 -4px 0 0 #FFFFFF;
+  }
+  .desktop-nav-container.is-scrolled span.active,
+  .desktop-nav-container.is-scrolled a.active {
+    color: #000000;
+    box-shadow: inset 0 -4px 0 0 #000000;
+  }
+}
+
+/* DropdownMenu */
+.dropdown-menu {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160vw;
+  border: none;
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0);
+  box-shadow: none;
+}
+
+.dropdown-menu.is-scrolled {
+  background-color: #FFFFFF;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.dropdown-menu ul {
+  display: flex;
+  list-style: none;
+  padding: 20px 0;
+  gap: 40px;
+}
+.dropdown-menu a {
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  padding-bottom: 4px;
+  color: #FFFFFF;
+}
+
+.dropdown-menu.is-scrolled a {
+    color: #000000;
+}
+
+.dropdown-menu a.active,
+.dropdown-menu a:hover {
+  color: #FFFFFF;
+  box-shadow: 0 3px 0 0 #FFFFFF;
+}
+
+.dropdown-menu.is-scrolled a.active,
+.dropdown-menu.is-scrolled a:hover {
+  color: #000000;
+  box-shadow: 0 3px 0 0 #000000;
+}
+
+/* HamburgerMenu - [수정] 모바일 투명 대응 */
+.hamburger-menu {
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1041;
+  padding: 10px;
+}
+
+.hamburger-menu .bar {
+  width: 24px;
+  height: 2px;
+  margin: 5px 0;
+  display: block;
+  transition: background-color 0.3s ease;
+  background-color: #FFFFFF; /* 1. 최상단(투명 헤더)일 때 흰색 */
+}
+
+/* 2. 스크롤 되었을 때 (흰색 헤더) 혹은 버튼 자체에 클래스가 붙었을 때 검정색으로 변경 */
+.header-container.is-scrolled .hamburger-menu .bar,
+.hamburger-menu.is-scrolled .bar {
+  background-color: #000000 !important;
+}
+
+/* CloseButton */
+.close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  width: 30px;
+  height: 30px;
+}
+.close-button span {
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background-color: #333;
+  left: 3px;
+}
+.close-button span:nth-child(1) {
+  transform: rotate(45deg);
+}
+.close-button span:nth-child(2) {
+  transform: rotate(-45deg);
+}
+
+/* SidePanelWrapper */
+.side-panel-wrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #FFFFFF;
+  z-index: 2100;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+}
+.side-panel-wrapper.is-open {
+  transform: translateX(0);
+}
+.side-panel-wrapper .panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  height: 60px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.side-panel-wrapper .panel-content {
+  padding: 40px 25px;
+}
+
+/* FullscreenNavWrapper */
+.fullscreen-nav-wrapper {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .fullscreen-nav-wrapper {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #FFFFFF;
+    z-index: 2500;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    overflow-y: auto;
+  }
+  .fullscreen-nav-wrapper.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+  .fullscreen-nav-wrapper .fullscreen-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    height: 60px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .fullscreen-nav-wrapper .fullscreen-content {
+    padding: 60px 10%;
+  }
+}
+
+/* NavList */
+.nav-list {
+  width: 100%;
+}
+.nav-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-list:not(.is-desktop) > ul > li {
+  border-bottom: 1px solid #f5f5f5;
+  padding: 25px 0;
+}
+.nav-list:not(.is-desktop) .menu-title-btn,
+.nav-list:not(.is-desktop) a {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #000;
+  background: none;
+  border: none;
+  text-align: left;
+  width: 100%;
+  text-decoration: none;
+  padding: 0;
+}
+.nav-list:not(.is-desktop) .submenu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 15px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.nav-list:not(.is-desktop) .submenu.show {
+  max-height: 300px;
+  opacity: 1;
+  margin-top: 20px;
+}
+.nav-list:not(.is-desktop) .submenu a {
+  font-size: 1.1rem;
+  color: #666;
+  font-weight: 500;
+  padding: 8px 15px;
+  background: #f8f9fa;
+  border-radius: 5px;
+  width: auto;
+}
+
+/* Desktop specific styles for NavList */
+.nav-list.is-desktop > ul > li {
+  border-bottom: 1px solid #eeeeee;
+  padding: 40px 0;
+}
+.nav-list.is-desktop .main-menu-group {
+  display: flex;
+  align-items: flex-start;
+}
+.nav-list.is-desktop .main-menu-item {
+  width: 300px;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #000;
+}
+.nav-list.is-desktop .submenu {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px 40px;
+  padding-left: 40px;
+}
+.nav-list.is-desktop .submenu a {
+  font-size: 1.2rem;
+  color: #666;
+  text-decoration: none;
+}
+.nav-list.is-desktop .submenu a:hover {
+  color: #007bff;
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 2000;
+}

@@ -1,0 +1,116 @@
+/* src/sections/subsections/DirectionsSection.css */
+
+.subsection-title-container {
+  text-align: center;
+  margin: 50px 0;
+}
+@media (max-width: 768px) {
+  .subsection-title-container {
+    margin: 30px 0;
+  }
+}
+
+.subsection-title {
+  font-size: 48px;
+  font-weight: 800;
+  color: #ff5e1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+}
+
+.subsection-title .quote {
+  color: #555;
+  font-family: serif;
+}
+
+@media (max-width: 768px) {
+  .subsection-title {
+    font-size: 30px;
+    gap: 5px;
+  }
+}
+
+.directions-info {
+  /* No direct class needed for this styled-component, as it's a wrapper for other elements */
+}
+
+.directions-info p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.directions-info strong {
+  color: #333;
+}
+
+.directions-info a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+.directions-info a:hover {
+  text-decoration: underline;
+}
+
+.map-wrapper {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.map-wrapper iframe {
+  width: 100%;
+  height: 450px;
+  border: 0;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .map-wrapper iframe {
+    height: 300px;
+  }
+}
+
+.company-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .company-image {
+    flex: 1;
+    max-width: 50%;
+    align-self: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .company-image {
+    max-width: 100%;
+  }
+}
+
+.directions-content {
+  /* No direct class needed for this styled-component, as it's a wrapper for other elements */
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .directions-content {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .directions-content {
+    flex-direction: column;
+  }
+}

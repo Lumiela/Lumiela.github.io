@@ -1,54 +1,21 @@
-import React, { useState, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import NoticeSection from './subsections/NoticeSection';
 import DataroomSection from './subsections/DataroomSection';
 import QnaSection from './subsections/QnaSection';
-import supportContent from '../content/SupportContent.json'; // Import content
-import {
-  SupportTabsContainer,
-  SupportTab,
-  SupportContentContainer,
-  SupportContentSection // Re-exporting from styles
-} from './SupportSection.styles.js'; // Import styled components
 
 const SupportSection = forwardRef((props, ref) => {
-  const [activeTab, setActiveTab] = useState(0);
-
-  const handleTabClick = (index) => {
-    setActiveTab(index);
-  };
-
-  const renderContent = () => {
-    switch (activeTab) {
-      case 0:
-        return <NoticeSection />;
-      case 1:
-        return <DataroomSection />;
-      case 2:
-        return <QnaSection />;
-      default:
-        return null;
-    }
-  };
+  // BusinessSection과 동일하게 상위에서 전달된 ref 객체를 해체합니다.
+  const { noticeRef, dataroomRef, inquiryRef } = ref;
 
   return (
-    <section id="support" className="section" ref={ref}>
-      <div className="sub-section">
-        <SupportTabsContainer>
-          {supportContent.tabs.map((tab, index) => ( // Use content from JSON
-            <SupportTab
-              key={tab}
-              className={activeTab === index ? 'active' : ''} // active class still used
-              onClick={() => handleTabClick(index)}
-            >
-              {tab}
-            </SupportTab>
-          ))}
-        </SupportTabsContainer>
-        <SupportContentContainer>
-          {renderContent()}
-        </SupportContentContainer>
-      </div>
-    </section>
+    <>
+      {/* 기존의 컨테이너들을 제거하고 Fragment로 묶어 
+        하위 섹션들이 직접적으로 100vh를 적용받을 수 있는 구조로 변경합니다.
+      */}
+      <NoticeSection ref={noticeRef} />
+      <DataroomSection ref={dataroomRef} />
+      <QnaSection ref={inquiryRef} />
+    </>
   );
 });
 

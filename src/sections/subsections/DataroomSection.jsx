@@ -1,41 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import Board from '../../components/Board';
-import { SupportContentSection } from '../SupportSection.styles.js';
+import React, { useEffect, useState, forwardRef } from 'react';
+import styled from 'styled-components';
 import { supabase } from '../../supabaseClient';
+import '../SupportSection.css';
 
-const DataroomSection = () => {
+const SectionWrapper = styled.section`
+  width: 100%;
+`;
+
+const DataroomSection = forwardRef((props, ref) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedPost, setSelectedPost] = useState(null);
+  const [expandedId, setExpandedId] = useState(null);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // 1. 유저 세션 및 상태 감지
     const getSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       setUser(session?.user ?? null);
     };
-    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
     getSession();
     fetchArchives();
-
-    return () => authListener.subscription.unsubscribe();
   }, []);
 
-  // 2. 자료실 데이터(archives 테이블) 불러오기
   const fetchArchives = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from('archives') // 자료실 전용 테이블
-        .select('*')
-        .order('notice_no', { ascending: false });
-
+      const { data, error } = await supabase.from('archives').select('*').order('notice_no', { ascending: false });
       if (error) throw error;
-
       setPosts(data.map(item => ({
         ...item,
         no: item.notice_no,
@@ -48,62 +39,52 @@ const DataroomSection = () => {
     }
   };
 
-  // 3. 자료 삭제 함수
-  const handleDelete = async (id) => {
-    if (!window.confirm("이 자료를 삭제하시겠습니까?")) return;
-    try {
-      const { error } = await supabase.from('archives').delete().eq('id', id);
-      if (error) throw error;
-      alert("삭제되었습니다.");
-      setSelectedPost(null);
-      fetchArchives();
-    } catch (error) {
-      alert("삭제 실패: " + error.message);
-    }
-  };
+  const toggleAccordion = (id) => setExpandedId(expandedId === id ? null : id);
 
   return (
-    <SupportContentSection>
-      {loading ? (
-        <p style={{ textAlign: 'center' }}>로딩 중...</p>
-      ) : selectedPost ? (
-        /* --- 자료 상세 보기 --- */
-        <div style={{ padding: '20px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <h2>{selectedPost.title}</h2>
-            {user && (
-              <button onClick={() => handleDelete(selectedPost.id)} style={{ color: 'red' }}>삭제</button>
-            )}
-          </div>
-          <p style={{ color: '#666' }}>날짜: {selectedPost.date}</p>
-          <hr />
-          <div style={{ minHeight: '150px', whiteSpace: 'pre-wrap', marginBottom: '20px' }}>
-            {selectedPost.content}
-          </div>
-          
-          {/* 첨부파일 다운로드 영역 */}
-          {selectedPost.file_url && (
-            <div style={{ padding: '15px', backgroundColor: '#f4f4f4', borderRadius: '5px' }}>
-              <strong>첨부파일: </strong>
-              <a href={selectedPost.file_url} target="_blank" rel="noopener noreferrer" download>
-                {selectedPost.file_name || '파일 다운로드'}
-              </a>
+    <SectionWrapper id="dataroom" ref={ref}>
+      <div className="sub-section">
+        <div className="support-content-section">
+          <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '40px' }}>자료실</h1>
+          <div style={{ borderTop: '2px solid #000', marginBottom: '0' }}></div>
+          {loading ? (
+            <p style={{ textAlign: 'center', padding: '50px' }}>로딩 중...</p>
+          ) : (
+            <div style={{ width: '100%' }}>
+              {posts.map((post) => (
+                <div key={post.id} style={{ borderBottom: '1px solid #e0e0e0' }}>
+                  <div 
+                    onClick={() => toggleAccordion(post.id)}
+                    style={{ display: 'flex', alignItems: 'center', padding: '25px 15px', cursor: 'pointer', justifyContent: 'space-between' }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                      <div style={{ backgroundColor: '#000', color: '#fff', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>Q</div>
+                      <span style={{ fontSize: '1.1rem', fontWeight: '500' }}>{post.title}</span>
+                    </div>
+                    <div style={{ transform: expandedId === post.id ? 'rotate(180deg)' : 'rotate(0deg)', transition: '0.3s' }}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </div>
+                  </div>
+                  {expandedId === post.id && (
+                    <div style={{ padding: '30px 20px 40px 67px', backgroundColor: '#fcfcfc', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                      {post.file_url && (
+                        <div style={{ padding: '12px 20px', backgroundColor: '#fff', border: '1px solid #eee', borderRadius: '8px', alignSelf: 'flex-start' }}>
+                          <a href={post.file_url} target="_blank" rel="noopener noreferrer" style={{ color: '#0066cc', textDecoration: 'none' }}>
+                            📁 {post.file_name || '파일 다운로드'}
+                          </a>
+                        </div>
+                      )}
+                      <div style={{ lineHeight: '1.8', whiteSpace: 'pre-wrap' }}>{post.content}</div>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           )}
-          
-          <button onClick={() => setSelectedPost(null)} style={{ marginTop: '20px' }}>목록으로</button>
         </div>
-      ) : (
-        /* --- 자료 목록 (Board 컴포넌트 재사용) --- */
-        <Board 
-          posts={posts} 
-          onItemClick={(post) => setSelectedPost(post)} 
-          onDelete={handleDelete}
-          currentUser={user}
-        />
-      )}
-    </SupportContentSection>
+      </div>
+    </SectionWrapper>
   );
-};
+});
 
 export default DataroomSection;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation, NavLink } from 'react-router-dom';
 import { menuItems } from '../../content/menuData';
-import { SubNavContainer } from './SubNav.styles';
+import './SubNav.css'; // Import the new CSS file
 
 const SubNav = () => {
   const location = useLocation();
@@ -13,7 +13,7 @@ const SubNav = () => {
   }
 
   return (
-    <SubNavContainer>
+    <nav className="sub-nav-container">
       <ul>
         {currentMenuItem.subMenus.map(subItem => (
           <li key={subItem.name}>
@@ -26,7 +26,7 @@ const SubNav = () => {
           </li>
         ))}
       </ul>
-    </SubNavContainer>
+    </nav>
   );
 };
 
