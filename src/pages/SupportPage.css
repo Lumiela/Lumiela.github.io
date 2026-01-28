@@ -27,9 +27,8 @@
   font-weight: 700;
   color: #111;
   letter-spacing: -0.5px;
-  margin: 0; /* h2에 기본 마진이 있을 수 있으므로 초기화 */
+  margin: 0;
 }
-
 
 /* Section Top Divider */
 .section-top-line {
@@ -110,8 +109,164 @@
   border-top: 1px solid #f0f0f0;
 }
 
+/* -----------------------------------------------------------------
+  Cafe Style Editor UI (Notice/Dataroom Write)
+----------------------------------------------------------------- */
+.cafe-editor-container {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 25px;
+  margin-top: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
 
-/* Form Elements (Inquiry) */
+.editor-title-input {
+  width: 100%;
+  font-size: 22px;
+  padding: 15px 0;
+  border: none;
+  border-bottom: 2px solid #f0f0f0;
+  margin-bottom: 15px;
+  font-weight: 700;
+  outline: none;
+}
+
+.editor-toolbar {
+  padding: 10px 0;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.toolbar-item {
+  cursor: pointer;
+  background: #f5f5f5;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 14px;
+  color: #555;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.toolbar-item:hover {
+  background: #e0e0e0;
+}
+
+.editor-body {
+  min-height: 400px;
+}
+
+.editor-content-textarea {
+  width: 100%;
+  min-height: 400px;
+  border: none;
+  resize: vertical;
+  font-size: 16px;
+  line-height: 1.8;
+  outline: none;
+  padding: 15px 0;
+}
+
+.editor-image-preview {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+.editor-image-preview img {
+  max-width: 300px;
+  border-radius: 4px;
+  display: block;
+}
+
+.editor-image-preview button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editor-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.btn-submit {
+  background: #03c75a;
+  color: #fff;
+  border: none;
+  padding: 12px 35px;
+  border-radius: 4px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  background: #f0f0f0;
+  color: #666;
+  border: none;
+  padding: 12px 35px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* -----------------------------------------------------------------
+  Post Content Rendering
+----------------------------------------------------------------- */
+.post-text-body {
+  line-height: 1.8;
+}
+
+.post-text-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 20px 0;
+  display: block;
+}
+
+.file-download-badge {
+  display: inline-block;
+  background: #f8f9fa;
+  padding: 12px 18px;
+  border-radius: 6px;
+  color: #555;
+  text-decoration: none;
+  font-size: 14px;
+  border: 1px solid #eee;
+  margin-top: 20px;
+  font-weight: 500;
+}
+
+.file-download-badge:hover {
+  background: #f1f3f5;
+}
+
+/* -----------------------------------------------------------------
+  Inquiry Section Styles (Fixed & Enhanced)
+----------------------------------------------------------------- */
+.inquiry-form-wrapper {
+  max-width: 900px;
+  margin: 40px auto 0;
+}
+
+/* 기본 레이아웃 구성 */
 .form-row {
   display: flex;
   border-bottom: 1px solid #f0f0f0;
@@ -124,52 +279,103 @@
   padding: 20px 0;
 }
 
+/* 레이블 및 필수 표시 */
 .form-group label {
-  width: 110px;
-  font-size: 14px;
+  width: 140px;
+  font-size: 15px;
   font-weight: 600;
-  color: #444;
+  color: #333;
 }
 
-.form-group input,
+.required-dot::after {
+  content: ' *';
+  color: #ff4d4f;
+  margin-left: 2px;
+}
+
+/* 인풋/텍스트에어리어 공통 스타일 */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
 .form-group textarea {
   flex: 1;
-  border: 1px solid #d1d5db;
-  background-color: #f9fafb;
-  padding: 12px 16px;
-  font-size: 14px;
-  outline: none;
+  padding: 12px 15px;
+  border: 1px solid #e0e0e0;
   border-radius: 4px;
-  transition: all 0.2s ease;
-}
-
-.form-group textarea {
-  min-height: 250px;
-  line-height: 1.6;
-  resize: vertical;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+  transition: all 0.2s;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: #111;
   background-color: #fff;
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.03);
 }
 
-/* Buttons */
-.btn-primary {
-  display: inline-flex;
+/* 인라인 필드 (2열 배치) 보완 */
+.inquiry-form-row.inline-fields {
+  display: flex;
+}
+
+.inquiry-form-row .form-group:first-child {
+  padding-right: 30px;
+}
+
+.inquiry-form-row .form-group:last-child {
+  padding-left: 30px;
+  border-left: 1px solid #f0f0f0;
+}
+
+/* 제목 및 내용 섹션 (Full Width) */
+.form-group.full-width {
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 30px 0;
+  border-bottom: none;
+}
+
+.form-group.full-width label {
+  width: auto;
+  margin-bottom: 15px;
+}
+
+.form-group.full-width input,
+.form-group.full-width textarea {
+  width: 100%;
+}
+
+.form-group textarea {
+  min-height: 200px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* 개인정보 동의 섹션 추가 스타일 */
+.privacy-accordion-section {
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+/* 하단 버튼 영역 */
+.form-footer {
+  display: flex;
   justify-content: center;
-  align-items: center;
-  height: 52px;
-  padding: 0 40px;
+  padding: 60px 0;
+}
+
+.btn-primary {
   background-color: #111;
   color: #fff;
+  padding: 16px 80px;
   border: none;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
   border-radius: 4px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
   transition: background-color 0.2s;
 }
 
@@ -182,187 +388,24 @@
   cursor: not-allowed;
 }
 
-
-/* =================================================================
-  Notice Section Styles
-================================================================= */
-.notice-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.notice-write-button {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  padding: 0 24px;
-  background-color: #111;
-  color: #fff;
-  border: none;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-}
-.notice-write-button:hover {
-  background-color: #333;
-}
-
-.notice-loading {
-  text-align: center;
-  padding: 50px;
-}
-
-.notice-list {
-  width: 100%;
-}
-
-.notice-item-meta {
-  min-width: 120px;
-  justify-content: space-between;
-}
-
-.notice-item-date {
-  min-width: 80px;
-  text-align: right;
-}
-
-.notice-item-actions {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.notice-action-edit,
-.notice-action-delete {
-  cursor: pointer;
-  font-size: 13px;
-  transition: color 0.2s;
-}
-
-.notice-action-edit {
-  color: #666;
-}
-.notice-action-edit:hover {
-  color: #000;
-}
-
-.notice-action-delete {
-  color: #ff4d4f;
-}
-.notice-action-delete:hover {
-  color: #d32f2f;
-}
-
-
-/* =================================================================
-  Dataroom Section Styles
-================================================================= */
-.dataroom-loading {
-  text-align: center;
-  padding: 50px;
-}
-
-.dataroom-accordion-icon {
-  transform: rotate(0deg);
-  transition: transform 0.3s;
-  color: #999;
-}
-
-.dataroom-accordion-icon.expanded {
-  transform: rotate(180deg);
-}
-
-.dataroom-item-content {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.dataroom-content-text {
-  line-height: 1.8;
-  white-space: pre-wrap;
-  color: #444;
-}
-
-.dataroom-file-link-wrapper {
-  padding: 12px 20px;
-  background-color: #fff;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  align-self: flex-start;
-  transition: border-color 0.2s, background-color 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.dataroom-file-link-wrapper:hover {
-  background-color: #f5faff;
-  border-color: #cce0ff;
-}
-
-.dataroom-file-link {
-  color: #0066cc;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-
-/* =================================================================
-  Inquiry Section Styles
-================================================================= */
-.inquiry-form-wrapper {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.inquiry-form-row.inline-fields {
-  display: flex;
-}
-
-.inquiry-form-row .form-group:first-child {
-  padding-right: 30px;
-}
-.inquiry-form-row .form-group:last-child {
-  padding-left: 30px;
-  border-left: 1px solid #f0f0f0;
-}
-
-.form-group.full-width {
-  flex-direction: column;
-  align-items: stretch;
-  padding: 30px 0;
-}
-
-.form-group.full-width label {
-  width: auto;
-  margin-bottom: 15px;
-}
-
-.form-footer {
-  display: flex;
-  justify-content: center;
-  padding: 60px 0;
-}
-
+/* 완료 화면 스타일 */
 .thank-you-container {
-  padding: 80px 0;
+  padding: 100px 0;
   text-align: center;
 }
 
 .thank-you-container .q-icon-circle {
-  margin: 0 auto 20px;
+  margin: 0 auto 30px;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
 }
 
 .thank-you-container h3 {
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #111;
 }
 
 .thank-you-container p {
@@ -370,56 +413,67 @@
   color: #666;
 }
 
+/* 에러 메시지 */
 .error-message {
-  color: #d32f2f;
-  font-size: 13px;
-  margin-top: 10px;
+  color: #ff4d4f;
+  font-size: 14px;
+  margin-top: 20px;
   text-align: center;
+  font-weight: 500;
 }
 
+/* -----------------------------------------------------------------
+  Existing Actions & Extra Helpers
+----------------------------------------------------------------- */
+.notice-write-button {
+  padding: 8px 18px;
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
 
-/* =================================================================
-  Responsive Styles
-================================================================= */
+.notice-item-meta { min-width: 120px; justify-content: space-between; }
+.notice-item-date { min-width: 80px; text-align: right; }
+.notice-item-actions { display: flex; gap: 12px; align-items: center; margin-right: 15px; }
+.notice-action-edit, .notice-action-delete { cursor: pointer; font-size: 13px; transition: color 0.2s; }
+.notice-action-edit { color: #666; }
+.notice-action-delete { color: #ff4d4f; }
+
+.dataroom-accordion-icon { transform: rotate(0deg); transition: transform 0.3s; color: #999; }
+.dataroom-accordion-icon.expanded { transform: rotate(180deg); }
+
+/* Responsive Styles */
 @media (max-width: 768px) {
-  .support-content-section {
-    padding: 40px 20px;
-  }
-  .list-item-header {
-    padding: 18px 10px;
-  }
-  .item-title {
-    font-size: 15px;
-  }
-  .item-meta {
-    font-size: 13px;
-  }
+  .support-content-section { padding: 40px 20px; }
+  .list-item-header { padding: 18px 10px; }
+  .item-title { font-size: 15px; }
   
-  /* Notice */
-  .notice-item-meta {
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 8px;
-    min-width: 80px;
-  }
-
-  /* Inquiry */
+  /* Inquiry 모바일 레이아웃: 수직 정렬로 변경 */
   .inquiry-form-row.inline-fields {
     flex-direction: column;
-    border-bottom: none;
   }
+  
+  .form-row {
+    flex-direction: column;
+  }
+
   .inquiry-form-row .form-group {
     padding-left: 0 !important;
     padding-right: 0 !important;
     border-left: none !important;
+    border-bottom: 1px solid #f0f0f0;
   }
-  .form-group.full-width {
-    padding: 20px 0;
+
+  .form-group label {
+    width: 100%;
+    margin-bottom: 10px;
   }
-  .form-footer {
-    padding: 40px 0;
-  }
+
   .btn-primary {
     width: 100%;
+    padding: 16px 0;
   }
 }
