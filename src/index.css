@@ -89,16 +89,14 @@ a:hover {
 
 .sub-section {
     width: 100%;
-    /* max-width: 1024px; */
-    padding: 1rem;
-    padding-top: 5rem;
-    background-color: #fff;
-    border: 1px solid #E8E8E8;
-    border-radius: 8px;
-    text-align: left;
-    min-height: 100vh;
     max-width: 1024px;
-    margin: 0 auto;       /* 가로 중앙 정렬 추가 */
+    margin: 0 auto;       /* 화면 중앙 배치 */
+    padding: 60px 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    min-height: 100vh;
+    box-sizing: border-box;
+    text-align: left;
 }
 
 @media (max-width: 1023px) {

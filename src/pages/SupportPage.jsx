@@ -5,12 +5,15 @@ import SubNav from '../components/SubNav/SubNav';
 import NoticeSection from '../sections/subsections/NoticeSection';
 import DataroomSection from '../sections/subsections/DataroomSection';
 import InquirySection from '../sections/subsections/InquirySection'; // InquirySection으로 변경
-import homeBannerImage from '../assets/images/slider-01.jpg'; // 배너 이미지 재사용
+import bannerImages from '../content/bannerImages.js';
+import './SupportPage.css';
 
 const SupportPage = () => {
+  const { title, subtitle, image } = bannerImages['/support'];
+
   return (
     <>
-      <Banner title="고객센터" image={homeBannerImage} />
+      <Banner title={title} subtitle={subtitle} image={image} />
       <SubNav />
       <Routes>
         <Route path="/" element={<Navigate to="notice" />} />

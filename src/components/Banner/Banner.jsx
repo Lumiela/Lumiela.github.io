@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import './Banner.css';
 
-const Banner = ({ title, image }) => {
+const Banner = ({ title, subtitle, image }) => {
   const [isVisible, setIsVisible] = useState(false);
   const domRef = useRef();
 
@@ -33,6 +33,7 @@ const Banner = ({ title, image }) => {
     >
       <div className={`banner-content ${isVisible ? 'is-visible' : ''}`}>
         <h1 className="banner-title">{title}</h1>
+        <h2 className="banner-subtitle">{subtitle}</h2>
       </div>
     </section>
   );

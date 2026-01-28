@@ -3,12 +3,14 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Banner from '../components/Banner/Banner';
 import SubNav from '../components/SubNav/SubNav';
 import CaseExampleSection from '../sections/subsections/CaseExampleSection';
-import homeBannerImage from '../assets/images/slider-01.jpg'; // 배너 이미지 재사용
+import bannerImages from '../content/bannerImages.js';
 
 const CasesPage = () => {
+  const { title, subtitle, image } = bannerImages['/cases'];
+
   return (
     <>
-      <Banner title="적용사례" image={homeBannerImage} />
+      <Banner title={title} subtitle={subtitle} image={image} />
       <SubNav />
       <Routes>
         <Route path="/" element={<Navigate to="example" />} />

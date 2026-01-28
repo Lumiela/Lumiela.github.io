@@ -1,0 +1,11 @@
+.scope-section-wrapper{
+  padding: 20px;
+  text-align: center;
+}
+
+.scope-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}

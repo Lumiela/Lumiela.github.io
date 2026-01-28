@@ -1,0 +1,10 @@
+.vision-section-wrapper  {
+  /* The sub-section class can be handled by simple padding or can be a separate component if it gets more complex */
+}
+
+.vision-image {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+}

@@ -46,7 +46,7 @@ const IntellectualPropertySection = React.forwardRef((props, ref) => {
                     id: file.id || index,
                     thumbnail: `${publicUrl}?t=${new Date().getTime()}`,
                     title: file.name.split('.').slice(0, -1).join('.') || '인증서',
-                    content: (<div style={{textAlign:'center'}}><img src={publicUrl} style={{maxWidth:'100%'}} alt="detail"/></div>)
+                    content: (<div className="modal-content-wrapper"><img src={publicUrl} className="modal-content-image" alt="detail"/></div>)
                 };
             });
             setIpExamples(formattedData);
@@ -80,18 +80,17 @@ const IntellectualPropertySection = React.forwardRef((props, ref) => {
     const closeModal = () => { setModalIsOpen(false); setSelectedItem(null); };
 
     return (
-        <section id="ip" ref={ref} className="sub-section">
+        <section id="ip" ref={ref}>
+        <div className="sub-section">
             <div className="ip-container">
                 <div className="section-header">
                     <h2>지식재산권 및 인증</h2>
                     <div className="main-title">{title}</div>
                     
                     {isAdmin && (
-                        <div style={{marginTop: '25px'}}>
+                        <div className="admin-upload-wrapper">
                             <input type="file" id="admin-upload" hidden onChange={handleUpload} accept="image/*" />
-                            <label htmlFor="admin-upload" style={{
-                                cursor: 'pointer', padding: '10px 20px', backgroundColor: '#ff5e1a', color: '#fff', borderRadius: '6px', fontSize: '14px', fontWeight: 'bold'
-                            }}>
+                            <label htmlFor="admin-upload" className="admin-upload-label">
                                 {uploading ? '업로드 중...' : '+ 신규 인증서 등록'}
                             </label>
                         </div>
@@ -125,7 +124,7 @@ const IntellectualPropertySection = React.forwardRef((props, ref) => {
                         ))}
                     </Swiper>
                 ) : (
-                    <div style={{padding: '100px 0', color: '#999'}}>등록된 인증 정보가 없습니다.</div>
+                    <div className="no-ip-data">등록된 인증 정보가 없습니다.</div>
                 )}
 
                 {selectedItem && (
@@ -134,7 +133,8 @@ const IntellectualPropertySection = React.forwardRef((props, ref) => {
                     </IntellectualPropertyModal>
                 )}
             </div>
-        </section>
+        </div>
+    </section>
     );
 });
 

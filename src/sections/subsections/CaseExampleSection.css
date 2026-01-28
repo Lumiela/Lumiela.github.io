@@ -140,3 +140,7 @@
 .modal-swiper .swiper-pagination-bullet-active {
   background: #007bff;
 }
+
+.swiper-image-responsive {
+  max-width: 100%;
+}

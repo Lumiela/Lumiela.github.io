@@ -1,11 +1,5 @@
 import React, { useEffect, useState, forwardRef } from 'react';
-import styled from 'styled-components';
 import { supabase } from '../../supabaseClient';
-import '../SupportSection.css';
-
-const SectionWrapper = styled.section`
-  width: 100%;
-`;
 
 const NoticeSection = forwardRef((props, ref) => {
   const [posts, setPosts] = useState([]);
@@ -73,62 +67,57 @@ const NoticeSection = forwardRef((props, ref) => {
   };
 
   return (
-    <SectionWrapper id="notice" ref={ref}>
+    <section id="notice" ref={ref} className="support-content-section section">
       <div className="sub-section">
-        <div className="support-content-section">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <h2 style={{ fontSize: '24px', fontWeight: 'bold' }}>공지사항</h2>
-            {user && !isWriting && !isEditing && (
-              <button 
-                onClick={() => { setTitle(''); setContent(''); setIsWriting(true); }}
-                style={{ padding: '8px 16px', backgroundColor: '#000', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-              >
-                글쓰기
-              </button>
-            )}
-          </div>
-          <hr style={{ border: '0', borderTop: '2px solid #000', marginBottom: '0' }} />
-          
-          {loading ? (
-            <div style={{ textAlign: 'center', padding: '50px' }}>로딩 중...</div>
-          ) : (
-            <div style={{ width: '100%' }}>
-              {posts.map((post) => (
-                <div key={post.id} style={{ borderBottom: '1px solid #eee' }}>
-                  <div 
-                    onClick={() => toggleAccordion(post.id)}
-                    style={{ 
-                      display: 'flex', alignItems: 'center', padding: '20px 10px', cursor: 'pointer',
-                      justifyContent: 'space-between', backgroundColor: expandedId === post.id ? '#fcfcfc' : 'transparent'
-                    }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flex: 1 }}>
-                      <div style={{ backgroundColor: '#000', color: '#fff', borderRadius: '50%', minWidth: '24px', height: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 'bold' }}>Q</div>
-                      <span style={{ fontWeight: expandedId === post.id ? 'bold' : 'normal', fontSize: '15px' }}>{post.title}</span>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '20px', color: '#999', fontSize: '13px' }}>
-                      <span style={{ minWidth: '80px', textAlign: 'center' }}>{post.date}</span>
-                      {user && (
-                        <div style={{ display: 'flex', gap: '8px' }}>
-                          <span onClick={(e) => startEditing(e, post)} style={{ cursor: 'pointer', color: '#666' }}>수정</span>
-                          <span onClick={(e) => handleDelete(e, post.id)} style={{ cursor: 'pointer', color: '#ff4d4f' }}>삭제</span>
-                        </div>
-                      )}
-                      <span>{expandedId === post.id ? '▲' : '▼'}</span>
-                    </div>
-                  </div>
-                  {expandedId === post.id && (
-                    <div style={{ padding: '25px 25px 35px 55px', backgroundColor: '#f9f9f9', whiteSpace: 'pre-wrap', lineHeight: '1.8', color: '#444', fontSize: '15px', borderTop: '1px solid #f0f0f0' }}>
-                      {post.content}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+        <header className="support-subsection-header">
+          <h2>공지사항</h2>
+          {user && !isWriting && !isEditing && (
+            <button 
+              onClick={() => { setTitle(''); setContent(''); setIsWriting(true); }}
+              className="notice-write-button"
+            >
+              글쓰기
+            </button>
           )}
-        </div>
+        </header>
+        <hr className="section-top-line" />
+        
+        {loading ? (
+          <div className="notice-loading">로딩 중...</div>
+        ) : (
+          <div className="notice-list">
+            {posts.map((post) => (
+              <div key={post.id} className="list-item-wrapper">
+                <div 
+                  onClick={() => toggleAccordion(post.id)}
+                  className={`list-item-header ${expandedId === post.id ? 'expanded' : ''}`}
+                >
+                  <div className="list-item-title-group">
+                    <div className="q-icon-circle">Q</div>
+                    <span className={`item-title ${expandedId === post.id ? 'expanded' : ''}`}>{post.title}</span>
+                  </div>
+                  <div className="item-meta notice-item-meta">
+                    <span className="notice-item-date">{post.date}</span>
+                    {user && (
+                      <div className="notice-item-actions">
+                        <span onClick={(e) => startEditing(e, post)} className="notice-action-edit">수정</span>
+                        <span onClick={(e) => handleDelete(e, post.id)} className="notice-action-delete">삭제</span>
+                      </div>
+                    )}
+                    <span>{expandedId === post.id ? '▲' : '▼'}</span>
+                  </div>
+                </div>
+                {expandedId === post.id && (
+                  <div className="item-content">
+                    {post.content}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-    </SectionWrapper>
+    </section>
   );
 });
 

@@ -55,7 +55,7 @@ const CaseExampleSection = forwardRef((props, ref) => { // Wrap with forwardRef
                     >
                         {[thumbnail, ...contentImages].map((img, i) => (
                             <SwiperSlide key={i}>
-                                <img src={img} alt={`${folder} image ${i + 1}`} style={{ maxWidth: '100%' }} />
+                                <img src={img} alt={`${folder} image ${i + 1}`} className="swiper-image-responsive" />
                             </SwiperSlide>
                         ))}
                     </Swiper>
@@ -77,7 +77,8 @@ const CaseExampleSection = forwardRef((props, ref) => { // Wrap with forwardRef
     };
 
     return (
-        <section className="sub-section" ref={ref}> {/* Use section with ref */}
+        <section ref={ref}> {/* Use section with ref */}
+        <div className="sub-section">
             <div className="subsection-title-container">
               <p className="subsection-title">
                 <span className="quote">“</span>
@@ -100,7 +101,8 @@ const CaseExampleSection = forwardRef((props, ref) => { // Wrap with forwardRef
                     {selectedCase.content}
                 </CasesModal>
             )}
-        </section> // Close section
+        </div>
+    </section> // Close section
     );
 });
 

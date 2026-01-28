@@ -4,12 +4,14 @@ import Banner from '../components/Banner/Banner';
 import SubNav from '../components/SubNav/SubNav';
 import Product1Section from '../sections/subsections/Product1Section';
 import Product2Section from '../sections/subsections/Product2Section';
-import homeBannerImage from '../assets/images/slider-01.jpg'; // 배너 이미지 재사용
+import bannerImages from '../content/bannerImages.js';
 
 const ProductsPage = () => {
+  const { title, subtitle, image } = bannerImages['/products'];
+
   return (
     <>
-      <Banner title="제품" image={homeBannerImage} />
+      <Banner title={title} subtitle={subtitle} image={image} />
       <SubNav />
       <Routes>
         <Route path="/" element={<Navigate to="product1" />} />

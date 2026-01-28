@@ -1,0 +1,425 @@
+/* =================================================================
+  Support Page Common Styles
+  - Notice, Dataroom, Inquiry 섹션의 공통 스타일을 정의합니다.
+================================================================= */
+
+/* Layout & Typography */
+.support-content-section {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 40px;
+  font-family: 'Pretendard', -apple-system, sans-serif;
+}
+
+/* Section Header */
+.support-subsection-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Section Title */
+.support-content-section h1,
+.support-content-section h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111;
+  letter-spacing: -0.5px;
+  margin: 0; /* h2에 기본 마진이 있을 수 있으므로 초기화 */
+}
+
+
+/* Section Top Divider */
+.section-top-line {
+  border: 0;
+  border-top: 2px solid #111;
+  margin: 0 0 10px 0;
+}
+
+/* Accordion/List Item Base (Notice & Dataroom) */
+.list-item-wrapper {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.list-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 15px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.list-item-header:hover {
+  background-color: #fafafa;
+}
+
+.list-item-header.expanded {
+  background-color: #fcfcfc;
+}
+
+.list-item-title-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+}
+
+.q-icon-circle {
+  background-color: #111;
+  color: #fff;
+  border-radius: 50%;
+  min-width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.item-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.item-title.expanded {
+  font-weight: 700;
+}
+
+.item-meta {
+  font-size: 14px;
+  color: #999;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.item-content {
+  padding: 30px 40px 40px 63px;
+  background-color: #f9f9f9;
+  white-space: pre-wrap;
+  line-height: 1.8;
+  color: #444;
+  font-size: 15px;
+  border-top: 1px solid #f0f0f0;
+}
+
+
+/* Form Elements (Inquiry) */
+.form-row {
+  display: flex;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  padding: 20px 0;
+}
+
+.form-group label {
+  width: 110px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+}
+
+.form-group input,
+.form-group textarea {
+  flex: 1;
+  border: 1px solid #d1d5db;
+  background-color: #f9fafb;
+  padding: 12px 16px;
+  font-size: 14px;
+  outline: none;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.form-group textarea {
+  min-height: 250px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #111;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.03);
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 52px;
+  padding: 0 40px;
+  background-color: #111;
+  color: #fff;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #333;
+}
+
+.btn-primary:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+
+/* =================================================================
+  Notice Section Styles
+================================================================= */
+.notice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.notice-write-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  padding: 0 24px;
+  background-color: #111;
+  color: #fff;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+.notice-write-button:hover {
+  background-color: #333;
+}
+
+.notice-loading {
+  text-align: center;
+  padding: 50px;
+}
+
+.notice-list {
+  width: 100%;
+}
+
+.notice-item-meta {
+  min-width: 120px;
+  justify-content: space-between;
+}
+
+.notice-item-date {
+  min-width: 80px;
+  text-align: right;
+}
+
+.notice-item-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.notice-action-edit,
+.notice-action-delete {
+  cursor: pointer;
+  font-size: 13px;
+  transition: color 0.2s;
+}
+
+.notice-action-edit {
+  color: #666;
+}
+.notice-action-edit:hover {
+  color: #000;
+}
+
+.notice-action-delete {
+  color: #ff4d4f;
+}
+.notice-action-delete:hover {
+  color: #d32f2f;
+}
+
+
+/* =================================================================
+  Dataroom Section Styles
+================================================================= */
+.dataroom-loading {
+  text-align: center;
+  padding: 50px;
+}
+
+.dataroom-accordion-icon {
+  transform: rotate(0deg);
+  transition: transform 0.3s;
+  color: #999;
+}
+
+.dataroom-accordion-icon.expanded {
+  transform: rotate(180deg);
+}
+
+.dataroom-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dataroom-content-text {
+  line-height: 1.8;
+  white-space: pre-wrap;
+  color: #444;
+}
+
+.dataroom-file-link-wrapper {
+  padding: 12px 20px;
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  align-self: flex-start;
+  transition: border-color 0.2s, background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.dataroom-file-link-wrapper:hover {
+  background-color: #f5faff;
+  border-color: #cce0ff;
+}
+
+.dataroom-file-link {
+  color: #0066cc;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+
+/* =================================================================
+  Inquiry Section Styles
+================================================================= */
+.inquiry-form-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.inquiry-form-row.inline-fields {
+  display: flex;
+}
+
+.inquiry-form-row .form-group:first-child {
+  padding-right: 30px;
+}
+.inquiry-form-row .form-group:last-child {
+  padding-left: 30px;
+  border-left: 1px solid #f0f0f0;
+}
+
+.form-group.full-width {
+  flex-direction: column;
+  align-items: stretch;
+  padding: 30px 0;
+}
+
+.form-group.full-width label {
+  width: auto;
+  margin-bottom: 15px;
+}
+
+.form-footer {
+  display: flex;
+  justify-content: center;
+  padding: 60px 0;
+}
+
+.thank-you-container {
+  padding: 80px 0;
+  text-align: center;
+}
+
+.thank-you-container .q-icon-circle {
+  margin: 0 auto 20px;
+}
+
+.thank-you-container h3 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.thank-you-container p {
+  font-size: 16px;
+  color: #666;
+}
+
+.error-message {
+  color: #d32f2f;
+  font-size: 13px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+
+/* =================================================================
+  Responsive Styles
+================================================================= */
+@media (max-width: 768px) {
+  .support-content-section {
+    padding: 40px 20px;
+  }
+  .list-item-header {
+    padding: 18px 10px;
+  }
+  .item-title {
+    font-size: 15px;
+  }
+  .item-meta {
+    font-size: 13px;
+  }
+  
+  /* Notice */
+  .notice-item-meta {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    min-width: 80px;
+  }
+
+  /* Inquiry */
+  .inquiry-form-row.inline-fields {
+    flex-direction: column;
+    border-bottom: none;
+  }
+  .inquiry-form-row .form-group {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    border-left: none !important;
+  }
+  .form-group.full-width {
+    padding: 20px 0;
+  }
+  .form-footer {
+    padding: 40px 0;
+  }
+  .btn-primary {
+    width: 100%;
+  }
+}

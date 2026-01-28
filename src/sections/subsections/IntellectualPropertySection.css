@@ -87,3 +87,30 @@
   background-color: #fafafa;
   border-top: 1px solid #f0f0f0;
 }
+
+.modal-content-wrapper {
+  text-align: center;
+}
+
+.modal-content-image {
+  max-width: 100%;
+}
+
+.admin-upload-wrapper {
+  margin-top: 25px;
+}
+
+.admin-upload-label {
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #ff5e1a;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.no-ip-data {
+  padding: 100px 0;
+  color: #999;
+}

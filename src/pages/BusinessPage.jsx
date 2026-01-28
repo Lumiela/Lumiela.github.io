@@ -5,12 +5,14 @@ import SubNav from '../components/SubNav/SubNav';
 import ScopeSection from '../sections/subsections/ScopeSection';
 import RndSection from '../sections/subsections/RndSection';
 import IntellectualPropertySection from '../sections/subsections/IntellectualPropertySection';
-import homeBannerImage from '../assets/images/slider-01.jpg'; // 배너 이미지 재사용
+import bannerImages from '../content/bannerImages.js';
 
 const BusinessPage = () => {
+  const { title, subtitle, image } = bannerImages['/business'];
+
   return (
     <>
-      <Banner title="사업분야" image={homeBannerImage} />
+      <Banner title={title} subtitle={subtitle} image={image} />
       <SubNav />
       <Routes>
         <Route path="/" element={<Navigate to="scope" />} />
