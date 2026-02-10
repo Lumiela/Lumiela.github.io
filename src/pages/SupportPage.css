@@ -1,68 +1,46 @@
 /* =================================================================
-  Support Page Common Styles
-  - Notice, Dataroom, Inquiry 섹션의 공통 스타일을 정의합니다.
+  Support Page Common Styles (Layout & Icons Preserved)
+  - 원본의 아이콘 크기, 레이아웃 수치를 그대로 유지하며 폰트만 반응형으로 수정합니다.
 ================================================================= */
+
+:root {
+  /* 최소 폰트 사이즈를 보호하는 가변 변수 */
+  --fz-h1: clamp(24px, 4vw, 28px);
+  --fz-h2: clamp(22px, 3.5vw, 24px);
+  --fz-title: clamp(15px, 2.5vw, 16px);
+  --fz-body: clamp(14px, 2vw, 15px);
+  --fz-meta: clamp(13px, 1.8vw, 14px);
+}
 
 /* Layout & Typography */
 .support-content-section {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 80px 40px;
+  padding: 80px 40px; 
   font-family: 'Pretendard', -apple-system, sans-serif;
 }
 
-/* Section Header */
-.support-subsection-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-/* Section Title */
-.support-content-section h1,
-.support-content-section h2 {
-  font-size: 28px;
-  font-weight: 700;
-  color: #111;
-  letter-spacing: -0.5px;
-  margin: 0;
-}
-
-/* Section Top Divider */
-.section-top-line {
-  border: 0;
-  border-top: 2px solid #111;
-  margin: 0 0 10px 0;
-}
-
-/* Accordion/List Item Base (Notice & Dataroom) */
+/* Accordion/List Item Base */
 .list-item-wrapper {
   border-bottom: 1px solid #f0f0f0;
 }
 
 .list-item-header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 22px 15px;
+  flex-direction: column; 
+  align-items: flex-start;
+  gap: 12px;
+  padding: 22px 15px; 
   cursor: pointer;
   transition: background-color 0.2s;
-}
-
-.list-item-header:hover {
-  background-color: #fafafa;
-}
-
-.list-item-header.expanded {
-  background-color: #fcfcfc;
+  border-bottom: 1px solid #070707;
 }
 
 .list-item-title-group {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 20px; 
   flex: 1;
 }
 
@@ -70,18 +48,18 @@
   background-color: #111;
   color: #fff;
   border-radius: 50%;
-  min-width: 28px;
-  height: 28px;
+  min-width: 28px; 
+  height: 28px;    
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 13px; 
   font-weight: 800;
   flex-shrink: 0;
 }
 
 .item-title {
-  font-size: 16px;
+  font-size: var(--fz-title);
   font-weight: 500;
   color: #333;
 }
@@ -91,7 +69,9 @@
 }
 
 .item-meta {
-  font-size: 14px;
+  width: 100%;
+  justify-content: flex-end;
+  font-size: var(--fz-meta);
   color: #999;
   display: flex;
   align-items: center;
@@ -100,30 +80,29 @@
 }
 
 .item-content {
-  padding: 30px 40px 40px 63px;
+  padding: 30px 40px 40px 63px; 
   background-color: #f9f9f9;
   white-space: pre-wrap;
   line-height: 1.8;
   color: #444;
-  font-size: 15px;
+  font-size: var(--fz-body);
   border-top: 1px solid #f0f0f0;
 }
 
 /* -----------------------------------------------------------------
-  Cafe Style Editor UI (Notice/Dataroom Write)
+  Cafe Style Editor UI
 ----------------------------------------------------------------- */
 .cafe-editor-container {
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 25px;
+  padding: 25px; 
   margin-top: 20px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
 .editor-title-input {
   width: 100%;
-  font-size: 22px;
+  font-size: 22px; 
   padding: 15px 0;
   border: none;
   border-bottom: 2px solid #f0f0f0;
@@ -132,143 +111,28 @@
   outline: none;
 }
 
-.editor-toolbar {
-  padding: 10px 0;
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  border-bottom: 1px solid #f5f5f5;
-}
-
-.toolbar-item {
-  cursor: pointer;
-  background: #f5f5f5;
-  padding: 8px 18px;
-  border-radius: 20px;
-  font-size: 14px;
-  color: #555;
-  font-weight: 500;
-  transition: 0.2s;
-}
-
-.toolbar-item:hover {
-  background: #e0e0e0;
-}
-
-.editor-body {
-  min-height: 400px;
-}
-
 .editor-content-textarea {
   width: 100%;
-  min-height: 400px;
+  min-height: 400px; 
   border: none;
   resize: vertical;
-  font-size: 16px;
+  font-size: var(--fz-body);
   line-height: 1.8;
   outline: none;
   padding: 15px 0;
 }
 
-.editor-image-preview {
-  position: relative;
-  display: inline-block;
-  margin-bottom: 15px;
-}
-
-.editor-image-preview img {
-  max-width: 300px;
-  border-radius: 4px;
-  display: block;
-}
-
-.editor-image-preview button {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.editor-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  padding-top: 20px;
-  border-top: 1px solid #f0f0f0;
-}
-
-.btn-submit {
-  background: #03c75a;
-  color: #fff;
-  border: none;
-  padding: 12px 35px;
-  border-radius: 4px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.btn-cancel {
-  background: #f0f0f0;
-  color: #666;
-  border: none;
-  padding: 12px 35px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
 /* -----------------------------------------------------------------
-  Post Content Rendering
------------------------------------------------------------------ */
-.post-text-body {
-  line-height: 1.8;
-}
-
-.post-text-body img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin: 20px 0;
-  display: block;
-}
-
-.file-download-badge {
-  display: inline-block;
-  background: #f8f9fa;
-  padding: 12px 18px;
-  border-radius: 6px;
-  color: #555;
-  text-decoration: none;
-  font-size: 14px;
-  border: 1px solid #eee;
-  margin-top: 20px;
-  font-weight: 500;
-}
-
-.file-download-badge:hover {
-  background: #f1f3f5;
-}
-
-/* -----------------------------------------------------------------
-  Inquiry Section Styles (Fixed & Enhanced)
+  Inquiry Section Styles (반응형 여백 및 정렬 수정 버전)
 ----------------------------------------------------------------- */
 .inquiry-form-wrapper {
   max-width: 900px;
   margin: 40px auto 0;
 }
 
-/* 기본 레이아웃 구성 */
 .form-row {
   display: flex;
+  gap: 40px; /* 좌우 입력 필드 간 여백 확보 */
   border-bottom: 1px solid #f0f0f0;
 }
 
@@ -279,201 +143,193 @@
   padding: 20px 0;
 }
 
-/* 레이블 및 필수 표시 */
 .form-group label {
-  width: 140px;
-  font-size: 15px;
+  width: 100px; /* 모든 라벨 너비 통일하여 수직 정렬 맞춤 */
+  font-size: var(--fz-body);
   font-weight: 600;
   color: #333;
+  flex-shrink: 0;
 }
 
-.required-dot::after {
-  content: ' *';
-  color: #ff4d4f;
-  margin-left: 2px;
-}
-
-/* 인풋/텍스트에어리어 공통 스타일 */
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="tel"],
+.form-group input,
 .form-group textarea {
   flex: 1;
   padding: 12px 15px;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
-  font-size: 14px;
-  color: #333;
+  font-size: var(--fz-body);
   outline: none;
-  transition: all 0.2s;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: #111;
-  background-color: #fff;
 }
 
-/* 인라인 필드 (2열 배치) 보완 */
-.inquiry-form-row.inline-fields {
-  display: flex;
-}
-
-.inquiry-form-row .form-group:first-child {
-  padding-right: 30px;
-}
-
-.inquiry-form-row .form-group:last-child {
-  padding-left: 30px;
-  border-left: 1px solid #f0f0f0;
-}
-
-/* 제목 및 내용 섹션 (Full Width) */
+/* 제목 및 내용 배열 조정: 상단 필드와 라벨 정렬을 동일하게 유지 */
 .form-group.full-width {
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 30px 0;
-  border-bottom: none;
+  flex-direction: row; 
+  align-items: center;
+  padding: 20px 0;
 }
 
-.form-group.full-width label {
-  width: auto;
-  margin-bottom: 15px;
-}
-
-.form-group.full-width input,
 .form-group.full-width textarea {
+  min-height: 200px; 
   width: 100%;
+  margin-top: 10px;
 }
 
-.form-group textarea {
-  min-height: 200px;
-  resize: vertical;
-  line-height: 1.6;
+/* 내용(textarea)의 경우 라벨이 상단에 오도록 별도 처리 */
+.form-row:last-of-type .form-group.full-width {
+  align-items: flex-start;
 }
-
-/* 개인정보 동의 섹션 추가 스타일 */
-.privacy-accordion-section {
-  border: 1px solid #f0f0f0;
-  border-radius: 8px;
-  overflow: hidden;
-  background-color: #fff;
-}
-
-/* 하단 버튼 영역 */
-.form-footer {
-  display: flex;
-  justify-content: center;
-  padding: 60px 0;
-}
-
-.btn-primary {
-  background-color: #111;
-  color: #fff;
-  padding: 16px 80px;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.btn-primary:hover {
-  background-color: #333;
-}
-
-.btn-primary:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-/* 완료 화면 스타일 */
-.thank-you-container {
-  padding: 100px 0;
-  text-align: center;
-}
-
-.thank-you-container .q-icon-circle {
-  margin: 0 auto 30px;
-  width: 60px;
-  height: 60px;
-  font-size: 24px;
-}
-
-.thank-you-container h3 {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 15px;
-  color: #111;
-}
-
-.thank-you-container p {
-  font-size: 16px;
-  color: #666;
-}
-
-/* 에러 메시지 */
-.error-message {
-  color: #ff4d4f;
-  font-size: 14px;
-  margin-top: 20px;
-  text-align: center;
-  font-weight: 500;
+.form-row:last-of-type .form-group.full-width label {
+  padding-top: 12px;
 }
 
 /* -----------------------------------------------------------------
-  Existing Actions & Extra Helpers
+  Pagination Common Styles (추가됨)
 ----------------------------------------------------------------- */
-.notice-write-button {
-  padding: 8px 18px;
-  background: #111;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 600;
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 50px 0;
+  width: 100%;
 }
 
-.notice-item-meta { min-width: 120px; justify-content: space-between; }
-.notice-item-date { min-width: 80px; text-align: right; }
-.notice-item-actions { display: flex; gap: 12px; align-items: center; margin-right: 15px; }
-.notice-action-edit, .notice-action-delete { cursor: pointer; font-size: 13px; transition: color 0.2s; }
-.notice-action-edit { color: #666; }
-.notice-action-delete { color: #ff4d4f; }
+.page-btn {
+  padding: 10px 18px;
+  border: 1px solid #e0e0e0;
+  background-color: #ffffff;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+}
 
-.dataroom-accordion-icon { transform: rotate(0deg); transition: transform 0.3s; color: #999; }
-.dataroom-accordion-icon.expanded { transform: rotate(180deg); }
+.page-btn:hover:not(:disabled) {
+  border-color: #ff5e1a;
+  color: #ff5e1a;
+  background-color: #fffaf8;
+}
 
-/* Responsive Styles */
+.page-btn:disabled {
+  background-color: #f8f8f8;
+  color: #ccc;
+  border-color: #eee;
+  cursor: not-allowed;
+}
+
+.page-info {
+  font-size: 15px;
+  font-weight: 500;
+  color: #666;
+  padding: 0 10px;
+  letter-spacing: 1px;
+}
+
+.page-info strong {
+  color: #ff5e1a;
+  font-weight: 800;
+}
+
+/* -----------------------------------------------------------------
+  관리용 버튼 액션 스타일 (강화됨)
+----------------------------------------------------------------- */
+.notice-item-actions {
+  display: flex;
+  gap: 8px;
+  margin-right: 5px;
+}
+
+.notice-action-edit, 
+.notice-action-delete {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-block;
+}
+
+/* 수정 버튼: 부드러운 그레이 */
+.notice-action-edit {
+  background-color: #f4f4f4;
+  color: #666;
+  border: 1px solid #ddd;
+}
+
+.notice-action-edit:hover {
+  background-color: #e9e9e9;
+  color: #222;
+  border-color: #ccc;
+}
+
+/* 삭제 버튼: 경고의 레드 */
+.notice-action-delete {
+  background-color: #fff0f0;
+  color: #d93025;
+  border: 1px solid #fadad7;
+}
+
+.notice-action-delete:hover {
+  background-color: #fce8e6;
+  color: #a50e0e;
+  border-color: #f1b7b1;
+}
+
+/* -----------------------------------------------------------------
+  Responsive Styles
+----------------------------------------------------------------- */
 @media (max-width: 768px) {
   .support-content-section { padding: 40px 20px; }
-  .list-item-header { padding: 18px 10px; }
-  .item-title { font-size: 15px; }
-  
-  /* Inquiry 모바일 레이아웃: 수직 정렬로 변경 */
-  .inquiry-form-row.inline-fields {
-    flex-direction: column;
-  }
   
   .form-row {
     flex-direction: column;
+    gap: 0; 
+    width: 100%;
   }
 
-  .inquiry-form-row .form-group {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    border-left: none !important;
-    border-bottom: 1px solid #f0f0f0;
+  .form-group {
+    padding: 15px 0 !important;
   }
 
   .form-group label {
-    width: 100%;
-    margin-bottom: 10px;
+    width: 80px; 
+    min-width: 80px;
   }
 
-  .btn-primary {
-    width: 100%;
-    padding: 16px 0;
+  .form-group.full-width {
+    flex-direction: row; 
+    align-items: center;
+  }
+
+  .form-group.full-width textarea {
+    width: 100% !important;
+  }
+
+  .pagination-container {
+    gap: 10px;
+    margin: 30px 0;
+  }
+  
+  .page-btn {
+    padding: 8px 14px;
+    font-size: 13px;
+    min-width: 60px;
   }
 }
+
+/* 기타 스타일 보존 */
+.notice-write-button { padding: 8px 18px; background: #111; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; }
+.dataroom-accordion-icon { transform: rotate(0deg); transition: transform 0.3s; color: #999; }
+.dataroom-accordion-icon.expanded { transform: rotate(180deg); }

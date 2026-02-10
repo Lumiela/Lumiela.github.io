@@ -4,8 +4,12 @@ import './Product1Section.css';
 
 const Product1Section = forwardRef((props, ref) => {
   return (
-    <section id="product1" ref={ref} className="product1-section-wrapper">
+    <section id="product1" ref={ref} className="section">
       <div className="sub-section">
+        <header className="subsection-header">
+          <h2 className="subsection-title">다오니</h2>
+        </header>
+        <hr className="section-top-line" />
         <img src={productImage1} alt="스마트 측정 제어기" className="product1-image" />
       </div>
     </section>

@@ -23,3 +23,4 @@ const ImageGrid = ({ gridData }) => {
 };
 
 export default ImageGrid;
+

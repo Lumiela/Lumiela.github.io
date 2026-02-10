@@ -1,30 +1,35 @@
 import React from 'react';
-import { useLocation, NavLink } from 'react-router-dom';
-import { menuItems } from '../../content/menuData';
-import './SubNav.css'; // Import the new CSS file
+import { NavLink } from 'react-router-dom';
+import { useMenuNavigation } from '../../hooks/useMenuNavigation';
+import './SubNav.css';
 
 const SubNav = () => {
-  const location = useLocation();
-  // 현재 URL 경로가 메뉴 아이템의 경로로 시작하는지 확인하여 현재 메뉴 아이템을 찾습니다.
-  const currentMenuItem = menuItems.find(item => location.pathname.startsWith(item.path) && item.path !== '/');
+  const { currentMainMenu, currentSubMenus, handleSubLinkClick, isActive } = useMenuNavigation();
 
-  if (!currentMenuItem || !currentMenuItem.subMenus) {
+  if (!currentSubMenus || currentSubMenus.length === 0) {
     return null;
   }
 
   return (
     <nav className="sub-nav-container">
       <ul>
-        {currentMenuItem.subMenus.map(subItem => (
-          <li key={subItem.name}>
-            <NavLink 
-              to={`${currentMenuItem.path}/${subItem.path}`}
-              className={({ isActive }) => isActive ? 'active' : ''}
-            >
-              {subItem.name}
-            </NavLink>
-          </li>
-        ))}
+        {currentSubMenus.map(subItem => {
+          const fullPath = `${currentMainMenu.path}/${subItem.path}`;
+          return (
+            <li key={subItem.name}>
+              <NavLink
+                to={fullPath}
+                className={() => isActive(subItem.path) ? 'active' : ''}
+                onClick={(e) => {
+                  e.preventDefault(); // NavLink의 기본 동작을 막습니다.
+                  handleSubLinkClick(fullPath);
+                }}
+              >
+                {subItem.name}
+              </NavLink>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );

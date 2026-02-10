@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import HomePage from './pages/HomePage';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -57,7 +56,7 @@ function App() {
 
       <main className="main-content">
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<Navigate to="/about/vision" replace />} />
           <Route path="/about/*" element={<AboutPage />} />
           <Route path="/business/*" element={<BusinessPage />} />
           <Route path="/products/*" element={<ProductsPage />} />

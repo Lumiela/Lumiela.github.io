@@ -5,15 +5,18 @@ import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaExternalLinkAlt } from 'react
 
 const DirectionsSection = forwardRef((props, ref) => {
   return (
-    <section id="directions" className="directions-section section" ref={ref}>
+    <section id="directions" className="section" ref={ref}>
       <div className="sub-section">
-        {/* 상단 문구 */}
-        <div className="directions-header">
-          <h2>DAONRS는 여러분의 방문을 환영합니다.</h2>
+        <header className="subsection-header">
+          <h2 className="subsection-title">오시는 길</h2>
+        </header>
+        <hr className="section-top-line" />
+        <h2 className="subsection-subtitle">DAONRS는 여러분의 방문을 환영합니다.</h2>
+        
+        <div className="content-highlight">
           <p>방문을 원하신다면 아래 위치 정보를 참고해주세요.</p>
         </div>
         
-        {/* 지도 영역 */}
         <div className="map-container">
           <div className="map-wrapper">
             <iframe 
@@ -26,27 +29,7 @@ const DirectionsSection = forwardRef((props, ref) => {
           </div>
         </div>
 
-        {/* 하단 상세 정보 UI */}
         <div className="info-layout">
-          <div className="info-item address-full">
-            <div className="icon-circle"><FaMapMarkerAlt /></div>
-            <div className="info-text">
-              <h3>Address</h3>
-              <p>{content.address}</p>
-            </div>
-            <button 
-              className="map-link-btn"
-              onClick={() => {
-                const encodedAddress = encodeURIComponent(content.address);
-                const naverMapUrl = `https://map.naver.com/v5/search/${encodedAddress}`;
-                window.open(naverMapUrl, '_blank');
-              }}
-              title="네이버 지도로 보기"
-            >
-              <FaExternalLinkAlt />네이버 지도로 보기
-            </button>
-          </div>
-
           <div className="contact-row">
             <div className="info-item">
               <div className="icon-circle"><FaPhoneAlt /></div>
@@ -61,6 +44,30 @@ const DirectionsSection = forwardRef((props, ref) => {
                 <h3>E-mail</h3>
                 <p>{content.email || "saleskss@twim21.com"}</p>
               </div>
+            </div>
+          </div>
+
+          {/* 주소 섹션 */}
+          <div className="address-section">
+            <div className="icon-circle"><FaMapMarkerAlt /></div>
+            
+            <div className="address-body">
+              {/* 타이틀과 버튼을 한 행에 배치 */}
+              <div className="address-header">
+                <h3 style={{marginRight: "20px"}}>Address</h3>
+                <button 
+                  className="map-link-btn"
+                  onClick={() => {
+                    const encodedAddress = encodeURIComponent(content.address);
+                    const naverMapUrl = `https://place.map.kakao.com/724095620`;
+                    window.open(naverMapUrl, '_blank');
+                  }}
+                >
+                  <FaExternalLinkAlt size={10} /> 카카오맵으로 보기
+                </button>
+              </div>
+              {/* 주소 텍스트는 아래행에 배치 */}
+              <p className="address-text">{content.address}</p>
             </div>
           </div>
         </div>

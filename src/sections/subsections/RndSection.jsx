@@ -4,15 +4,12 @@ import './RndSection.css';
 
 const RndSection = forwardRef((props, ref) => {
   return (
-    <section id="rnd" ref={ref} className="rnd-section-wrapper">
+    <section id="rnd" ref={ref} className="section">
       <div className="sub-section">
-        <div className="rnd-subsection-title-container">
-          <p className="rnd-subsection-title">
-            <span className="quote">“</span>
-            연구개발
-            <span className="quote">”</span>
-          </p>
-        </div>
+        <header className="subsection-header">
+          <h2 className="subsection-title">연구개발</h2>
+        </header>
+        <hr className="section-top-line" />
         <img src={rndImage} alt="연구개발" className="rnd-image" />
       </div>
     </section>

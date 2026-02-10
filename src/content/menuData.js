@@ -4,7 +4,7 @@ export const menuItems = [
     name: '회사소개', 
     path: '/about', 
     subMenus: [
-      { name: '경영비전', path: 'vision' },
+      { name: '기업개요', path: 'vision' },
       { name: '회사연혁', path: 'history' },
       { name: '오시는길', path: 'directions' },
     ] 
@@ -22,8 +22,8 @@ export const menuItems = [
     name: '제품', 
     path: '/products',
     subMenus: [
-      { name: '스마트 측정 제어기', path: 'product1' },
-      { name: '탄산가스 발생기', path: 'product2' },
+      { name: '탄사니', path: 'product1' },
+      { name: '다오니', path: 'product2' },
     ]
   },
   { name: '적용사례', 
