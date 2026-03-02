@@ -51,7 +51,7 @@ const Header: React.FC<HeaderProps> = ({ onKakaoLoginClick }) => {
         {/* 로고 영역 */}
         <div className="logo">
           <Link to="/">
-            <img src="/src/assets/약속해_icon.png" alt="약속해" className='logo_icon'/>
+            <img src="/app_icon.png" alt="약속해" className='logo_icon'/>
           </Link>
         </div>
 

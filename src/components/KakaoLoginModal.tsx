@@ -46,7 +46,7 @@ const KakaoLoginModal: React.FC<KakaoLoginModalProps> = ({ isOpen, onClose }) =>
         <div className="kakao-login-container">
           <div className="login-header">
             <div className="app-logo-circle">
-              <img src="/src/assets/약속해_icon.png" alt="App Logo" />
+              <img src="/app_icon.png" alt="App Logo" />
             </div>
             <h2 className="login-title">반가워요!</h2>
             <p className="login-subtitle">
