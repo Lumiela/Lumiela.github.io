@@ -1,0 +1,213 @@
+/* Booking.css */
+.booking-container {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.booking-steps-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: var(--space-sm);
+}
+
+.step-number {
+  background: var(--primary-color);
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: var(--fs-xs);
+  font-weight: 800;
+}
+
+.section-header h2, .section-header h3 {
+  margin: 0;
+  font-size: var(--fs-md);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.calendar-wrapper {
+  width: 100%;
+  max-width: min(100%, 500px);
+  margin: 0 auto;
+}
+
+.react-calendar {
+  width: 100% !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  font-family: inherit;
+  box-shadow: var(--shadow-sm);
+}
+
+.selected-date-banner {
+  background: var(--bg-soft);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  border: 1px solid var(--border-color);
+  margin-top: var(--space-lg);
+  width: 100%;
+}
+
+.date-label {
+  font-size: var(--fs-sm);
+  color: var(--text-soft);
+  font-weight: 600;
+}
+
+.date-value {
+  font-size: var(--fs-lg);
+  color: var(--primary-color);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.time-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100px, 100%), 1fr));
+  gap: var(--space-sm);
+  width: 100%;
+}
+
+.time-chip {
+  padding: var(--space-md) var(--space-xs);
+  border: 1px solid var(--border-color);
+  background: #fff;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: var(--transition-base);
+}
+
+.time-chip .time-val {
+  font-weight: 700;
+  font-size: var(--fs-base);
+}
+
+.time-chip:hover:not(.disabled) {
+  border-color: var(--primary-color);
+  background-color: var(--bg-soft);
+}
+
+.time-chip.active {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #fff;
+}
+
+.booking-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: var(--space-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  resize: none;
+  font-size: var(--fs-base);
+  transition: var(--transition-base);
+}
+
+.booking-textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: var(--space-lg);
+  background: var(--primary-color);
+  color: #fff;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-md);
+  font-weight: 800;
+  box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 600px) {
+  .time-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 추가된 카카오 로그인 유도 버튼 디자인 */
+.login-prompt-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.kakao-booking-btn {
+  width: 100%;
+  padding: 20px;
+  background-color: #FEE500; /* Kakao 브랜드 컬러 */
+  color: #3C1E1E; /* Kakao 텍스트 컬러 */
+  border: none;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background-color 0.2s, transform 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.kakao-booking-btn:hover {
+  background-color: #FAD100;
+  transform: translateY(-2px);
+}
+
+.kakao-icon {
+  font-size: 1.4rem;
+}
+
+.login-warn, .action-hint {
+  font-size: 0.9rem;
+  color: #ff4757;
+  font-weight: 600;
+  text-align: center;
+}
+
+.action-hint {
+  color: #888;
+}
+
+@media (max-width: 600px) {
+  .booking-container {
+    margin: 20px auto;
+  }
+  .section-header h2, .section-header h3 {
+    font-size: 1.25rem;
+  }
+  .date-value {
+    font-size: 1.3rem;
+  }
+  .time-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

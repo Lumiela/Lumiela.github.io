@@ -1,0 +1,144 @@
+.home {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-color); /* 전역 배경색 사용 */
+}
+
+.main-banner {
+  width: 100%;
+  height: 100vh; /* 전체 화면 유지 */
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-image 0.5s ease-in-out;
+  background-color: var(--bg-color);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* z-index: 1 제거: 새로운 쌓임 맥락을 만들지 않아 가상 요소 관리가 쉬워짐 */
+}
+
+/* 배너가 설정되었을 때 오버레이 */
+.main-banner[style*="url"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2); /* 은은한 어두운 처리 */
+  z-index: 0; /* 배경(이미지) 보다는 위, 콘텐츠(z-index: 2) 보다는 아래 */
+  pointer-events: none;
+}
+
+/* 배너가 없을 때의 플레이스홀더 스타일 개선 */
+.banner-placeholder {
+  text-align: center;
+  color: var(--text-muted);
+  z-index: 2;
+  background: #fff;
+  padding: 3rem 5rem;
+  border-radius: var(--radius-lg);
+  border: 2px dashed var(--border-color);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.banner-placeholder span {
+  font-size: 3rem;
+  display: block;
+  opacity: 0.8;
+}
+
+.banner-placeholder p {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* 오너 전용 배너 편집 버튼 */
+.banner-edit-controls {
+  position: fixed;
+  /* bottom: clamp(2rem, 5vh, 4rem); 하단에서 적정 거리 유지 */
+  right: clamp(1rem, 5vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: var(--z-fab);
+  pointer-events: auto;
+}
+
+.edit-banner-btn, .delete-banner-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 50px; /* 둥근 버튼으로 변경 */
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: var(--shadow-md);
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.edit-banner-btn {
+  background: #fff;
+  color: var(--text-main);
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.delete-banner-btn {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--error-color);
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.edit-banner-btn:hover { 
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  background: var(--text-main);
+  color: #fff;
+}
+
+.delete-banner-btn:hover { 
+  background: var(--error-color);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* 업로드 중 텍스트 */
+.uploading-text {
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+}
+
+/* 반응형 처리 */
+@media (max-width: 768px) {
+  .banner-edit-controls {
+    bottom: 40%;
+    right: 10%;
+    gap: 10px;
+  }
+  .edit-banner-btn, .delete-banner-btn {
+    padding: 10px 18px;
+    font-size: 0.85rem;
+  }
+  
+  .banner-placeholder {
+    padding: 2rem;
+    width: 90%;
+  }
+}

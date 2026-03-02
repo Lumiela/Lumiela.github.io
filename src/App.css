@@ -1,0 +1,56 @@
+.App {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.store-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+}
+
+/* 본문 메인 영역 설정 */
+.store-layout main {
+  flex: 1;
+  width: 100%;
+  padding-top: var(--header-height); /* 기본적으로 헤더 높이만큼 여백 */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 홈 페이지 전용: 배너가 헤더 뒤로 가도록 padding 제거 */
+.store-layout.home-no-scroll main {
+  padding-top: 0;
+}
+
+/* 
+  모든 페이지에서 콘텐츠의 정렬과 너비를 통일하기 위한 래퍼 클래스
+  - Home 페이지의 배너를 제외한 모든 콘텐츠에 적용
+*/
+.content-wrapper {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg);
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .store-layout main {
+    padding-top: calc(var(--header-height) - 10px);
+  }
+  .store-layout.home-no-scroll main {
+    padding-top: 0;
+  }
+  .content-wrapper {
+    padding: var(--space-lg) var(--space-md);
+  }
+}
+
+footer {
+  width: 100%;
+}

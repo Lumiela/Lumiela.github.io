@@ -1,0 +1,111 @@
+.contact-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  backdrop-filter: blur(4px);
+}
+
+.contact-modal-content {
+  background-color: #fff;
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: modalAppear 0.3s ease-out;
+}
+
+@keyframes modalAppear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.contact-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+  transition: color 0.2s;
+}
+
+.contact-modal-close:hover {
+  color: #333;
+}
+
+.contact-modal-header h2 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.contact-info-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 1.5rem;
+  word-break: keep-all;
+}
+
+.email-box {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+  border: 1px solid #eee;
+}
+
+.email-link {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1976d2;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.email-link:hover {
+  color: #1565c0;
+  text-decoration: underline;
+}
+
+.sub-text {
+  font-size: 0.8rem;
+  color: #999;
+  margin-bottom: 2rem;
+}
+
+.confirm-button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.confirm-button:hover {
+  background-color: #000;
+}

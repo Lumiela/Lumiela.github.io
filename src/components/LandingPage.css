@@ -1,0 +1,351 @@
+/* LandingPage.css - 정제된 스타일과 레이아웃 교정 */
+
+.landing-wrapper {
+  font-family: var(--font-main);
+  color: var(--text-main);
+  background-color: var(--bg-white);
+  line-height: 1.6;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.pc-only { display: block; }
+.mo-only { display: none; }
+
+/* 히어로 섹션 */
+.hero-section {
+  padding: 10rem 0 6rem;
+  text-align: center;
+  background: radial-gradient(circle at top, #f0f4ff 0%, #ffffff 100%);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #eef2ff;
+  color: var(--primary-color);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 8px 20px;
+  border-radius: 50px;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 4px 12px rgba(43, 89, 255, 0.1);
+}
+
+.main-title {
+  font-size: 4.2rem;
+  font-weight: 850;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  margin-bottom: 2rem;
+}
+
+.main-title span { color: var(--primary-color); }
+
+.sub-description {
+  font-size: 1.3rem;
+  color: var(--text-soft);
+  line-height: 1.7;
+  margin-bottom: 3.5rem;
+}
+
+.hero-button-group { display: flex; justify-content: center; }
+
+.primary-btn {
+  background: var(--primary-color);
+  color: white;
+  padding: 1.2rem 3.5rem;
+  border: none;
+  border-radius: 18px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 12px 30px rgba(43, 89, 255, 0.3);
+}
+
+.primary-btn:hover:not(:disabled) {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(43, 89, 255, 0.4);
+}
+
+/* 기능 섹션 - 헤더 교정 핵심 */
+.features-section { padding: 120px 0; }
+
+.section-header { 
+  text-align: center; 
+  margin-bottom: 5rem;
+  display: flex;
+  flex-direction: column; /* 세로 정렬 강제 */
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.section-title { 
+  font-size: 3rem; 
+  font-weight: 850; 
+  margin: 0; 
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.section-title span {
+  color: var(--primary-color);
+}
+
+.section-subtitle { 
+  font-size: 1.3rem; 
+  color: var(--text-soft); 
+  margin: 0;
+  font-weight: 500;
+}
+
+.section-subtitle strong {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.feature-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  background: #fff;
+  padding: 3rem;
+  border-radius: 32px;
+  border: 1px solid #f0f3f8;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.feature-card:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 25px 50px rgba(43, 89, 255, 0.08);
+  transform: translateY(-8px);
+}
+
+.feature-icon-wrapper {
+  width: 72px;
+  height: 72px;
+  background: var(--primary-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.feature-text h3 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
+.feature-text p { color: var(--text-soft); line-height: 1.7; font-size: 1.1rem; }
+
+/* 강점 섹션 */
+.strengths-section { padding: 120px 0; background: #fcfdfe; }
+.strengths-layout { display: flex; align-items: center; gap: 5rem; }
+.strengths-text { flex: 1.2; }
+
+.strengths-list { list-style: none; padding: 0; margin-top: 3.5rem; }
+.strengths-list li { display: flex; gap: 1.5rem; margin-bottom: 3rem; }
+
+.check-icon { margin-top: 4px; flex-shrink: 0; }
+.strengths-list li strong { display: block; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.8rem; }
+.strengths-list li p { color: var(--text-soft); line-height: 1.6; font-size: 1.1rem; }
+
+/* 목업 UI 상세 */
+.strengths-visual { flex: 0.8; }
+.mockup-ui {
+  width: 100%;
+  max-width: 380px;
+  background: white;
+  border-radius: 35px;
+  padding: 0;
+  box-shadow: 0 50px 100px rgba(0,0,0,0.12);
+  border: 10px solid #f0f0f0;
+  overflow: hidden;
+}
+
+.mockup-header {
+  height: 50px;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 15px;
+}
+
+.mockup-dot { width: 10px; height: 10px; background: #ff5f56; border-radius: 50%; box-shadow: 20px 0 #ffbd2e, 40px 0 #27c93f; }
+.mockup-address { margin-left: 50px; font-size: 0.8rem; color: #aaa; background: white; padding: 4px 15px; border-radius: 20px; flex: 1; text-align: left; }
+
+.mockup-body { padding: 30px 25px; }
+.mockup-profile { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
+.mockup-avatar { width: 50px; height: 50px; background: #2b59ff; border-radius: 50%; }
+.mockup-line.title { font-weight: 800; font-size: 1.1rem; margin-bottom: 4px; text-align: left;}
+.mockup-line.sub { font-size: 0.85rem; color: #999; text-align: left;}
+
+.mockup-item {
+  background: #f8f9fa;
+  padding: 18px;
+  border-radius: 18px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.mockup-label { font-size: 0.75rem; font-weight: 700; color: #2b59ff; margin-bottom: 10px; text-transform: uppercase; }
+.mockup-content { font-size: 1rem; font-weight: 600; }
+
+.mockup-image-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.mockup-image-grid .img { height: 80px; background: #eee; border-radius: 10px; }
+
+/* QR 코드 섹션 */
+.qr-section {
+  padding: 120px 0;
+  background-color: #ffffff;
+}
+
+.qr-layout {
+  display: flex;
+  align-items: center;
+  gap: 6rem;
+  background: var(--bg-light);
+  padding: 5rem;
+  border-radius: 48px;
+  border: 1px solid #eef2ff;
+}
+
+.qr-visual {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.qr-mockup {
+  width: 280px;
+  height: 280px;
+  background: white;
+  padding: 25px;
+  border-radius: 30px;
+  box-shadow: 0 30px 60px rgba(43, 89, 255, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  position: relative;
+  z-index: 2;
+}
+
+.qr-placeholder {
+  width: 100%;
+  aspect-ratio: 1;
+  background: #f8f9fa;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #ddd;
+}
+
+.qr-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  font-size: 0.9rem;
+}
+
+.qr-decor {
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(43, 89, 255, 0.05) 0%, rgba(255,255,255,0) 70%);
+  z-index: 1;
+}
+
+.qr-text {
+  flex: 1.2;
+}
+
+.qr-benefits {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.benefit-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+.benefit-item p {
+  margin: 0;
+  font-size: 1.15rem;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+
+.benefit-item strong {
+  color: var(--text-main);
+}
+
+@media (max-width: 1024px) {
+  .qr-layout { flex-direction: column-reverse; padding: 4rem 2rem; text-align: center; gap: 4rem; }
+  .qr-benefits { text-align: left; max-width: 500px; margin-left: auto; margin-right: auto; }
+}
+
+/* CTA 섹션 */
+.cta-section { padding: 120px 0; text-align: center; background: var(--primary-color); color: white; }
+.cta-section h2 { font-size: 3rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: -0.02em; }
+.cta-section p { font-size: 1.3rem; opacity: 0.9; margin-bottom: 3rem; }
+.cta-btn { background: white; color: var(--primary-color); padding: 1.3rem 4rem; border: none; border-radius: 20px; font-size: 1.3rem; font-weight: 850; cursor: pointer; transition: all 0.3s ease; }
+.cta-btn:hover { transform: scale(1.05); box-shadow: 0 15px 40px rgba(0,0,0,0.2); }
+.future-notice { margin-top: 2rem; font-size: 0.95rem; opacity: 0.7; font-weight: 500; }
+
+/* 반응형 스타일 */
+@media (max-width: 1024px) {
+  .main-title { font-size: 3.5rem; }
+  .strengths-layout { flex-direction: column; text-align: center; gap: 4rem; }
+  .strengths-list li { text-align: left; }
+  .strengths-visual { display: flex; justify-content: center; }
+}
+
+@media (max-width: 768px) {
+  .pc-only { display: none; }
+  .mo-only { display: block; }
+  .hero-section { padding: 8rem 0 4rem; }
+  .main-title { font-size: 2.8rem; }
+  .sub-description { font-size: 1.15rem; }
+  .section-header { margin-bottom: 3rem; }
+  .section-title { font-size: 2.4rem; }
+  .features-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+  .feature-card { padding: 2rem; gap: 1.5rem; }
+  .feature-icon-wrapper { width: 60px; height: 60px; }
+  .feature-text h3 { font-size: 1.4rem; }
+  .cta-section h2 { font-size: 2rem; }
+}
+
+@media (max-width: 480px) {
+  .main-title { font-size: 2.4rem; }
+  .primary-btn { padding: 1.1rem 2rem; font-size: 1.1rem; width: 100%; justify-content: center; }
+}

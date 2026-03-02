@@ -1,0 +1,118 @@
+.qr-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: var(--z-modal);
+  backdrop-filter: blur(4px);
+}
+
+.qr-modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.close-modal-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.qr-modal-content h2 {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.qr-modal-content p {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.qr-image-container {
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  border: 1px solid #eee;
+}
+
+.qr-image-container img {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.qr-no-image {
+  padding: 2rem;
+  color: #999;
+}
+
+.qr-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.link-copy-section {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.link-copy-section input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  background: #f5f5f5;
+}
+
+.copy-btn, .download-btn, .regen-btn {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.copy-btn {
+  background: #333;
+  color: white;
+  min-width: 60px;
+}
+
+.download-btn {
+  background: #fee500;
+  color: #3c1e1e;
+}
+
+.regen-btn {
+  background: #f0f0f0;
+  color: #666;
+  font-size: 0.8rem;
+}
+
+.copy-btn:hover { background: #000; }
+.download-btn:hover { background: #fada0a; }
+.regen-btn:hover { background: #e0e0e0; }

@@ -1,0 +1,199 @@
+/* MyPage.css */
+
+.mypage-container {
+  width: 100%;
+}
+
+.pending-badge {
+  background: var(--error-color);
+  color: white;
+  font-size: var(--fs-xs);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+/* 탭 메뉴 */
+.tab-menu {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tab-btn {
+  padding: var(--space-md) var(--space-lg);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--text-soft);
+  position: relative;
+  transition: var(--transition-base);
+}
+
+.tab-btn.active {
+  color: var(--primary-color);
+}
+
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--primary-color);
+}
+
+/* 관리자 전용 섹션 */
+.admin-block-section {
+  background: var(--bg-soft);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-xl);
+  border: 1px solid var(--border-color);
+}
+
+.admin-block-section h3 {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  margin-bottom: var(--space-xs);
+}
+
+.block-form {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.block-input, .block-select {
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  background: #fff;
+}
+
+.block-btn {
+  background: var(--primary-color);
+  color: #fff;
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+}
+
+/* 예약 리스트 그리드 */
+.booking-sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.section-subtitle {
+  font-size: var(--fs-md);
+  font-weight: 800;
+  margin-bottom: var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding-left: var(--space-sm);
+  border-left: 4px solid var(--primary-color);
+}
+
+.booking-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: var(--space-lg);
+}
+
+.booking-card {
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: var(--transition-base);
+  box-shadow: var(--shadow-sm);
+}
+
+.booking-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.today-card {
+  border: 2px solid var(--primary-color);
+}
+
+.card-header {
+  padding: var(--space-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.status-badge {
+  font-size: var(--fs-xs);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.status-badge.pending { background: #fff3e0; color: #ef6c00; }
+.status-badge.confirmed { background: #e8f5e9; color: #2e7d32; }
+.status-badge.completed { background: var(--bg-soft); color: var(--text-soft); }
+
+.card-body {
+  padding: var(--space-lg);
+  flex-grow: 1;
+}
+
+.time-text {
+  font-size: var(--fs-md);
+  font-weight: 900;
+  color: var(--primary-color);
+  text-align: center;
+  margin-bottom: var(--space-md);
+}
+
+.owner-client-info {
+  background: var(--bg-soft);
+  padding: var(--space-md);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-md);
+  font-size: var(--fs-sm);
+  border: 1px solid var(--border-color);
+}
+
+.card-footer {
+  padding: var(--space-sm);
+  display: flex;
+  gap: var(--space-xs);
+  background: var(--bg-soft);
+  border-top: 1px solid var(--border-color);
+}
+
+.action-btn {
+  flex: 1;
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+}
+
+.action-btn.confirm { background: var(--primary-color); color: #fff; }
+.action-btn.complete { background: var(--success-color); color: #fff; }
+.action-btn.cancel { background: #fff; border: 1px solid var(--border-color); color: var(--text-soft); }
+
+@media (max-width: 768px) {
+  .booking-list {
+    grid-template-columns: 1fr;
+  }
+  .block-form {
+    flex-direction: column;
+  }
+}

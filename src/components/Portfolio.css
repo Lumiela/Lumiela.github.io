@@ -1,0 +1,250 @@
+.portfolio {
+  /* width 제거: .content-wrapper에서 제어 */
+  padding-bottom: var(--space-xl);
+}
+
+.post-count {
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  background-color: var(--bg-soft);
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.post-count.limit {
+  color: var(--error-color);
+  background-color: #fff5f5;
+}
+
+.add-portfolio-toggle-btn {
+  padding: 0.6rem 1.2rem;
+  background-color: var(--bg-white);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.add-portfolio-toggle-btn:hover {
+  background-color: var(--bg-soft);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.add-portfolio-toggle-btn.active {
+  background-color: var(--text-main);
+  color: #fff;
+  border-color: var(--text-main);
+}
+
+/* 업로드 폼 애니메이션 및 스타일 */
+.portfolio-upload-section {
+  background-color: #fff;
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-xl);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  animation: slideDown 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 800px; /* 충분한 높이 */
+  }
+}
+
+.portfolio-modern-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-title-row h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-main);
+}
+
+.form-title-row p {
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+
+/* 파일 업로드 버튼 스타일 커스텀 */
+.custom-file-upload {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-soft);
+  color: var(--text-muted);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 120px;
+}
+
+.custom-file-upload:hover {
+  border-color: var(--secondary-color);
+  background-color: #eef6ff; /* 아주 연한 파란색 */
+  color: var(--secondary-color);
+}
+
+.modern-input, .modern-textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  background: #fff;
+  transition: border-color 0.2s ease;
+  font-family: inherit;
+}
+
+.modern-input:focus, .modern-textarea:focus {
+  outline: none;
+  border-color: var(--text-main);
+}
+
+.modern-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.char-count {
+  text-align: right;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.modern-submit-btn {
+  padding: 1rem;
+  background-color: var(--primary-color); /* 검정색 계열 */
+  color: white;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-weight: 700;
+  transition: background-color 0.2s ease;
+  margin-top: var(--space-md);
+}
+
+.modern-submit-btn:hover:not(:disabled) {
+  background-color: #000;
+}
+
+.modern-submit-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* 그리드 레이아웃 */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: var(--space-xl);
+}
+
+@media (max-width: 480px) {
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+  
+  .portfolio-modern-form {
+    gap: 1rem;
+  }
+  
+  .custom-file-upload {
+    min-height: 100px;
+    padding: 1rem;
+  }
+  
+  .modern-textarea {
+    min-height: 100px;
+  }
+  
+  .empty-portfolio {
+    padding: 3rem 1rem;
+  }
+}
+
+.portfolio-card-wrapper {
+  position: relative;
+  /* Card 자체의 호버 효과가 있으므로 wrapper에는 추가 transform 불필요 */
+}
+
+.card-delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  width: 32px;
+  height: 32px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 14px; /* X 아이콘 크기 조정 */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  opacity: 0; /* 기본 숨김 */
+}
+
+.portfolio-card-wrapper:hover .card-delete-btn {
+  opacity: 1; /* 호버 시 노출 */
+}
+
+.card-delete-btn:hover {
+  background: #ff4d4f;
+  transform: scale(1.1);
+}
+
+/* 데이터 없음 상태 */
+.empty-portfolio {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 80px 0;
+  background: var(--bg-white);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--border-color);
+  color: var(--text-muted);
+}
+
+.empty-portfolio .hint {
+  color: var(--secondary-color);
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.limit-warning-banner {
+  background-color: #fff5f5;
+  color: #e03131;
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-lg);
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid #ffc9c9;
+}
