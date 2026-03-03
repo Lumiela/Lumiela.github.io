@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import './KakaoLoginModal.css'; 
+import BaseModal from './BaseModal';
+import './BecomeOwnerModal.css';
 import { useUserSession } from '../hooks/useUserSession';
 import { useImageHandler } from '../hooks/useImageHandler';
+import { useAlert } from '../hooks/useAlert';
+import { Upload, Link as LinkIcon, FileText, Check } from 'lucide-react';
 
 interface BecomeOwnerModalProps {
   isOpen: boolean;
@@ -11,34 +14,42 @@ interface BecomeOwnerModalProps {
 
 const BecomeOwnerModal: React.FC<BecomeOwnerModalProps> = ({ isOpen, onClose, onSuccess }) => {
   const { user } = useUserSession();
+  const { showAlert } = useAlert();
   const [file, setFile] = useState<File | null>(null);
-  const [storeName, setStoreName] = useState(''); // [추가] 상점 주소 상태
+  const [storeName, setStoreName] = useState('');
   const { isUploading: uploading, uploadLicense } = useImageHandler();
 
-  if (!isOpen) return null;
-
   const handleUpgrade = async () => {
-    // 1. 유효성 검사: 상점 주소 입력 여부
     if (!storeName.trim()) {
-      alert("원하시는 상점 주소를 입력해주세요.");
+      showAlert({
+        type: 'error',
+        message: "원하시는 상점 주소를 입력해주세요."
+      });
       return;
     }
 
-    // 2. 유효성 검사: 상점 주소 형식 (영문 소문자, 숫자, 하이픈만 허용)
     const slugRegex = /^[a-z0-9-]+$/;
     if (!slugRegex.test(storeName)) {
-      alert("상점 주소는 영문 소문자, 숫자, 하이픈(-)만 사용 가능합니다.");
+      showAlert({
+        type: 'error',
+        message: "상점 주소는 영문 소문자, 숫자, 하이픈(-)만 사용 가능합니다."
+      });
       return;
     }
 
-    // 3. 유효성 검사: 사업자 등록증 파일
     if (!file) {
-      alert("사업자 등록증 이미지를 반드시 첨부해주세요.");
+      showAlert({
+        type: 'error',
+        message: "사업자 등록증 이미지를 반드시 첨부해주세요."
+      });
       return;
     }
 
     if (!user) {
-      alert("로그인이 필요합니다.");
+      showAlert({
+        type: 'error',
+        message: "로그인이 필요합니다."
+      });
       return;
     }
     
@@ -46,64 +57,92 @@ const BecomeOwnerModal: React.FC<BecomeOwnerModalProps> = ({ isOpen, onClose, on
 
     try {
       await uploadLicense(user.id, storeName, file, userNickname);
-      alert(`${userNickname} 사장님, 신청 서류가 성공적으로 제출되었습니다!`);
-      if (onSuccess) onSuccess(); 
-      onClose();
+      showAlert({
+        type: 'success',
+        title: '신청 완료',
+        message: `${userNickname} 사장님, 신청 서류가 성공적으로 제출되었습니다!`,
+        onConfirm: () => {
+          if (onSuccess) onSuccess(); 
+          onClose();
+        }
+      });
     } catch (error: any) {
-      alert("오류가 발생했습니다: " + error.message);
+      showAlert({
+        type: 'error',
+        title: '오류 발생',
+        message: "제출 중 오류가 발생했습니다: " + error.message
+      });
     }
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="x-button" onClick={onClose}>&times;</button>
-        <h2>사장님으로 등록하기</h2>
-        <p>서비스 이용을 위해 사업자 등록증 확인이 필요합니다.</p>
-
-        {/* [추가] 상점 주소 입력 섹션 */}
-        <div style={{ marginTop: '2rem', textAlign: 'left' }}>
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
-            희망 상점 주소 (URL)
-          </label>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ color: '#666', fontSize: '0.9rem' }}>myapp.com/</span>
-            <input 
-              type="text" 
-              placeholder="my-cool-shop"
-              value={storeName}
-              onChange={(e) => setStoreName(e.target.value.toLowerCase())} // 소문자 강제 변환
-              style={{ flex: 1, padding: '10px', border: '1px solid #ddd', borderRadius: '4px' }}
-            />
-          </div>
-          <small style={{ color: '#888', display: 'block', marginTop: '4px' }}>
-            * 영문 소문자, 숫자, 하이픈(-)만 입력 가능합니다.
-          </small>
+    <BaseModal 
+      isOpen={isOpen} 
+      onClose={onClose} 
+      title="사장님으로 등록하기"
+      maxWidth="480px"
+    >
+      <div className="become-owner-container">
+        <div className="become-owner-header">
+          <p>서비스 이용을 위해 상점 정보와<br />사업자 등록증 확인이 필요합니다.</p>
         </div>
 
-        {/* 사업자 등록증 첨부 섹션 */}
-        <div style={{ margin: '1.5rem 0', textAlign: 'left' }}>
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
-            사업자 등록증 첨부 (이미지)
+        <div className="input-group">
+          <label className="input-label">
+            <LinkIcon size={16} /> 희망 상점 주소 (URL)
           </label>
-          <input 
-            type="file" 
-            accept="image/*" 
-            onChange={(e) => setFile(e.target.files?.[0] || null)}
-            style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '4px', boxSizing: 'border-box' }}
-          />
+          <div className="url-input-wrapper">
+            <span className="url-prefix">nlaps.com/</span>
+            <input 
+              type="text" 
+              className="url-input"
+              placeholder="my-store-name"
+              value={storeName}
+              onChange={(e) => setStoreName(e.target.value.toLowerCase())}
+            />
+          </div>
+          <p className="input-hint">* 영문 소문자, 숫자, 하이픈(-)만 사용 가능</p>
+        </div>
+
+        <div className="input-group">
+          <label className="input-label">
+            <FileText size={16} /> 사업자 등록증 첨부 (이미지)
+          </label>
+          <div className="file-input-wrapper">
+            <input 
+              type="file" 
+              id="license-file"
+              accept="image/*" 
+              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              style={{ display: 'none' }}
+            />
+            <label htmlFor="license-file" className="file-input-custom">
+              {file ? (
+                <span style={{ color: 'var(--primary-color)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Check size={18} /> {file.name}
+                </span>
+              ) : (
+                '파일 선택하기 (JPG, PNG, WEBP)'
+              )}
+            </label>
+          </div>
         </div>
 
         <button 
-          className="kakao-button" 
+          className="submit-btn" 
           onClick={handleUpgrade} 
           disabled={uploading}
-          style={{ backgroundColor: uploading ? '#ccc' : '#FEE500' }}
         >
-          {uploading ? '제출 중...' : '신청 서류 제출하기'}
+          {uploading ? (
+            <>제출 중...</>
+          ) : (
+            <>
+              <Upload size={20} /> 신청 서류 제출하기
+            </>
+          )}
         </button>
       </div>
-    </div>
+    </BaseModal>
   );
 };
 
