@@ -126,3 +126,60 @@
 .submit-btn:active:not(:disabled) {
   transform: translateY(0);
 }
+
+/* --- Responsive Styles (Mobile Optimization) --- */
+@media (max-width: 768px) {
+  .become-owner-container {
+    gap: 1.2rem;
+    padding: 0;
+  }
+
+  .become-owner-header p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    word-break: keep-all; /* 단어 단위 줄바꿈으로 가독성 향상 */
+  }
+
+  .input-label {
+    font-size: 0.9rem;
+  }
+
+  .url-input-wrapper {
+    padding: 0 0.8rem;
+  }
+
+  .url-prefix {
+    font-size: 0.85rem;
+  }
+
+  .url-input {
+    padding: 0.7rem 0;
+    font-size: 0.95rem;
+  }
+
+  .file-input-custom {
+    padding: 0.75rem 0.9rem;
+    font-size: 0.85rem;
+    min-height: 48px; /* 터치 영역 확보 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .submit-btn {
+    height: 52px;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
+}
+
+/* 매우 작은 화면 대응 */
+@media (max-width: 400px) {
+  .url-prefix {
+    display: none; /* 화면이 너무 좁으면 nlaps.com/ 접두사 숨김 */
+  }
+  
+  .url-input-wrapper {
+    padding: 0 0.8rem;
+  }
+}
