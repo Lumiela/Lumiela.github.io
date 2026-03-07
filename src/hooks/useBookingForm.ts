@@ -2,9 +2,11 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../supabaseClient';
 import type { User } from '@supabase/supabase-js';
 
-const getLocalDateString = (date: Date) => {
-  const offset = date.getTimezoneOffset() * 60000;
-  return new Date(date.getTime() - offset).toISOString().split('T')[0];
+const formatLocalDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 };
 
 export const useBookingForm = (user: User | null, ownerId: string) => {
@@ -18,19 +20,19 @@ export const useBookingForm = (user: User | null, ownerId: string) => {
   const fetchReserved = useCallback(async () => {
     if (!date || !ownerId) return;
     try {
+      // 오너가 직접 막은 시간(user_id === owner_id)만 조회하여 '예약 불가'로 설정
+      // 일반 고객의 예약은 조회하지 않음 -> 따라서 중복 신청(대기) 가능
       const { data, error } = await supabase
         .from('bookings')
-        .select('booking_time, service_name')
+        .select('booking_time')
         .eq('owner_id', ownerId)
-        .eq('booking_date', getLocalDateString(date))
+        .eq('user_id', ownerId) 
+        .eq('booking_date', formatLocalDate(date))
         .neq('status', 'cancelled');
       
       if (error) throw error;
       if (data) {
-        // '🚫'가 포함된 (오너가 직접 블록한) 시간만 reservedTimes에 저장
-        const blockedTimes = data
-          .filter(b => b.service_name?.includes('🚫'))
-          .map(b => b.booking_time);
+        const blockedTimes = data.map(b => b.booking_time);
         setReservedTimes(blockedTimes);
       }
     } catch (error) {
@@ -73,7 +75,7 @@ export const useBookingForm = (user: User | null, ownerId: string) => {
       const { error } = await supabase.from('bookings').insert([{
         user_id: user.id, 
         owner_id: ownerId, 
-        booking_date: getLocalDateString(date),
+        booking_date: formatLocalDate(date),
         booking_time: fullTime, 
         service_name: bookingNote, 
         status: 'pending'

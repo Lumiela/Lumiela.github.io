@@ -21,10 +21,10 @@ const MyPage: React.FC = () => {
 
   const isOwner = role === 'owner';
   const todayStr = new Date().toISOString().split('T')[0];
-
-  // 전체 데이터 분류
-  const customerBookings = bookings.filter(b => !b.service_name?.includes('🚫'));
-  const blockedBookings = bookings.filter(b => b.service_name?.includes('🚫'));
+  
+  // 전체 데이터 분류 (심플 로직: 본인 가게에 본인이 예약하면 차단, 아니면 고객 예약)
+  const blockedBookings = bookings.filter(b => b.user_id === b.owner_id);
+  const customerBookings = bookings.filter(b => b.user_id !== b.owner_id);
 
   // 탭별 카운트
   const activeCount = customerBookings.filter(b => b.status === 'pending' || b.status === 'confirmed').length;
@@ -68,7 +68,7 @@ const MyPage: React.FC = () => {
         owner_id: user.id,
         booking_date: blockDate,
         booking_time: `${blockHour}:00`,
-        service_name: '🚫 사장님 재량 비활성화 (차단)',
+        service_name: '사장님 재량 비활성화 (차단)',
         status: 'confirmed'
       }]);
 
@@ -182,7 +182,7 @@ const MyPage: React.FC = () => {
               <p className="empty-msg">내역이 없습니다.</p>
             ) : (
               filteredList.map((b) => {
-                const isBlocked = b.service_name?.includes('🚫');
+                const isBlocked = b.user_id === b.owner_id;
                 const isToday = b.booking_date === todayStr;
                 return (
                   <div key={b.id} className={`booking-card ${b.status} ${isBlocked ? 'blocked-card' : ''} ${isToday ? 'today-card' : ''}`}>
