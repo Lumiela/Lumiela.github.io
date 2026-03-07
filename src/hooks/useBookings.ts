@@ -9,13 +9,13 @@ export interface BookingData {
   service_name: string;
   status: 'pending' | 'confirmed' | 'cancelled' | 'completed';
   user_id: string;
+  owner_id: string;
   cancel_reason: string | null;
-  profiles: { 
-    full_name: string; 
-    phone: string; 
+  profiles: {
+    full_name: string;
+    phone: string;
   } | null;
 }
-
 export const useBookings = (user: User | null, role: string | null) => {
   const [bookings, setBookings] = useState<BookingData[]>([]);
   const [loading, setLoading] = useState(true);
