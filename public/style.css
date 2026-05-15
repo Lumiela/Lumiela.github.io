@@ -1,0 +1,163 @@
+/* 문서의 기본 색상 변수 설정 (디자인 가이드 기반) */
+:root {
+  --primary: #000000;       /* 강조할 때 쓰는 색상 (주로 버튼 등 검정색) */
+  --background: #ffffff;    /* 전체 페이지 배경색 (흰색) */
+  --surface: #fafafa;       /* 모달 같은 패널 요소의 배경색 (약간 회색빛) */
+  --border: #e5e5e5;        /* 테두리 색상 (연한 회색) */
+  --text-primary: #111111;  /* 기본 글씨 색상 (진한 검정) */
+  --text-secondary: #737373;/* 부가적인 설명에 쓰이는 글씨 색상 (회색) */
+  --focus-ring: rgba(0, 0, 0, 0.2); /* 입력창 클릭 시 주변에 생기는 링 효과 색상 */
+}
+
+/* 기본 여백 및 폰트 초기화 (브라우저 기본 스타일 제거) */
+* {
+  box-sizing: border-box; /* 크기 계산을 테두리 기준으로 맞춥니다 */
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--background);
+  color: var(--text-primary);
+  display: flex;
+  justify-content: center; /* 화면 중앙 정렬 */
+  align-items: center;     /* 세로 중앙 정렬 */
+  min-height: 100vh;       /* 화면 전체 높이를 차지하게 설정 */
+}
+
+/* 컨텐츠를 감싸는 중앙 박스 */
+.container {
+  width: 100%;
+  max-width: 600px;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* 헤더(제목 영역) 스타일 */
+header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+header p {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+/* 입력 영역 스타일 */
+.input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* 텍스트 입력창과 버튼 사이의 간격 */
+}
+
+/* 텍스트 입력창 (Textarea) */
+textarea.rounded-full {
+  width: 100%;
+  height: 150px;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 20px; /* 약간 둥글게 처리 */
+  background-color: var(--surface);
+  font-size: 1rem;
+  resize: none; /* 사용자가 크기를 마음대로 조절하지 못하게 고정 */
+  outline: none; /* 클릭 시 생기는 기본 테두리 제거 */
+  transition: box-shadow 0.2s, border-color 0.2s; /* 부드러운 전환 효과 */
+}
+
+/* 텍스트 입력창을 클릭(포커스) 했을 때 효과 */
+textarea.rounded-full:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--focus-ring); /* 디자인 가이드의 포커스 링 적용 */
+}
+
+/* 알약 모양의 버튼 */
+button.pill-button {
+  height: 40px;
+  border-radius: 20px; /* 양 끝이 완전히 둥근 알약 모양을 만듭니다 */
+  background-color: var(--primary);
+  color: var(--background);
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer; /* 마우스를 올리면 손가락 모양으로 변경 */
+  transition: opacity 0.2s; /* 부드러운 투명도 전환 효과 */
+}
+
+button.pill-button:hover {
+  opacity: 0.8; /* 마우스를 올리면 살짝 투명해지는 효과 */
+}
+
+button.pill-button:disabled {
+  background-color: var(--border); /* 비활성화 시 회색으로 변경 */
+  cursor: not-allowed;
+}
+
+/* ================================
+   모달 (팝업창) 스타일
+   ================================ */
+
+/* 화면 전체를 덮는 반투명 배경 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* 제일 앞에 보이도록 설정 */
+}
+
+/* 화면에서 요소를 숨길 때 사용하는 클래스 */
+.hidden {
+  display: none !important;
+}
+
+/* 모달 컨텐츠가 담기는 박스 */
+.modal-content {
+  background-color: var(--surface); /* 약간 회색빛 배경 */
+  width: 90%;
+  max-width: 400px;
+  border-radius: 12px; /* 모서리 둥글기 12px */
+  border: 1px solid var(--border); /* 얇은 테두리(Hairline Border) */
+  padding: 2rem;
+  position: relative;
+  text-align: left; /* 내용물 좌측 정렬 */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+/* 모달 닫기 버튼 ('X' 마크) */
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: var(--primary);
+}
+
+.modal-content h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+/* 모달 안의 결과 텍스트 스타일 */
+.modal-content p {
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+}
+
+.modal-content strong {
+  color: var(--text-primary);
+}

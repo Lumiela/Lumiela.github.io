@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 감성 분석기</title>
+    <!-- 디자인 가이드에 맞춰 스타일을 분리하여 로드합니다 -->
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <main class="container">
+        <header>
+            <h1>AI 감성 분석기</h1>
+            <p>분석할 텍스트를 입력해주세요.</p>
+        </header>
+
+        <!-- 사용자 텍스트 입력 영역 -->
+        <section class="input-section">
+            <textarea 
+                id="textInput" 
+                class="rounded-full" 
+                placeholder="여기에 텍스트를 입력하세요..." 
+                aria-label="감성 분석을 위한 텍스트 입력창"
+            ></textarea>
+            <button 
+                id="analyzeBtn" 
+                class="pill-button" 
+                aria-label="감성 분석 실행"
+            >
+                분석하기
+            </button>
+        </section>
+
+        <!-- 분석 결과를 보여줄 숨겨진 모달 (기본적으로는 화면에 보이지 않습니다) -->
+        <div id="resultModal" class="modal hidden" aria-modal="true" role="dialog">
+            <div class="modal-content">
+                <button id="closeModalBtn" class="close-btn" aria-label="모달 닫기">&times;</button>
+                <h2>분석 결과</h2>
+                
+                <!-- 로딩 중일 때 보여줄 영역 -->
+                <div id="loadingArea" class="hidden">
+                    <p>AI가 텍스트를 분석 중입니다...</p>
+                </div>
+                
+                <!-- 분석 결과 데이터를 보여줄 영역 -->
+                <div id="resultArea" class="hidden">
+                    <p><strong>감성:</strong> <span id="sentimentResult"></span></p>
+                    <p><strong>신뢰도:</strong> <span id="confidenceResult"></span></p>
+                    <p><strong>분석 이유:</strong> <span id="reasonResult"></span></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 이벤트 및 로직을 처리할 자바스크립트 파일을 로드합니다 -->
+    <script src="./app.js"></script>
+</body>
+</html>
