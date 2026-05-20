@@ -64,11 +64,10 @@ const InquirySection = forwardRef((props, ref) => {
           <div className="q-icon-circle">✓</div>
           <h3>문의가 정상적으로 접수되었습니다.</h3>
           <p>빠른 시일 내에 답변드리겠습니다.</p>
-          <div className="form-footer" style={{ marginTop: '30px' }}>
+          <div className="form-footer">
             <button 
               onClick={() => navigate('/')} 
               className="btn-primary"
-              style={{ padding: '12px 40px' }}
             >
               홈으로 이동
             </button>

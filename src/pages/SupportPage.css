@@ -333,3 +333,101 @@
 .notice-write-button { padding: 8px 18px; background: #111; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; }
 .dataroom-accordion-icon { transform: rotate(0deg); transition: transform 0.3s; color: #999; }
 .dataroom-accordion-icon.expanded { transform: rotate(180deg); }
+
+/* -----------------------------------------------------------------
+  Thank You (Submission Success) Styles
+----------------------------------------------------------------- */
+.thank-you-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 50px 40px;
+  background: #ffffff;
+  border: 1px solid #eaeaea;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.thank-you-container .q-icon-circle {
+  background-color: #ff5e1a; /* 포인트 컬러인 오렌지 적용 */
+  color: #fff;
+  border-radius: 50%;
+  width: 72px;
+  height: 72px;
+  min-width: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 14px rgba(255, 94, 26, 0.3);
+}
+
+.thank-you-container h3 {
+  font-family: 'Motiva Sans Bold', 'Pretendard', sans-serif;
+  font-size: clamp(20px, 3vw, 24px);
+  color: #111;
+  margin-bottom: 12px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.thank-you-container p {
+  font-size: clamp(14px, 2vw, 16px);
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  word-break: keep-all;
+}
+
+.thank-you-container .form-footer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.thank-you-container .btn-primary {
+  width: 100%;
+  max-width: 240px;
+  height: 50px;
+  background-color: #111;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thank-you-container .btn-primary:hover {
+  background-color: #ff5e1a;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 94, 26, 0.2);
+}
+
+@media (max-width: 768px) {
+  .thank-you-container {
+    margin: 40px auto;
+    padding: 40px 20px;
+    border-radius: 12px;
+  }
+  
+  .thank-you-container .q-icon-circle {
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+}
