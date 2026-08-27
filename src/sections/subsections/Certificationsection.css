@@ -151,61 +151,54 @@
   text-overflow: ellipsis;
 }
 
-/* 4. 일반 모드: Swiper 스타일 */
-.styled-swiper {
-  width: 100%;
-  padding: 50px 0 80px 0;
+/* 4. 일반 모드: 정렬된 이미지 그리드 스타일 */
+.content-highlight p {
+  margin-bottom: 0.5rem; /* 본문 아래 여백 축소 */
 }
 
-.styled-swiper .swiper-slide {
-  transition: all 0.4s ease;
-  transform: scale(0.85);
-  opacity: 0.6;
-  filter: blur(1.5px);
+.cert-gallery-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 20px 20px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.grid-row {
   display: flex;
   justify-content: center;
+  gap: 15px;
+  width: 100%;
+  flex-wrap: nowrap; /* 3/2 정렬 깨짐 방지 */
 }
-
-.styled-swiper .swiper-slide-active {
-  transform: scale(1.1);
-  opacity: 1;
-  filter: blur(0);
-  z-index: 10;
-}
-
-.styled-swiper .swiper-button-next,
-.styled-swiper .swiper-button-prev {
-  color: #ff5e1a;
-  transform: scale(0.7);
-}
-
-.styled-swiper .swiper-pagination-bullet-active {
-  background: #ff5e1a;
-}
-
 
 .gallery-item {
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   width: 100%;
-  max-width: 380px;
-  height: 480px;
+  max-width: 190px; /* 최대 가로 크기 확대 */
+  aspect-ratio: 3 / 4; /* 가로에 맞춰 세로가 비율대로 조절되어 내부 상하 여백 최소화 */
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
-  cursor: pointer;
   border: 1px solid #eee;
+  background: #fafafa;
+  padding: 8px;
+  flex-shrink: 1; /* 화면이 좁아질 때 유연하게 축소 허용 */
 }
 
-/* 5. 공통 및 모달 */
+.gallery-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* 5. 공통 */
 .no-ip-data {
   padding: 100px 0;
   color: #999;
-}
-
-.modal-img {
-  max-width: 100%;
-  max-height: 80vh;
-  object-fit: contain;
 }

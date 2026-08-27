@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import { Link } from 'react-router-dom';
-import productImage2 from '../../assets/images/ec799f44001e51b2d01a4e98ec22278f_1644560652_3293.jpg';
+import productImage1 from '../../assets/brochure/daoni/page-0001.jpg';
+import productImage2 from '../../assets/brochure/daoni/page-0002.jpg';
 import './Product2Section.css';
 import daoniLogo from '../../assets/images/daoni.png';
 
@@ -41,6 +42,7 @@ const Product2Section = forwardRef((props, ref) => {
 
 
         <hr className="section-top-line" />
+        <img src={productImage1} alt="탄산가스 발생기" className="product2-image" />
         <img src={productImage2} alt="탄산가스 발생기" className="product2-image" />
       </div>
     </section>

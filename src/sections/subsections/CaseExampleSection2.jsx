@@ -1,7 +1,8 @@
 import React, { useState, useEffect, forwardRef, useMemo, useRef } from 'react';
 import ReactQuill from 'react-quill-new';
+import { useLocation } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
-import { createImageHandler, getEditorModules } from '../../hooks/editorHandlers';
+import { createImageHandler, createVideoHandler, getEditorModules, convertYoutubeLinksToIframes } from '../../hooks/editorHandlers';
 
 import 'react-quill-new/dist/quill.snow.css';
 import './CaseExampleSection.css';
@@ -10,6 +11,7 @@ const CaseExampleSection = forwardRef((props, ref) => {
     const [caseExamples, setCaseExamples] = useState([]);
     const [viewMode, setViewMode] = useState('list'); 
     const [selectedCase, setSelectedCase] = useState(null);
+    const location = useLocation();
     
     // 페이지네이션 관련 상태
     const [currentPage, setCurrentPage] = useState(1);
@@ -38,6 +40,36 @@ const CaseExampleSection = forwardRef((props, ref) => {
             authListener.subscription.unsubscribe();
         };
     }, []);
+
+    // 메인 홈 화면 등에서 넘어온 selectedId가 있으면 자동으로 해당 사례 상세 정보를 조회하여 띄워줌
+    useEffect(() => {
+        const checkIncomingState = async () => {
+            if (location.state && location.state.selectedId) {
+                const targetId = location.state.selectedId;
+                
+                // 1. 이미 받아온 목록에 있으면 바로 오픈
+                const found = caseExamples.find(item => item.id === targetId);
+                if (found) {
+                    openDetail(found);
+                    window.history.replaceState({}, document.title); // state 초기화
+                } else {
+                    // 2. 목록에 없으면(페이지 범위를 벗어난 경우 등) 단건 직접 조회해서 띄움
+                    const { data, error } = await supabase
+                        .from('case_examples')
+                        .select('*')
+                        .eq('id', targetId)
+                        .single();
+                    
+                    if (!error && data) {
+                        const formatted = { ...data, date: data.created_at?.split('T')[0] };
+                        openDetail(formatted);
+                    }
+                    window.history.replaceState({}, document.title); // state 초기화
+                }
+            }
+        };
+        checkIncomingState();
+    }, [location.state, caseExamples]);
 
     // 페이지 번호가 바뀔 때마다 DB에서 데이터를 새로 가져옵니다.
     useEffect(() => {
@@ -78,13 +110,27 @@ const CaseExampleSection = forwardRef((props, ref) => {
         }
     };
 
-    const handler = useMemo(() => createImageHandler(quillRef, 'case_examples'), []);
-    const modules = useMemo(() => getEditorModules(handler), [handler]);
+    const imageHandler = useMemo(() => createImageHandler(quillRef, 'case_examples'), []);
+    const videoHandler = useMemo(() => createVideoHandler(quillRef), []);
+    const modules = useMemo(() => getEditorModules(imageHandler, videoHandler), [imageHandler, videoHandler]);
 
     const getThumbnail = (htmlContent) => {
+        if (!htmlContent) return 'https://via.placeholder.com/600x400?text=No+Image';
+        
+        // 1. 본문에 이미지가 있는지 먼저 확인
         const imgRegex = /<img[^>]+src="([^">]+)"/;
-        const match = imgRegex.exec(htmlContent);
-        return match ? match[1] : 'https://via.placeholder.com/600x400?text=No+Image';
+        const imgMatch = imgRegex.exec(htmlContent);
+        if (imgMatch) return imgMatch[1];
+        
+        // 2. 이미지가 없다면 유튜브 비디오 ID가 있는지 추출하여 썸네일 경로 구성
+        const youtubeReg = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|shorts\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+        const ytMatch = youtubeReg.exec(htmlContent);
+        if (ytMatch && ytMatch[1]) {
+            return `https://img.youtube.com/vi/${ytMatch[1]}/hqdefault.jpg`;
+        }
+        
+        // 3. 둘 다 없다면 기본 대체 이미지 반환
+        return 'https://via.placeholder.com/600x400?text=No+Image';
     };
 
     const handleSave = async () => {
@@ -252,7 +298,7 @@ const CaseExampleSection = forwardRef((props, ref) => {
                                 </ul>
                             </div>
                         </div>
-                        <div className="detail-body ql-editor" dangerouslySetInnerHTML={{ __html: selectedCase.content }} />
+                        <div className="detail-body ql-editor" dangerouslySetInnerHTML={{ __html: convertYoutubeLinksToIframes(selectedCase.content) }} />
                         <div className="detail-footer">
                             <button className="btn-list-go" onClick={backToList}>목록으로</button>
                         </div>

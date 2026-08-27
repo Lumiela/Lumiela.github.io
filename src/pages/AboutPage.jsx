@@ -6,6 +6,8 @@ import VisionSection from '../sections/subsections/VisionSection';
 import HistorySection from '../sections/subsections/HistorySection';
 import DirectionsSection from '../sections/subsections/DirectionsSection';
 import bannerImages from '../content/bannerImages.js';
+import IntellectualPropertySection from '../sections/subsections/IntellectualPropertySection';
+import Certification from '../sections/subsections/Certificationsection';
 
 const AboutPage = () => {
   const { title, subtitle, image } = bannerImages['/about'];
@@ -19,6 +21,8 @@ const AboutPage = () => {
         <Route path="vision" element={<VisionSection />} />
         <Route path="history" element={<HistorySection />} />
         <Route path="directions" element={<DirectionsSection />} />
+        <Route path="ip" element={<IntellectualPropertySection />} />
+        <Route path="Certification" element={<Certification />} />
       </Routes>
     </>
   );

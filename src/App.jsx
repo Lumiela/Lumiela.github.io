@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import HomePage from './pages/HomePage';
-import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate, Link } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import AboutPage from './pages/AboutPage';
@@ -8,6 +8,7 @@ import BusinessPage from './pages/BusinessPage';
 import ProductsPage from './pages/ProductsPage';
 import CasesPage from './pages/CasesPage';
 import SupportPage from './pages/SupportPage';
+import BrochurePage from './pages/BrochurePage';
 import './App.css';
 import AdminTopNav from './components/AdminTopNav';
 import AdminLoginPage from './pages/AdminLoginPage';
@@ -21,19 +22,18 @@ function App() {
 
   const isAdminPage = location.pathname.startsWith('/admin');
   const isMonitorPage = location.pathname.startsWith('/monitor');
+  const isBrochurePage = location.pathname.startsWith('/brochure');
 
   useEffect(() => {
-    // [규칙 1] 경로 변경 시 기본 동작은 최상단 이동 (메인 메뉴 클릭 대응)
     window.scrollTo(0, 0);
 
-    // [규칙 2] 서브 메뉴/SubNav 클릭 시 발생하는 커스텀 이벤트 처리
     const handleScrollToContent = () => {
       setTimeout(() => {
         window.scrollTo({
-          top: window.innerHeight, // 100vh 지점
+          top: window.innerHeight,
           behavior: 'smooth'
         });
-      }, 100); // 렌더링 후 실행을 위한 미세 지연
+      }, 100);
     };
 
     window.addEventListener('scrollToSubContent', handleScrollToContent);
@@ -52,8 +52,8 @@ function App() {
 
   return (
     <div className={`App ${isAdmin ? 'admin-logged-in' : ''}`}>
-      {isAdmin && <AdminTopNav />}
-      {!isMonitorPage && <Header isAdmin={isAdmin} />}
+      {!isMonitorPage && !isBrochurePage && isAdmin && <AdminTopNav />}
+      {!isMonitorPage && !isBrochurePage && <Header isAdmin={isAdmin} />}
 
       <main className="main-content">
         <Routes>
@@ -64,10 +64,42 @@ function App() {
           <Route path="/cases/*" element={<CasesPage />} />
           <Route path="/support/*" element={<SupportPage />} />
           <Route path="/monitor/*" element={<MonitorPage />} />
+          <Route path="/brochure" element={<BrochurePage />} />
         </Routes>
       </main>
 
-      {!isMonitorPage && <Footer />}
+      {!isMonitorPage && !isBrochurePage && <Footer />}
+      
+      {/* 화면 우측 하단 고정 플로팅 버튼 (아이콘 내부에 텍스트 포함) */}
+      {!isMonitorPage && !isBrochurePage && (
+        <Link 
+          to="/brochure" 
+          className="floating-brochure-btn" 
+          title="제품 카탈로그 보기"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {/* 책 모양 SVG 아이콘 */}
+          <svg 
+            className="book-icon"
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="1.8" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+          >
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+          </svg>
+          
+          {/* 버튼 내부에 고정된 텍스트 (두 줄) */}
+          <div className="btn-text-content">
+            <span className="btn-text-line1">제품</span>
+            <span className="btn-text-line2">카탈로그</span>
+          </div>
+        </Link>
+      )}
     </div>
   );
 }

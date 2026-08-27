@@ -32,9 +32,20 @@ const CasePreviewSection = () => {
     }, []);
 
     const getThumbnail = (htmlContent) => {
+        // 1. 이미지 태그가 있는 경우 우선 추출
         const imgRegex = /<img[^>]+src="([^">]+)"/;
         const match = imgRegex.exec(htmlContent);
-        return match ? match[1] : 'https://via.placeholder.com/600x400?text=No+Image';
+        if (match) return match[1];
+
+        // 2. 유튜브 iframe src 또는 일반 유튜브 링크 감지
+        // youtube.com/embed/ID, youtube.com/watch?v=ID, youtu.be/ID 매칭
+        const ytRegex = /(?:youtube\.com\/(?:embed\/|watch\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+        const ytMatch = ytRegex.exec(htmlContent);
+        if (ytMatch && ytMatch[1]) {
+            return `https://img.youtube.com/vi/${ytMatch[1]}/mqdefault.jpg`;
+        }
+
+        return 'https://via.placeholder.com/600x400?text=No+Image';
     };
 
     return (
@@ -80,7 +91,10 @@ const CasePreviewSection = () => {
                                 >
                                     {recentCases.map((item) => (
                                         <SwiperSlide key={item.id}>
-                                            <div className="case-slide-item" onClick={() => navigate(`/cases/${item.id}`)}>
+                                            <div className="case-slide-item" onClick={() => {
+                                                const targetPath = item.category === 'example2' ? 'example2' : 'example1';
+                                                navigate(`/cases/${targetPath}`, { state: { selectedId: item.id } });
+                                            }}>
                                                 <div className="case-img-wrapper">
                                                     <img src={getThumbnail(item.content)} alt={item.title} />
                                                 </div>

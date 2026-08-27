@@ -292,3 +292,14 @@ html.admin-logged-in {
         padding: 0 20px;
     }
 }
+
+/* --- Quill 에디터 및 본문 내 비디오(iframe) 반응형 스타일 --- */
+iframe.ql-video {
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  margin: 20px 0;
+}

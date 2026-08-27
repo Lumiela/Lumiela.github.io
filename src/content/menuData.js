@@ -6,26 +6,28 @@ export const menuItems = [
     subMenus: [
       { name: '기업개요', path: 'vision' },
       { name: '회사연혁', path: 'history' },
+      // { name: '지식재산권', path: 'ip' },
+      { name: '인증', path: 'Certification ' },
       { name: '오시는길', path: 'directions' },
     ] 
   },
-  { 
-    name: '인증현황', 
-    path: '/business',
-    subMenus: [
-      // { name: '사업영역', path: 'scope' },
-      // { name: '연구개발', path: 'rnd' },
-      { name: '지식재산권', path: 'ip' },
-      { name: '인증 ', path: 'Certification ' },
+  // { 
+  //   name: '인증현황', 
+  //   path: '/business',
+  //   subMenus: [
+  //     // { name: '사업영역', path: 'scope' },
+  //     // { name: '연구개발', path: 'rnd' },
+  //     { name: '지식재산권', path: 'ip' },
+  //     { name: '인증 ', path: 'Certification ' },
 
-    ]
-  },
+  //   ]
+  // },
   { 
     name: '제품', 
     path: '/products',
     subMenus: [
-      { name: '탄사니', path: 'product1' },
-      { name: '다오니', path: 'product2' },
+      { name: '촉매형 탄산가스발생기(탄사니)', path: 'product1' },
+      { name: '환경데이터측정기(다오니)', path: 'product2' },
     ]
   },
   { name: '적용사례', 

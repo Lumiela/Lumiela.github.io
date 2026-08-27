@@ -134,3 +134,15 @@
   min-width: 60px;
   text-align: center;
 }
+
+/* --- 5. Quill 비디오 (iframe) 반응형 스타일 --- */
+.detail-body iframe.ql-video,
+.quill-wrapper iframe.ql-video {
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  margin: 20px 0;
+}

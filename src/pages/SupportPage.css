@@ -335,6 +335,146 @@
 .dataroom-accordion-icon.expanded { transform: rotate(180deg); }
 
 /* -----------------------------------------------------------------
+  File Attachment Styles (에디터 내 파일 첨부 영역)
+----------------------------------------------------------------- */
+.file-attach-area {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  padding: 16px 20px;
+  background: #fafafa;
+  border: 1px dashed #ddd;
+  border-radius: 8px;
+}
+
+.file-attach-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  background: #fff;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.file-attach-label:hover {
+  border-color: #111;
+  color: #111;
+  background: #f5f5f5;
+}
+
+.file-attach-icon { font-size: 16px; }
+
+.file-attach-input {
+  display: none;
+}
+
+.file-attach-preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #333;
+  max-width: 100%;
+}
+
+.file-attach-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 300px;
+}
+
+.file-remove-btn {
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.file-remove-btn:hover {
+  color: #d93025;
+}
+
+/* -----------------------------------------------------------------
+  File Download Styles (게시글 상세 보기 내 다운로드 영역)
+----------------------------------------------------------------- */
+.file-download-area {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.file-download-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: #f8f8f8;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.file-download-link:hover {
+  background: #f0f0f0;
+  border-color: #ccc;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.file-download-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.file-download-name {
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 300px;
+}
+
+.file-download-btn {
+  padding: 4px 12px;
+  background: #111;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.file-download-link:hover .file-download-btn {
+  background: #ff5e1a;
+}
+
+@media (max-width: 768px) {
+  .file-attach-area { padding: 12px 14px; gap: 10px; }
+  .file-attach-name { max-width: 180px; }
+  .file-download-name { max-width: 150px; }
+  .file-download-link { padding: 10px 14px; gap: 8px; font-size: 13px; }
+}
+
+/* -----------------------------------------------------------------
   Thank You (Submission Success) Styles
 ----------------------------------------------------------------- */
 .thank-you-container {

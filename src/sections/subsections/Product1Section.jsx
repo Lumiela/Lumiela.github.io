@@ -1,5 +1,8 @@
 import React, { forwardRef } from 'react';
-import productImage1 from '../../assets/images/ec799f44001e51b2d01a4e98ec22278f_1644560772_8999.jpg';
+import productImage1 from '../../assets/Brochure/tansani/page-0001.jpg';
+import productImage2 from '../../assets/Brochure/tansani/page-0002.jpg';
+import productImage3 from '../../assets/Brochure/tansani/page-0003.jpg';
+import productImage4 from '../../assets/Brochure/tansani/page-0004.jpg';
 import './Product1Section.css';
 
 const Product1Section = forwardRef((props, ref) => {
@@ -12,6 +15,9 @@ const Product1Section = forwardRef((props, ref) => {
         </header>
         <hr className="section-top-line" />
         <img src={productImage1} alt="스마트 측정 제어기" className="product1-image" />
+        <img src={productImage2} alt="스마트 측정 제어기" className="product1-image" />
+        <img src={productImage3} alt="스마트 측정 제어기" className="product1-image" />
+        <img src={productImage4} alt="스마트 측정 제어기" className="product1-image" />
       </div>
     </section>
   );
