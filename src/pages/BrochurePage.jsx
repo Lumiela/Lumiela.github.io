@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import HTMLFlipBook from 'react-pageflip';
 
 // 이미지 임포트 (다오니, 탄사니 전체 포함)
-import daoni1 from '../assets/brochure/daoni/page-0001.jpg';
+import daoni1 from '../assets/Brochure/daoni/page-0001.jpg';
 import daoni2 from '../assets/brochure/daoni/page-0002.jpg';
 import tansani1 from '../assets/brochure/tansani/page-0001.jpg';
 import tansani2 from '../assets/brochure/tansani/page-0002.jpg';
