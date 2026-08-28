@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
-import productImage1 from '../../assets/Brochure/tansani/page-0001.jpg';
-import productImage2 from '../../assets/Brochure/tansani/page-0002.jpg';
-import productImage3 from '../../assets/Brochure/tansani/page-0003.jpg';
-import productImage4 from '../../assets/Brochure/tansani/page-0004.jpg';
+import productImage1 from '../../assets/brochure/tansani/page-0001.jpg';
+import productImage2 from '../../assets/brochure/tansani/page-0002.jpg';
+import productImage3 from '../../assets/brochure/tansani/page-0003.jpg';
+import productImage4 from '../../assets/brochure/tansani/page-0004.jpg';
 import './Product1Section.css';
 
 const Product1Section = forwardRef((props, ref) => {
